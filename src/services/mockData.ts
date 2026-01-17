@@ -82,23 +82,27 @@ const generateTrees = (): Tree[] => {
   let treeCounter = 1;
 
   MOCK_SPECIES.forEach((species) => {
-    // Generate exactly 1 tree per species
-    trees.push({
-      id: `tree-${treeCounter}`,
-      name: species.name, // Use 'species.name' only, no suffix
-      price: 150000,
-      status: Math.random() > 0.8 ? 'sold' : 'available',
-      location_block: species.category,
-      coords: {
-        lat: -7.0 + (Math.random() * 0.1),
-        lng: 110.0 + (Math.random() * 0.1),
-        x_percent: Math.floor(Math.random() * 80) + 10,
-        y_percent: Math.floor(Math.random() * 80) + 10,
-      },
-      species_id: species.id,
-      species: species,
-    });
-    treeCounter++;
+    // Generate 1-5 trees per species
+    const count = Math.floor(Math.random() * 5) + 1;
+
+    for (let i = 0; i < count; i++) {
+      trees.push({
+        id: `tree-${treeCounter}`,
+        name: `${species.name} #${i + 1}`,
+        price: 150000,
+        status: Math.random() > 0.8 ? 'sold' : 'available',
+        location_block: species.category,
+        coords: {
+          lat: -7.0 + (Math.random() * 0.1),
+          lng: 110.0 + (Math.random() * 0.1),
+          x_percent: Math.floor(Math.random() * 80) + 10,
+          y_percent: Math.floor(Math.random() * 80) + 10,
+        },
+        species_id: species.id,
+        species: species,
+      });
+      treeCounter++;
+    }
   });
 
   return trees;
