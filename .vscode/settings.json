@@ -1,0 +1,12 @@
+{    
+  "claudeCode.environmentVariables": [
+    {
+      "name": "ANTHROPIC_BASE_URL",
+      "value": "https://api.z.ai/api/anthropic"
+    },
+    {
+      "name": "ANTHROPIC_AUTH_TOKEN",
+      "value": "c2570941258e48cdbc9c559395fe58c7.VsmlzrEt3804UHpb"
+    }
+  ]
+}

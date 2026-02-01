@@ -1,15 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronDown, Menu, X } from 'lucide-react';
-
 import Image from 'next/image';
 import { Typography } from '@/components/ui/Typography';
 
 export const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const dropdownLinks = [
     { label: 'About', href: '/about' },
@@ -18,153 +18,195 @@ export const Navbar = () => {
     { label: 'Sustainable Development Goals', href: '/sdgs' },
   ];
 
-  return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-100">
-      <div className="w-full h-[96px] px-[70px] flex items-center justify-between">
+  // Handle scroll effect for navbar shadow
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-        {/* --- 1. LOGO (KIRI) --- */}
-        <Link href="/" className="flex-shrink-0">
-          <div className="flex items-center gap-[10px] p-[10px] opacity-100">
-            <Image
-              src="/images/Logo.svg"
-              alt="PohonKu Logo"
-              width={185}
-              height={143.860595703125}
-              className="object-contain"
-              style={{ transform: 'rotate(0deg)' }}
-            />
-          </div>
+  return (
+    <nav className={`sticky top-0 z-50 bg-white transition-shadow duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
+      <div className="w-full max-w-[1920px] mx-auto px-8 lg:px-16 h-24 flex items-center justify-between">
+
+        {/* --- LOGO --- */}
+        <Link href="/" className="flex-shrink-0 hover:opacity-80 transition-opacity">
+          <Image
+            src="/images/Logo.svg"
+            alt="PohonKu Logo"
+            width={140}
+            height={105}
+            className="object-contain"
+            priority
+          />
         </Link>
 
-        {/* --- 2. MENU ITEMS (TENGAH) --- */}
-        <div className="hidden md:flex flex-1 items-center justify-center">
-          <div className="flex items-center gap-16">
+        {/* --- DESKTOP NAVIGATION --- */}
+        <div className="hidden lg:flex items-center gap-8 xl:gap-12">
 
-            {/* Dropdown: PohonKu */}
-            <div className="relative h-full flex items-center">
-              <div
-                className="relative inline-block"
-                onMouseEnter={() => setIsDropdownOpen(true)}
-                onMouseLeave={() => setIsDropdownOpen(false)}
+          {/* PohonKu Dropdown */}
+          <div
+            className="relative group"
+            onMouseEnter={() => setIsDropdownOpen(true)}
+            onMouseLeave={() => setIsDropdownOpen(false)}
+          >
+            <button className="flex items-center gap-1 focus:outline-none group/btn">
+              <Typography
+                variant="beranda-nav"
+                className="text-gray-900 group-hover/btn:text-[#1A581E] transition-colors"
               >
-                <button className="flex items-center gap-1 focus:outline-none group h-full">
-                  <Typography
-                    variant="beranda-nav"
-                    className={`transition-colors ${isDropdownOpen ? 'text-[#1A581E]' : 'text-gray-900 group-hover:text-[#1A581E]'}`}
-                  >
-                    PohonKu
-                  </Typography>
-                  <ChevronDown
-                    size={16}
-                    className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-[#1A581E]' : 'text-gray-900 group-hover:text-[#1A581E]'}`}
-                  />
-                </button>
+                PohonKu
+              </Typography>
+              <ChevronDown
+                size={14}
+                className={`text-gray-900 group-hover/btn:text-[#1A581E] transition-all duration-300 ${
+                  isDropdownOpen ? 'rotate-180 text-[#1A581E]' : ''
+                }`}
+              />
+            </button>
 
-                {/* Dropdown Content */}
-                <div
-                  className={`absolute top-full left-0 w-[310px] bg-[#1A581E] rounded-none mt-1
-                    transition-all duration-200 origin-top z-50 transform
-                    ${isDropdownOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}
-                  aria-hidden={!isDropdownOpen}
-                >
-                  <div className="flex flex-col divide-y divide-white">
-                    {dropdownLinks.map((link) => (
-                      <Link
-                        key={link.label}
-                        href={link.href}
-                        className="flex min-h-[35px] px-4 py-2 items-center gap-[10px] transition-colors hover:bg-[#234f27]"
-                      >
-                        <Typography variant="beranda-nav" weight="light" className="text-white tracking-wide">
-                          {link.label}
-                        </Typography>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
+            {/* Dropdown Menu */}
+            <div
+              className={`absolute top-full left-0 mt-2 w-56 bg-[#1A581E] rounded-lg overflow-hidden transition-all duration-200 ${
+                isDropdownOpen
+                  ? 'opacity-100 visible translate-y-0'
+                  : 'opacity-0 invisible -translate-y-2'
+              }`}
+            >
+              <div className="py-2">
+                {dropdownLinks.map((link, index) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="block px-4 py-2.5 hover:bg-white/10 transition-colors"
+                  >
+                    <Typography variant="beranda-nav" weight="light" className="text-white">
+                      {link.label}
+                    </Typography>
+                  </Link>
+                ))}
               </div>
             </div>
-
-            {/* Link: Contact */}
-            <Link href="/contact" className="group relative py-1">
-              <Typography variant="beranda-nav" className="text-gray-900 group-hover:text-[#1A581E] transition-colors">
-                Contact
-              </Typography>
-              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#1A581E] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-            </Link>
-
-            {/* Link: Tree List */}
-            <Link href="/trees" className="group relative py-1">
-              <Typography variant="beranda-nav" className="text-gray-900 group-hover:text-[#1A581E] transition-colors">
-                Tree List
-              </Typography>
-              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#1A581E] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-            </Link>
-
-            {/* Button: Adopt a Tree */}
-            <Link
-              href="/adopt"
-              className="bg-[#1A581E] text-white px-6 py-2.5 rounded-lg hover:opacity-90 transition-all shadow-md active:scale-95 flex items-center justify-center"
-            >
-              <Typography variant="beranda-nav" className="text-white">
-                Adopt a Tree
-              </Typography>
-            </Link>
           </div>
+
+          {/* Navigation Links */}
+          <Link
+            href="/contact"
+            className="relative group/nav py-1"
+          >
+            <Typography variant="beranda-nav" className="text-gray-900 group-hover/nav:text-[#1A581E] transition-colors">
+              Contact
+            </Typography>
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#1A581E] scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-left"></span>
+          </Link>
+
+          <Link
+            href="/trees"
+            className="relative group/nav py-1"
+          >
+            <Typography variant="beranda-nav" className="text-gray-900 group-hover/nav:text-[#1A581E] transition-colors">
+              Tree List
+            </Typography>
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#1A581E] scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-left"></span>
+          </Link>
+
+          {/* CTA Button */}
+          <Link
+            href="/adopt"
+            className="bg-[#1A581E] hover:bg-[#029146] text-white px-5 py-2.5 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
+          >
+            <Typography variant="beranda-nav" className="text-white">
+              Adopt a Tree
+            </Typography>
+          </Link>
         </div>
 
-        {/* --- 3. PROFILE SECTION (KANAN) --- */}
-        <div className="hidden md:flex items-center gap-[10px] opacity-100 flex-shrink-0">
-          <Link href="/profile" className="rounded-[20px]">
+        {/* --- PROFILE SECTION --- */}
+        <div className="hidden lg:flex items-center">
+          <Link href="/profile" className="hover:opacity-80 transition-opacity">
             <Image
               src="/images/guestProfile.svg"
               alt="Profile"
-              width={40}
-              height={40}
-              className="hover:opacity-80 transition-opacity rounded-[20px]"
-              style={{ transform: 'rotate(0deg)' }}
+              width={44}
+              height={44}
+              className="rounded-full"
             />
           </Link>
         </div>
 
         {/* --- MOBILE HAMBURGER --- */}
         <button
-          className="md:hidden p-2 text-gray-900"
+          className="lg:hidden p-2 text-gray-900 hover:text-[#1A581E] transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* --- MOBILE MENU OVERLAY --- */}
+      {/* --- MOBILE MENU --- */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-[80px] left-0 w-full bg-white border-b border-gray-100 shadow-lg p-6 flex flex-col gap-4 z-40 animate-in fade-in slide-in-from-top-4">
-
-          {/* Dropdown in Mobile */}
-          <div className="flex flex-col gap-3">
-            <Typography variant="beranda-nav" className="text-[#1A581E] font-bold border-b border-gray-100 pb-2">PohonKu</Typography>
-            <div className="pl-4 flex flex-col gap-3 border-l-2 border-gray-100">
-              {dropdownLinks.map(link => (
-                <Link key={link.label} href={link.href} className="block text-gray-600 hover:text-[#1A581E]">
-                  <Typography variant="beranda-nav" className="font-normal">{link.label}</Typography>
+        <div className="lg:hidden absolute top-24 left-0 right-0 bg-white border-t border-gray-100 shadow-xl p-6 flex flex-col gap-4 z-40 animate-in fade-in slide-in-from-top-4">
+          {/* Mobile Dropdown */}
+          <div className="flex flex-col gap-2 pb-4 border-b border-gray-100">
+            <Typography variant="beranda-nav" className="text-[#1A581E] font-bold mb-2">
+              PohonKu
+            </Typography>
+            <div className="pl-4 flex flex-col gap-3 border-l-2 border-gray-200">
+              {dropdownLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="block text-gray-600 hover:text-[#1A581E] transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Typography variant="beranda-nav">{link.label}</Typography>
                 </Link>
               ))}
             </div>
           </div>
 
-          <Link href="/contact" className="py-2 border-b border-gray-100">
-            <Typography variant="beranda-nav" className="text-gray-900">Contact</Typography>
+          <Link
+            href="/contact"
+            className="block py-2 border-b border-gray-100 text-gray-900 hover:text-[#1A581E] transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <Typography variant="beranda-nav">Contact</Typography>
           </Link>
 
-          <Link href="/trees" className="py-2 border-b border-gray-100">
-            <Typography variant="beranda-nav" className="text-gray-900">Tree List</Typography>
+          <Link
+            href="/trees"
+            className="block py-2 border-b border-gray-100 text-gray-900 hover:text-[#1A581E] transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <Typography variant="beranda-nav">Tree List</Typography>
           </Link>
 
-          <div className="flex flex-col gap-4 pt-2">
-            <Link href="/adopt" className="bg-[#1A581E] text-white py-3 rounded-lg text-center hover:opacity-90 active:scale-95">
-              <Typography variant="beranda-nav" className="text-white">Adopt a Tree</Typography>
+          <div className="flex flex-col gap-3 pt-2">
+            <Link
+              href="/adopt"
+              className="bg-[#1A581E] text-white py-3 rounded-lg text-center hover:bg-[#029146] transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Typography variant="beranda-nav" className="text-white">
+                Adopt a Tree
+              </Typography>
             </Link>
 
-            <Link href="/profile" className="text-center py-2 text-gray-500 hover:text-[#1A581E]">
+            <Link
+              href="/profile"
+              className="text-center py-2 text-gray-500 hover:text-[#1A581E] transition-colors flex items-center justify-center gap-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Image
+                src="/images/guestProfile.svg"
+                alt="Profile"
+                width={28}
+                height={28}
+                className="rounded-full"
+              />
               <Typography variant="beranda-nav">Profile</Typography>
             </Link>
           </div>
