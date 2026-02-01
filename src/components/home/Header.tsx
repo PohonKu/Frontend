@@ -1,11 +1,19 @@
 import React from 'react';
+import Image from 'next/image';
 
 export const Header = () => {
     return (
-        <section className="min-h-screen border-b border-gray-200">
-            {/* TODO: Insert Hero Image & Headline here */}
-            <div className="container mx-auto px-6 h-full flex items-center justify-center">
-                <p className="text-gray-400 italic">Header / Hero Section Placeholder</p>
+        <section className="relative w-full">
+            {/* Hero Image - Fixed aspect ratio to maintain pixel quality */}
+            <div className="relative w-full h-auto">
+                <Image
+                    src="/images/bgTahuraHeader.svg"
+                    alt="Tahura Bunder Landscape"
+                    width={1920}
+                    height={1080}
+                    className="w-full h-auto"
+                    priority
+                />
             </div>
         </section>
     );

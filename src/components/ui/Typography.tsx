@@ -7,8 +7,10 @@ type TypoVariant =
   | "title" | "body" | "label"
   | "c1" | "c2"
   // Varian Baru Spesifik Desain:
-  | "tahura-bunder"  // Untuk style TahuraBunder (Tilt Warp)
-  | "beranda-nav";   // Untuk style Beranda (Inria Serif)
+  | "tahura-bunder"  // Untuk style TahuraBunder (Inria Serif)
+  | "beranda-nav"   // Untuk style Beranda (Inria Serif)
+  | "tilt-title"    // Untuk judul besar (Tilt Warp) - PohonKu title
+  | "tilt-label";   // Untuk label kecil (Tilt Warp) - Visi/Misi labels
 
 type TypoWeight = "light" | "regular" | "medium" | "semibold" | "bold";
 
@@ -42,6 +44,12 @@ const variantStyles: Record<TypoVariant, string> = {
 
   // Beranda / Beranda-Nav: Inria Serif, 14px, 100% LH (Bold applied via weight logic)
   "beranda-nav": "font-inria text-[14px] leading-[100%] tracking-normal",
+
+  // Tilt Title: Tilt Warp, 96px, 121px LH untuk judul "PohonKu"
+  "tilt-title": "font-tilt text-[96px] leading-[121px] tracking-normal flex items-center",
+
+  // Tilt Label: Tilt Warp, 24px, 30px LH untuk label "Visi:" dan "Misi:"
+  "tilt-label": "font-tilt text-[24px] leading-[30px] tracking-normal",
 };
 
 const weightStyles: Record<TypoWeight, string> = {
@@ -59,6 +67,8 @@ const defaultTags: Record<TypoVariant, ElementType> = {
   // Default tags untuk varian baru
   "tahura-bunder": "span", // Biasanya logo text pakai span/h1
   "beranda-nav": "span",   // Link navigasi pakai span
+  "tilt-title": "h1",      // Judul besar PohonKu
+  "tilt-label": "span",    // Label Visi/Misi
 };
 
 export function Typography({
@@ -71,9 +81,9 @@ export function Typography({
 }: TypographyProps) {
   const Tag = component || defaultTags[variant];
 
-  // Logic khusus: Jika varian adalah 'beranda-nav' atau 'tahura-bunder', kita paksa weight jadi Bold secara default
+  // Logic khusus: Jika varian adalah 'beranda-nav', 'tahura-bunder', atau 'tilt-label', kita paksa weight jadi Bold secara default
   // kecuali user override lewat props.
-  const isCustomVariant = variant === 'beranda-nav' || variant === 'tahura-bunder';
+  const isCustomVariant = variant === 'beranda-nav' || variant === 'tahura-bunder' || variant === 'tilt-label';
   const appliedWeight = isCustomVariant && weight === 'regular' ? 'bold' : weight;
 
   const finalClassName = [
