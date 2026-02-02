@@ -1,0 +1,220 @@
+/* Import Tilt Warp Font */
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap');
+
+/* Section - WIDER TOP/BOTTOM SPACING */
+.goals-section {
+  width: 100%;
+  padding: 80px 20px;
+  margin: 0;
+  background-color: #ffffff;
+}
+
+/* Container */
+.goals-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section Title - TILT WARP, GREEN COLOR */
+.goals-title {
+  font-family: 'Tilt Warp', cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 56px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  color: #1A581E;
+  text-align: center;
+  margin: 0 0 70px 0;
+}
+
+/* SDG List - VERTICAL STACK */
+.sdg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* Individual SDG Item - HORIZONTAL ROW, NO CARD STYLING */
+.sdg-item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 32px;
+  background: transparent;  /* NO background */
+  border: none;  /* NO border */
+  box-shadow: none;  /* NO shadow */
+  padding: 0;
+  text-align: left;
+}
+
+/* Left Section - SDG Icon Block */
+.sdg-icon {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sdg-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Right Section - Text Content */
+.sdg-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+/* Title - BOLD, GREEN */
+.sdg-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1A581E;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Description - NORMAL, DARK GRAY */
+.sdg-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #2d3748;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+
+/* Tablet */
+@media (max-width: 1200px) {
+  .goals-section {
+    padding: 70px 20px;
+  }
+
+  .goals-container {
+    max-width: 1100px;
+  }
+
+  .sdg-list {
+    gap: 50px;
+  }
+
+  .sdg-item {
+    gap: 28px;
+  }
+
+  .sdg-icon {
+    width: 120px;
+    height: 120px;
+  }
+
+  .sdg-title {
+    font-size: 28px;
+  }
+
+  .sdg-description {
+    font-size: 18px;
+  }
+
+  .goals-title {
+    font-size: 52px;
+    margin-bottom: 60px;
+  }
+}
+
+/* Small Tablet & Mobile - ICON STAYS LEFT */
+@media (max-width: 768px) {
+  .goals-section {
+    padding: 60px 20px;
+  }
+
+  .sdg-list {
+    gap: 40px;
+  }
+
+  .sdg-item {
+    gap: 20px;
+  }
+
+  .sdg-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .sdg-title {
+    font-size: 24px;
+  }
+
+  .sdg-description {
+    font-size: 16px;
+  }
+
+  .goals-title {
+    font-size: 44px;
+    margin-bottom: 50px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .goals-section {
+    padding: 50px 15px;
+  }
+
+  .sdg-list {
+    gap: 35px;
+  }
+
+  .sdg-item {
+    flex-direction: row;  /* KEEP HORIZONTAL on mobile */
+    gap: 16px;
+  }
+
+  .sdg-icon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .sdg-title {
+    font-size: 20px;
+  }
+
+  .sdg-description {
+    font-size: 15px;
+  }
+
+  .goals-title {
+    font-size: 40px;
+    margin-bottom: 40px;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1400px) {
+  .goals-section {
+    padding: 120px 20px;
+  }
+
+  .goals-container {
+    max-width: 1400px;
+  }
+
+  .sdg-list {
+    gap: 80px;
+  }
+
+  .sdg-item {
+    gap: 40px;
+  }
+}
