@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -30,4 +35,25 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Restore list styles that Tailwind removes */
+ul, ol {
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+  padding-left: 20px !important;
+}
+
+ul li, ol li {
+  display: list-item !important;
+  list-style-type: disc !important;
+  list-style-position: outside !important;
+}
+
+ol {
+  list-style-type: decimal !important;
+}
+
+ol li {
+  list-style-type: decimal !important;
 }
