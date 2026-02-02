@@ -12,11 +12,22 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const dropdownLinks = [
-    { label: 'About', href: '/about' },
-    { label: 'Project Area', href: '/project-area' },
-    { label: 'Team Member', href: '/team' },
-    { label: 'Sustainable Development Goals', href: '/sdgs' },
+    { label: 'About', href: '/#about', sectionId: 'about' },
+    { label: 'Project Area', href: '/#project-area', sectionId: 'project-area' },
+    { label: 'Team Member', href: '/#team-member', sectionId: 'team-member' },
+    { label: 'Sustainable Development Goals', href: '/#goals', sectionId: 'goals' },
   ];
+
+  // Handle smooth scroll to section
+  const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Update URL without triggering scroll
+      window.history.pushState(null, '', `/#${sectionId}`);
+    }
+  };
 
   // Handle scroll effect for navbar shadow
   useEffect(() => {
@@ -76,16 +87,17 @@ export const Navbar = () => {
               }`}
             >
               <div className="py-2">
-                {dropdownLinks.map((link, index) => (
-                  <Link
+                {dropdownLinks.map((link) => (
+                  <a
                     key={link.label}
                     href={link.href}
-                    className="block px-4 py-2.5 hover:bg-white/10 transition-colors"
+                    onClick={(e) => handleScrollToSection(e, link.sectionId)}
+                    className="block px-4 py-2.5 hover:bg-white/10 transition-colors cursor-pointer"
                   >
                     <Typography variant="beranda-nav" weight="light" className="text-white">
                       {link.label}
                     </Typography>
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
@@ -156,14 +168,17 @@ export const Navbar = () => {
             </Typography>
             <div className="pl-4 flex flex-col gap-3 border-l-2 border-gray-200">
               {dropdownLinks.map((link) => (
-                <Link
+                <a
                   key={link.label}
                   href={link.href}
-                  className="block text-gray-600 hover:text-[#1A581E] transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    handleScrollToSection(e, link.sectionId);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="block text-gray-600 hover:text-[#1A581E] transition-colors cursor-pointer"
                 >
                   <Typography variant="beranda-nav">{link.label}</Typography>
-                </Link>
+                </a>
               ))}
             </div>
           </div>

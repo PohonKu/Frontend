@@ -10,7 +10,8 @@ type TypoVariant =
   | "tahura-bunder"  // Untuk style TahuraBunder (Inria Serif)
   | "beranda-nav"   // Untuk style Beranda (Inria Serif)
   | "tilt-title"    // Untuk judul besar (Tilt Warp) - PohonKu title
-  | "tilt-label";   // Untuk label kecil (Tilt Warp) - Visi/Misi labels
+  | "tilt-label"   // Untuk label kecil (Tilt Warp) - Visi/Misi labels
+  | "tilt-zone";    // Untuk nama zona (Tilt Warp) - Zone names
 
 type TypoWeight = "light" | "regular" | "medium" | "semibold" | "bold";
 
@@ -50,6 +51,9 @@ const variantStyles: Record<TypoVariant, string> = {
 
   // Tilt Label: Tilt Warp, 24px, 30px LH untuk label "Visi:" dan "Misi:"
   "tilt-label": "font-tilt text-[24px] leading-[30px] tracking-normal",
+
+  // Tilt Zone: Tilt Warp, 14px untuk nama zona
+  "tilt-zone": "font-tilt text-[14px] leading-[100%] tracking-normal",
 };
 
 const weightStyles: Record<TypoWeight, string> = {
@@ -69,6 +73,7 @@ const defaultTags: Record<TypoVariant, ElementType> = {
   "beranda-nav": "span",   // Link navigasi pakai span
   "tilt-title": "h1",      // Judul besar PohonKu
   "tilt-label": "span",    // Label Visi/Misi
+  "tilt-zone": "h3",       // Zone names
 };
 
 export function Typography({
@@ -81,9 +86,9 @@ export function Typography({
 }: TypographyProps) {
   const Tag = component || defaultTags[variant];
 
-  // Logic khusus: Jika varian adalah 'beranda-nav', 'tahura-bunder', atau 'tilt-label', kita paksa weight jadi Bold secara default
+  // Logic khusus: Jika varian adalah 'beranda-nav', 'tahura-bunder', 'tilt-label', atau 'tilt-zone', kita paksa weight jadi Bold secara default
   // kecuali user override lewat props.
-  const isCustomVariant = variant === 'beranda-nav' || variant === 'tahura-bunder' || variant === 'tilt-label';
+  const isCustomVariant = variant === 'beranda-nav' || variant === 'tahura-bunder' || variant === 'tilt-label' || variant === 'tilt-zone';
   const appliedWeight = isCustomVariant && weight === 'regular' ? 'bold' : weight;
 
   const finalClassName = [
