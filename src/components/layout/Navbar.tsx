@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { Typography } from '@/components/ui/Typography';
+import { usePathname } from 'next/navigation';
 
 export const Navbar = () => {
+  const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,6 +23,13 @@ export const Navbar = () => {
   // Handle smooth scroll to section
   const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
+
+    // If not on home page, navigate to home first
+    if (pathname !== '/') {
+      window.location.href = `/#${sectionId}`;
+      return;
+    }
+
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -40,22 +49,22 @@ export const Navbar = () => {
 
   return (
     <nav className={`sticky top-0 z-50 bg-white transition-shadow duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
-      <div className="w-full max-w-[1920px] mx-auto px-8 lg:px-16 h-24 flex items-center justify-between">
+      <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
 
         {/* --- LOGO --- */}
         <Link href="/" className="flex-shrink-0 hover:opacity-80 transition-opacity">
           <Image
             src="/images/Logo.svg"
             alt="PohonKu Logo"
-            width={140}
-            height={105}
+            width={120}
+            height={90}
             className="object-contain"
             priority
           />
         </Link>
 
         {/* --- DESKTOP NAVIGATION --- */}
-        <div className="hidden lg:flex items-center gap-8 xl:gap-12">
+        <div className="hidden lg:flex items-center gap-6 xl:gap-10">
 
           {/* PohonKu Dropdown */}
           <div
@@ -71,7 +80,7 @@ export const Navbar = () => {
                 PohonKu
               </Typography>
               <ChevronDown
-                size={14}
+                size={12}
                 className={`text-gray-900 group-hover/btn:text-[#1A581E] transition-all duration-300 ${
                   isDropdownOpen ? 'rotate-180 text-[#1A581E]' : ''
                 }`}
@@ -80,7 +89,7 @@ export const Navbar = () => {
 
             {/* Dropdown Menu */}
             <div
-              className={`absolute top-full left-0 mt-2 w-56 bg-[#1A581E] rounded-lg overflow-hidden transition-all duration-200 ${
+              className={`absolute top-full left-0 mt-2 w-52 bg-[#1A581E] rounded-lg overflow-hidden transition-all duration-200 ${
                 isDropdownOpen
                   ? 'opacity-100 visible translate-y-0'
                   : 'opacity-0 invisible -translate-y-2'
@@ -127,9 +136,9 @@ export const Navbar = () => {
           {/* CTA Button */}
           <Link
             href="/adopt"
-            className="bg-[#1A581E] hover:bg-[#029146] text-white px-5 py-2.5 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
+            className="bg-[#1A581E] hover:bg-[#029146] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
           >
-            <Typography variant="beranda-nav" className="text-white">
+            <Typography variant="beranda-nav" className="text-white text-sm font-semibold">
               Adopt a Tree
             </Typography>
           </Link>
@@ -137,13 +146,13 @@ export const Navbar = () => {
 
         {/* --- PROFILE SECTION --- */}
         <div className="hidden lg:flex items-center">
-          <Link href="/profile" className="hover:opacity-80 transition-opacity">
+          <Link href="/profile" className="hover:opacity-80 transition-opacity transform hover:scale-110 transition-transform duration-200">
             <Image
               src="/images/guestProfile.svg"
               alt="Profile"
-              width={44}
-              height={44}
-              className="rounded-full"
+              width={36}
+              height={36}
+              className="rounded-full border-2 border-transparent hover:border-[#1A581E] transition-colors"
             />
           </Link>
         </div>
@@ -154,13 +163,13 @@ export const Navbar = () => {
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
         >
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* --- MOBILE MENU --- */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-24 left-0 right-0 bg-white border-t border-gray-100 shadow-xl p-6 flex flex-col gap-4 z-40 animate-in fade-in slide-in-from-top-4">
+        <div className="lg:hidden absolute top-20 left-0 right-0 bg-white border-t border-gray-100 shadow-xl p-5 flex flex-col gap-4 z-40 animate-in fade-in slide-in-from-top-4">
           {/* Mobile Dropdown */}
           <div className="flex flex-col gap-2 pb-4 border-b border-gray-100">
             <Typography variant="beranda-nav" className="text-[#1A581E] font-bold mb-2">
@@ -218,9 +227,9 @@ export const Navbar = () => {
               <Image
                 src="/images/guestProfile.svg"
                 alt="Profile"
-                width={28}
-                height={28}
-                className="rounded-full"
+                width={24}
+                height={24}
+                className="rounded-full border-2 border-transparent hover:border-[#1A581E] transition-colors"
               />
               <Typography variant="beranda-nav">Profile</Typography>
             </Link>
