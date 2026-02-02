@@ -1,0 +1,428 @@
+/* ============================================
+   SECTION LAYOUT
+============================================ */
+
+.contactSection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contactBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('/images/contactBg.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.contactOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.contactContent {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 96px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ============================================
+   HEADER
+============================================ */
+
+.contactHeader {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.contactTitle {
+  font-size: 48px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+  line-height: 1.2;
+}
+
+.contactSubtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* ============================================
+   TWO COLUMN GRID
+============================================ */
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .contactGrid {
+    grid-template-columns: 45% 1fr;
+    gap: 64px;
+  }
+}
+
+/* ============================================
+   LEFT COLUMN - CONTACT INFO
+============================================ */
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.contactBlock {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.iconContainer {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.iconContainer:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.contactIcon {
+  color: #1e5a2b;
+  transition: color 150ms ease;
+}
+
+.iconContainer:hover .contactIcon {
+  color: #1e5a2b;
+}
+
+.contactDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.contactText {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ============================================
+   SOCIAL MEDIA
+============================================ */
+
+.socialSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.socialTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.socialLink {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms ease;
+  text-decoration: none;
+  background: transparent;
+}
+
+.socialLink:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.socialIcon {
+  width: 20px;
+  height: 20px;
+  color: #ffffff;
+}
+
+/* ============================================
+   RIGHT COLUMN - FORM CARD
+============================================ */
+
+.formCard {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .formCard {
+    margin-left: auto;
+  }
+}
+
+.formTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e5a2b;
+  margin: 0 0 32px 0;
+}
+
+/* ============================================
+   FORM STYLES
+============================================ */
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2d3748;
+  margin-bottom: 4px;
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  background: transparent;
+  font-size: 15px;
+  color: #1a202c;
+  outline: none;
+  transition: border-color 150ms ease, border-width 150ms ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.formInput:focus {
+  border-bottom-color: #1e5a2b;
+  border-bottom-width: 2px;
+}
+
+.formInput::placeholder {
+  color: #a0aec0;
+}
+
+.formTextarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  background: transparent;
+  font-size: 15px;
+  color: #1a202c;
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.5;
+  transition: border-color 150ms ease, border-width 150ms ease;
+  box-sizing: border-box;
+}
+
+.formTextarea:focus {
+  border-bottom-color: #1e5a2b;
+  border-bottom-width: 2px;
+}
+
+.formTextarea::placeholder {
+  color: #a0aec0;
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: #e53e3e;
+  margin-top: 4px;
+  display: block;
+}
+
+/* ============================================
+   SUBMIT BUTTON
+============================================ */
+
+.submitButton {
+  background-color: #1e5a2b;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  transition: all 150ms ease;
+  box-shadow: 0 2px 8px rgba(30, 90, 43, 0.3);
+  align-self: center;
+  margin-top: 8px;
+  font-family: inherit;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #164622;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 90, 43, 0.4);
+}
+
+.submitButton:focus-visible {
+  outline: 2px solid #1e5a2b;
+  outline-offset: 2px;
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================
+   SUCCESS TOAST
+============================================ */
+
+.successToast {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: #48bb78;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all 200ms ease;
+  z-index: 100;
+}
+
+.successToast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+============================================ */
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .formCard {
+    max-width: 100%;
+    margin-left: 0;
+    padding: 32px 24px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .contactContent {
+    padding: 64px 16px;
+  }
+
+  .contactTitle {
+    font-size: 36px;
+  }
+
+  .contactSubtitle {
+    font-size: 14px;
+  }
+
+  .formCard {
+    padding: 28px 20px;
+  }
+
+  .formTitle {
+    font-size: 24px;
+  }
+
+  .formInput,
+  .formTextarea {
+    font-size: 14px;
+  }
+
+  .contactLabel {
+    font-size: 15px;
+  }
+
+  .contactText {
+    font-size: 13px;
+  }
+
+  .iconContainer {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1400px) {
+  .contactContent {
+    padding: 96px 40px;
+  }
+}
