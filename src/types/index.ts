@@ -19,9 +19,10 @@ export interface TreeSpecies {
   story_content: string;    // HTML Rich Text untuk storytelling
   image_url: string;        // URL Gambar
   co2_absorption: number;   // Estimasi serapan karbon (kg/thn)
-  
+  fun_fact?: string;        // Fakta menarik tentang pohon
+
   // Kategori Wajib Ada (Untuk Filter)
-  category: TreeCategory; 
+  category: TreeCategory;
 }
 
 // 4. Interface Pohon (Unit Inventory)
@@ -47,7 +48,8 @@ export interface Tree {
   species?: TreeSpecies;    // Optional karena di database aslinya ini relation
 }
 
-// 5. Interface User (Untuk Guest/Login nanti)
+// 5. Interface User (PLANNED: For future Guest/Login authentication feature)
+// TODO: Implement when adding user authentication system
 export interface User {
   id?: string;
   name: string;

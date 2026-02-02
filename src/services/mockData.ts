@@ -31,12 +31,29 @@ const CLUSTER_4: string[] = [ // Sumbu Filosofi
 
 // --- 2. GENERATORS (Smart Deduplication) ---
 
+// Helper function to generate fun facts
+const generateFunFact = (name: string, category: string): string => {
+  const funFacts: string[] = [
+    `Kayu ${name} sering digunakan untuk kerajinan tangan karena teksturnya yang kuat.`,
+    `${name} memiliki kemampuan menyerap karbon tinggi, hingga 50 kg per tahun.`,
+    `Daun ${name} dapat digunakan sebagai obat tradisional sejak zaman dahulu.`,
+    `Akar ${name} sangat kuat dan dapat mencegah tanah longsor di daerah pegunungan.`,
+    `${name} menjadi habitat alami bagi berbagai spesies burung lokal.`,
+    `Buah ${name} dapat dimakan dan mengandung banyak vitamin.`,
+    `Kulit batang ${name} mengandung senyawa alami yang bermanfaat bagi kesehatan.`,
+    `${name} mampu bertahan hidup dalam kondisi tanah yang kurang subur.`,
+    `Bunga ${name} mekar setahun sekali dan menjadi atraksi wisata alam.`,
+    `${name} dipercaya membawa keberuntungan bagi masyarakat setempat.`,
+  ];
+  return funFacts[Math.floor(Math.random() * funFacts.length)];
+};
+
 const generateSmartSpecies = (): TreeSpecies[] => {
   const allSpeciesMap = new Map<string, TreeSpecies>();
 
   // Helper to process list and assign category
   // If a tree appears in multiple lists, the FIRST category it appears in will be used (Primary Category)
-  const processList = (list: string[], category: TreeCategory) => {
+  const processList = (list: string[], cat: TreeCategory) => {
     list.forEach((name) => {
       const cleanName = name.trim();
 
@@ -45,22 +62,23 @@ const generateSmartSpecies = (): TreeSpecies[] => {
           id: `sp-${cleanName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '-')}`,
           name: cleanName,
           scientific_name: `Scientific name of ${cleanName}`, // Placeholder
-          description: `Tanaman ${cleanName} merupakan bagian penting dari ekosistem ${category}.`,
+          description: `Tanaman ${cleanName} merupakan bagian penting dari ekosistem ${cat}.`,
           story_content: `
             <div class="space-y-4">
               <p class="text-lg leading-relaxed">
-                <strong>${cleanName}</strong> memiliki makna mendalam dalam konteks <em>${category}</em>.
+                <strong>${cleanName}</strong> memiliki makna mendalam dalam konteks <em>${cat}</em>.
                 Tanaman ini dipilih karena nilai ekologis dan filosofisnya yang kuat bagi lingkungan sekitar.
               </p>
               <p>
-                Di habitat aslinya, pohon ini berfungsi sebagai penyeimbang ekosistem, 
+                Di habitat aslinya, pohon ini berfungsi sebagai penyeimbang ekosistem,
                 menyediakan oksigen, dan menjadi rumah bagi berbagai biodiversitas lokal.
               </p>
             </div>
           `,
           image_url: `https://placehold.co/600x400/228B22/FFFFFF/png?text=${encodeURIComponent(cleanName)}`,
           co2_absorption: Math.floor(Math.random() * 40) + 10,
-          category: category,
+          category: cat,
+          fun_fact: generateFunFact(cleanName, cat),
         });
       }
     });
