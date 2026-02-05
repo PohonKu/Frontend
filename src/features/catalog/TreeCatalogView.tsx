@@ -92,27 +92,27 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
   return (
     <div className="w-full">
       {/* Page Header */}
-      <div className="mb-10 text-center">
-        <h1 className="text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Tilt Warp, serif' }}>
+      <div className="mb-8 md:mb-10 text-center px-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 md:mb-4" style={{ fontFamily: 'Tilt Warp, serif' }}>
           Koleksi PohonKu
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
+        <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
           Jelajahi koleksi pohon langka dan bersejarah yang kami jaga. Setiap pohon memiliki cerita unik yang patut dibanggakan.
         </p>
       </div>
 
       {/* Search Bar */}
-      <div className="mb-8 flex justify-center">
+      <div className="mb-6 md:mb-8 flex justify-center px-4">
         <div className="relative w-full max-w-2xl">
           <input
             type="text"
             placeholder="Search by tree name (e.g., Nangka, Manggis)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-5 py-3 pl-12 border-2 border-gray-200 rounded-full focus:outline-none focus:border-[#1A581E] focus:ring-2 focus:ring-[#1A581E]/20 transition-all text-gray-700 placeholder-gray-400"
+            className="w-full px-4 py-2.5 md:px-5 md:py-3 pl-10 md:pl-12 text-sm md:text-base border-2 border-gray-200 rounded-full focus:outline-none focus:border-[#1A581E] focus:ring-2 focus:ring-[#1A581E]/20 transition-all text-gray-700 placeholder-gray-400"
           />
           <svg
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+            className="absolute left-3.5 md:left-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -137,8 +137,8 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
       </div>
 
       {/* Results Info */}
-      <div className="mb-6 flex items-center justify-between">
-        <p className="text-sm text-gray-600">
+      <div className="mb-4 md:mb-6 px-4 flex items-center justify-between">
+        <p className="text-xs sm:text-sm text-gray-600">
           Menampilkan <span className="font-semibold text-[#1A581E]">{filteredSpecies.length}</span> species
           {activeCluster !== 'All' && (
             <span> di cluster <span className="font-semibold">{activeCluster}</span></span>
@@ -151,7 +151,7 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
 
       {/* Species Grid */}
       {filteredSpecies.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 px-4 md:px-0">
           {filteredSpecies.map((species) => (
             <TreeCard
               key={species.id}
@@ -161,12 +161,12 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20">
-          <div className="text-6xl mb-4">🌳</div>
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">
+        <div className="text-center py-16 md:py-20 px-4">
+          <div className="text-4xl md:text-6xl mb-3 md:mb-4">🌳</div>
+          <h3 className="text-lg md:text-xl font-semibold text-gray-700 mb-2">
             Tidak ada spesies ditemukan
           </h3>
-          <p className="text-gray-500">
+          <p className="text-sm md:text-base text-gray-500">
             {searchTerm ? 'Coba kata kunci lain' : 'Coba filter lain untuk melihat koleksi kami'}
           </p>
         </div>

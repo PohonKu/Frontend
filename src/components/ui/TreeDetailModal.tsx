@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { X } from 'lucide-react';
 import { TreeSpeciesCard } from './TreeCard';
+import styles from './TreeDetailModal.module.css';
 
 interface TreeDetailModalProps {
   species: TreeSpeciesCard;
@@ -29,98 +30,109 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200"
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 animate-in fade-in duration-300"
       onClick={onClose}
     >
       {/* Modal Content */}
       <div
-        className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-200"
+        className={`${styles.modalContent} bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[92vh] overflow-hidden relative`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-md"
-          aria-label="Close modal"
-        >
-          <X size={20} className="text-gray-700" />
-        </button>
+        {/* Close Button - Positioned closer to content, more accessible */}
+        <div className="absolute top-4 right-4 z-20 flex gap-2">
+          <button
+            onClick={onClose}
+            className={`${styles.closeButton} bg-white/95 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg border-2 border-gray-100 hover:border-[#1A581E] w-12 h-12 sm:w-11 sm:h-11`}
+            aria-label="Close modal"
+          >
+            <X size={22} className="text-gray-700" />
+          </button>
+        </div>
 
-        {/* Scrollable Content */}
-        <div className="overflow-y-auto max-h-[90vh]">
-          {/* Banner Image */}
-          <div className="relative h-72 bg-gray-100">
-            <Image
-              src={species.image}
-              alt={species.localName}
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+        {/* Scrollable Content with Custom Scrollbar */}
+        <div className={`${styles.modalScroll} overflow-y-auto max-h-[92vh]`}>
+          {/* Banner Image with Enhanced Design */}
+          <div className={`relative h-80 sm:h-96 bg-linear-to-br from-gray-100 to-gray-200 overflow-hidden`}>
+            <div className={`${styles.bannerImage} absolute inset-0`}>
+              <Image
+                src={species.image}
+                alt={species.localName}
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+            {/* Enhanced Gradient Overlay */}
+            <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/20 to-transparent" />
+            {/* Decorative Bottom Border */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-[#1A581E] via-[#2B2B2B] to-[#1A581E]" />
           </div>
 
-          {/* Modal Body */}
-          <div className="p-8">
+          {/* Modal Body with Enhanced Spacing */}
+          <div className="p-6 sm:p-8 lg:p-10">
             {/* Two Column Layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Left Column - Key Info */}
               <div className="space-y-6">
-                {/* Title & Scientific Name */}
-                <div>
-                  <h2 className="text-4xl font-bold text-gray-900 mb-2 font-serif leading-tight">
+                {/* Title & Scientific Name with Enhanced Typography */}
+                <div className="space-y-2">
+                  <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 font-serif leading-tight tracking-tight">
                     {species.localName}
                   </h2>
-                  <p className="text-lg text-gray-500 italic">
+                  <p className="text-lg sm:text-xl text-gray-500 italic font-light">
                     {species.scientificName}
                   </p>
                 </div>
 
-                {/* Price & Stock */}
-                <div className="bg-green-50 rounded-xl p-6 border border-green-100">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1">Price per Tree</p>
-                      <p className="text-3xl font-bold text-[#1A581E]">
+                {/* Price & Stock Card with Enhanced Design */}
+                <div className={`${styles.priceCard} bg-linear-to-br from-green-50 to-emerald-50 rounded-2xl p-6 sm:p-7 border-2 border-green-100 shadow-sm`}>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="flex-1">
+                      <p className="text-xs sm:text-sm font-medium text-gray-600 mb-1 uppercase tracking-wide">Price per Tree</p>
+                      <p className="text-3xl sm:text-4xl font-bold text-[#1A581E] leading-none">
                         {formatPrice(species.price)}
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm text-gray-600 mb-1">Available Stock</p>
-                      <p className="text-3xl font-bold text-gray-900">
+                    <div className="text-right flex-1">
+                      <p className="text-xs sm:text-sm font-medium text-gray-600 mb-1 uppercase tracking-wide">Available Stock</p>
+                      <p className="text-3xl sm:text-4xl font-bold text-gray-900 leading-none">
                         {species.stock}
                       </p>
                     </div>
                   </div>
 
-                  {/* Availability Status */}
-                  <div className="pt-4 border-t border-green-200">
+                  {/* Availability Status with Enhanced Design */}
+                  <div className="pt-5 border-t-2 border-green-200/60">
                     {isAvailable ? (
-                      <div className="flex items-center gap-2 text-[#1A581E]">
-                        <div className="w-3 h-3 bg-[#1A581E] rounded-full animate-pulse" />
-                        <span className="font-semibold">Ready for Adoption</span>
+                      <div className="flex items-center gap-3 text-[#1A581E]">
+                        <div className="relative">
+                          <div className="w-3 h-3 bg-[#1A581E] rounded-full animate-pulse" />
+                          <div className="absolute inset-0 w-3 h-3 bg-[#1A581E] rounded-full animate-ping opacity-75" />
+                        </div>
+                        <span className="font-semibold text-sm sm:text-base">Ready for Adoption</span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2 text-gray-500">
+                      <div className="flex items-center gap-3 text-gray-500">
                         <div className="w-3 h-3 bg-gray-400 rounded-full" />
-                        <span className="font-semibold">Currently Out of Stock</span>
+                        <span className="font-semibold text-sm sm:text-base">Currently Out of Stock</span>
                       </div>
                     )}
                   </div>
                 </div>
 
-                {/* CTA Button */}
+                {/* CTA Button with Enhanced Design */}
                 <button
                   onClick={() => onAdopt?.(species.id)}
                   disabled={!isAvailable}
                   className={`
-                    w-full font-bold text-lg py-4 px-8 rounded-xl transition-all duration-200
-                    transform active:scale-95 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-offset-2
+                    ${styles.ctaButton} w-full font-bold text-lg py-4 px-8 rounded-2xl
+                    transform active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-offset-2
+                    shadow-lg hover:shadow-2xl
                     ${
                       isAvailable
-                        ? 'bg-[#1A581E] hover:bg-[#124416] text-white focus:ring-[#1A581E]'
-                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        ? 'bg-linear-to-r from-[#1A581E] to-[#1a6b2e] hover:from-[#124416] hover:to-[#145824] text-white focus:ring-[#1A581E]/50'
+                        : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'
                     }
                   `}
                 >
@@ -130,76 +142,73 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
 
               {/* Right Column - Rich Details */}
               <div className="space-y-6">
-                {/* Tab Switcher */}
-                <div className="flex gap-2 border-b border-gray-200">
+                {/* Enhanced Tab Switcher */}
+                <div className="flex gap-1 bg-gray-100 rounded-xl p-1.5">
                   <button
                     onClick={() => setActiveTab('deskripsi')}
                     className={`
-                      px-6 py-3 font-semibold text-sm transition-all relative
+                      flex-1 px-5 py-3 font-semibold text-sm rounded-lg transition-all duration-200
                       ${activeTab === 'deskripsi'
-                        ? 'text-[#1A581E]'
-                        : 'text-gray-500 hover:text-gray-700'
+                        ? 'bg-white text-[#1A581E] shadow-md'
+                        : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
                       }
                     `}
                   >
                     Deskripsi
-                    {activeTab === 'deskripsi' && (
-                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#1A581E] rounded-t-full" />
-                    )}
                   </button>
                   <button
                     onClick={() => setActiveTab('cerita')}
                     className={`
-                      px-6 py-3 font-semibold text-sm transition-all relative
+                      flex-1 px-5 py-3 font-semibold text-sm rounded-lg transition-all duration-200
                       ${activeTab === 'cerita'
-                        ? 'text-[#1A581E]'
-                        : 'text-gray-500 hover:text-gray-700'
+                        ? 'bg-white text-[#1A581E] shadow-md'
+                        : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
                       }
                     `}
                   >
                     Cerita & Filosofi
-                    {activeTab === 'cerita' && (
-                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#1A581E] rounded-t-full" />
-                    )}
                   </button>
                 </div>
 
-                {/* Tab Content */}
-                <div className="min-h-[200px]">
+                {/* Tab Content with Animation */}
+                <div className={`${styles.tabContent} min-h-55`}>
                   {activeTab === 'deskripsi' ? (
                     <div className="prose prose-sm max-w-none">
-                      <p className="text-gray-700 leading-relaxed">{species.description}</p>
+                      <p className="text-gray-700 leading-relaxed text-base">{species.description}</p>
                     </div>
                   ) : (
-                    <div
-                      className="prose prose-sm max-w-none text-gray-700"
-                      dangerouslySetInnerHTML={{ __html: 'Coming soon: Cerita & filosofi akan ditambahkan...' }}
-                    />
+                    <div className="prose prose-sm max-w-none text-gray-700">
+                      <p className="text-base leading-relaxed italic text-gray-500">
+                        Cerita & filosofi tentang {species.localName} akan segera ditambahkan...
+                      </p>
+                    </div>
                   )}
                 </div>
 
-                {/* Fun Fact Box */}
+                {/* Enhanced Fun Fact Box */}
                 {species.description && (
-                  <div className="bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 mt-0.5">
-                        <svg
-                          className="w-6 h-6 text-yellow-600"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M11.3 1.046A1 1 0 011 4 2 2 0 011.414 1.414l.293.293a1 1 0 001.414 0l3-3a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-.293.293zM7 2a1 1 0 00-1 1v2a1 1 0 002 0V4a1 1 0 002-2V3a1 1 0 00-1-1zm0 5a1 1 0 00-1 1v2a1 1 0 002 0V9a1 1 0 002-2V8a1 1 0 00-1-1zm3 5a1 1 0 00-1 1v2a1 1 0 002 0v-2a1 1 0 00-1-1zm3-5a1 1 0 00-1 1v2a1 1 0 002 0v-2a1 1 0 00-1-1zm-6 8a1 1 0 00-1 1v1a1 1 0 002 0v-1a1 1 0 00-1-1z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
+                  <div className={`${styles.funFactBox} bg-linear-to-br from-amber-50 to-yellow-50 border-l-4 border-amber-400 rounded-r-xl p-5 shadow-sm`}>
+                    <div className="flex items-start gap-4">
+                      <div className="shrink-0 mt-0.5">
+                        <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                          <svg
+                            className="w-5 h-5 text-amber-600"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M11.3 1.046A1 1 0 011 4 2 2 0 011.414 1.414l.293.293a1 1 0 001.414 0l3-3a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-.293.293zM7 2a1 1 0 00-1 1v2a1 1 0 002 0V4a1 1 0 002-2V3a1 1 0 00-1-1zm0 5a1 1 0 00-1 1v2a1 1 0 002 0V9a1 1 0 002-2V8a1 1 0 00-1-1zm3 5a1 1 0 00-1 1v2a1 1 0 002 0v-2a1 1 0 00-1-1zm3-5a1 1 0 00-1 1v2a1 1 0 002 0v-2a1 1 0 00-1-1zm-6 8a1 1 0 00-1 1v1a1 1 0 002 0v-1a1 1 0 00-1-1z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-xs font-semibold text-yellow-800 mb-1">
+                      <div className="flex-1">
+                        <p className="text-xs font-bold text-amber-800 mb-2 uppercase tracking-wide">
                           Fun Fact
                         </p>
-                        <p className="text-sm text-yellow-700 leading-relaxed">
+                        <p className="text-sm text-amber-900 leading-relaxed font-medium">
                           Tanaman ini memiliki keunikan khusus dan memainkan peran penting dalam ekosistem lokal.
                         </p>
                       </div>

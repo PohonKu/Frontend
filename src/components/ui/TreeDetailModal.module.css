@@ -1,0 +1,129 @@
+/* TreeDetailModal Styles */
+
+/* Custom Scrollbar */
+.modalScroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modalScroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+  margin: 8px;
+}
+
+.modalScroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1A581E 0%, #2B2B2B 100%);
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+.modalScroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #124416 0%, #1a1a1a 100%);
+}
+
+/* Firefox Scrollbar */
+.modalScroll {
+  scrollbar-width: thin;
+  scrollbar-color: #1A581E #f1f1f1;
+}
+
+/* Modal Content */
+.modalContent {
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Close Button */
+.closeButton {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.closeButton:hover {
+  transform: rotate(90deg) scale(1.1);
+}
+
+.closeButton:active {
+  transform: rotate(90deg) scale(0.95);
+}
+
+/* Tab Animation */
+.tabIndicator {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tab Content Animation */
+.tabContent {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CTA Button Enhancement */
+.ctaButton {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ctaButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.ctaButton:hover::before {
+  left: 100%;
+}
+
+/* Price Card Enhancement */
+.priceCard {
+  transition: all 0.3s ease;
+}
+
+.priceCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(26, 88, 30, 0.15);
+}
+
+/* Banner Image Enhancement */
+.bannerImage {
+  transition: transform 0.5s ease;
+}
+
+.bannerImage:hover {
+  transform: scale(1.02);
+}
+
+/* Fun Fact Box */
+.funFactBox {
+  transition: all 0.3s ease;
+}
+
+.funFactBox:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 15px rgba(234, 179, 8, 0.2);
+}
