@@ -11,6 +11,7 @@ export const Header = () => {
                     width={1920}
                     height={1080}
                     className="w-full h-auto"
+                    sizes="100vw"
                     priority
                 />
             </div>

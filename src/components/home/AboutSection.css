@@ -1,8 +1,14 @@
-/* ===== About Section ===== */
+/* ===== About Section (Mobile-First) ===== */
 .about-section {
   width: 100%;
-  padding: 80px 20px;
+  padding: 48px 16px;
   background-color: #ffffff;
+}
+
+@media (min-width: 640px) {
+  .about-section {
+    padding: 60px 20px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -24,26 +30,51 @@
 
 /* ===== Hero: PohonKu brand + intro (left-aligned) ===== */
 .about-hero {
-  margin-bottom: 48px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  .about-hero {
+    margin-bottom: 48px;
+  }
 }
 
 .about-brand {
   font-family: var(--font-tilt), cursive;
-  font-size: 48px;
+  font-size: 28px;
   font-weight: 400;
   color: #1A581E;
-  margin: 0 0 16px 0;
+  margin: 0 0 12px 0;
   line-height: 1.2;
   text-align: left;
 }
 
+@media (min-width: 640px) {
+  .about-brand {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .about-brand {
+    font-size: 48px;
+  }
+}
+
 .about-intro {
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.8;
   color: #2B2B2B;
   margin: 0;
   text-align: left;
+}
+
+@media (min-width: 640px) {
+  .about-intro {
+    font-size: 14px;
+  }
 }
 
 .about-intro em {
@@ -54,28 +85,63 @@
 /* ===== Centered "About" Title ===== */
 .about-title {
   font-family: var(--font-tilt), cursive;
-  font-size: 36px;
+  font-size: 24px;
   font-weight: 400;
   color: #1A581E;
-  margin: 0 0 32px 0;
+  margin: 0 0 24px 0;
   line-height: 1.2;
   text-align: center;
 }
 
-/* ===== Content Grid (Image + Text) ===== */
+@media (min-width: 640px) {
+  .about-title {
+    font-size: 28px;
+    margin-bottom: 28px;
+  }
+}
+
+@media (min-width: 768px) {
+  .about-title {
+    font-size: 36px;
+    margin-bottom: 32px;
+  }
+}
+
+/* ===== Content Grid (Image + Text) — Mobile-first: stacked ===== */
 .about-content {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 32px;
+  grid-template-columns: 1fr;
+  gap: 20px;
   align-items: start;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  .about-content {
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-content {
+    grid-template-columns: 300px 1fr;
+    gap: 32px;
+  }
 }
 
 .about-image {
   width: 100%;
-  height: 200px;
+  height: 180px;
   background-color: #D9D9D9;
   border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+  .about-image {
+    height: 200px;
+  }
 }
 
 .about-text {
@@ -86,11 +152,17 @@
 
 .about-text p {
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.8;
   color: #2B2B2B;
   margin: 0;
   text-align: justify;
+}
+
+@media (min-width: 640px) {
+  .about-text p {
+    font-size: 14px;
+  }
 }
 
 .about-text em {
@@ -98,27 +170,43 @@
   font-weight: 500;
 }
 
-/* ===== Vision & Mission Grid ===== */
+/* ===== Vision & Mission Grid — Mobile-first: stacked ===== */
 .vision-mission-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  grid-template-columns: 1fr;
+  gap: 24px;
   margin-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .vision-mission-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
 }
 
 /* ---- Card Shared ---- */
 .vision-card,
 .mission-card {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+
+  .vision-card,
+  .mission-card {
+    flex-direction: row;
+    gap: 12px;
+  }
 }
 
 /* ---- Card Title ---- */
 .card-title {
   font-family: var(--font-tilt), cursive;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
   color: #1A581E;
   margin: 0;
@@ -126,14 +214,26 @@
   flex-shrink: 0;
 }
 
+@media (min-width: 640px) {
+  .card-title {
+    font-size: 16px;
+  }
+}
+
 /* ---- Visi Content ---- */
 .card-content {
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.7;
   color: #2B2B2B;
   margin: 0;
   text-align: left;
+}
+
+@media (min-width: 640px) {
+  .card-content {
+    font-size: 14px;
+  }
 }
 
 .card-content em {
@@ -151,12 +251,18 @@
 
 .mission-list li {
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.7;
   color: #2B2B2B;
   margin-bottom: 6px;
   list-style: disc !important;
   display: list-item !important;
+}
+
+@media (min-width: 640px) {
+  .mission-list li {
+    font-size: 14px;
+  }
 }
 
 .mission-list li::marker {
@@ -165,76 +271,4 @@
 
 .mission-list li:last-child {
   margin-bottom: 0;
-}
-
-/* ===== Responsive ===== */
-
-@media (max-width: 1024px) {
-  .about-content {
-    grid-template-columns: 260px 1fr;
-    gap: 24px;
-  }
-
-  .vision-mission-grid {
-    gap: 32px;
-  }
-}
-
-@media (max-width: 768px) {
-  .about-section {
-    padding: 40px 16px 60px;
-  }
-
-  .about-brand {
-    font-size: 36px;
-  }
-
-  .about-title {
-    font-size: 28px;
-  }
-
-  .about-content {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .about-image {
-    height: 180px;
-  }
-
-  .vision-mission-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .vision-card,
-  .mission-card {
-    flex-direction: column;
-    gap: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .about-section {
-    padding: 32px 12px 48px;
-  }
-
-  .about-brand {
-    font-size: 28px;
-  }
-
-  .about-title {
-    font-size: 24px;
-  }
-
-  .about-intro,
-  .about-text p,
-  .card-content,
-  .mission-list li {
-    font-size: 13px;
-  }
-
-  .card-title {
-    font-size: 15px;
-  }
 }

@@ -1,7 +1,14 @@
+/* ===== Project Area Section (Mobile-First) ===== */
 .project-area-section {
   width: 100%;
-  padding: 64px 20px 96px;
+  padding: 40px 16px 60px;
   background: linear-gradient(to bottom, #ffffff, #f9fafb);
+}
+
+@media (min-width: 640px) {
+  .project-area-section {
+    padding: 56px 20px 80px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -24,36 +31,70 @@
 /* Section Title */
 .section-title {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 32px;
 }
 
-/* Description Text */
+@media (min-width: 768px) {
+  .section-title {
+    margin-bottom: 50px;
+  }
+}
+
+/* Description Text (replaces inline styles) */
 .description-text {
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.8;
   color: #000000;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   text-align: left;
 }
 
-/* Zone Cards Grid */
+@media (min-width: 640px) {
+  .description-text {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .description-text {
+    font-size: 16px;
+  }
+}
+
+/* Zone Cards Grid — Mobile-first: 1 column */
 .zone-cards-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 24px;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (min-width: 480px) {
+  .zone-cards-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
 }
 
 /* Individual Zone Card */
 .zone-card {
   background-color: #ffffff;
   border-radius: 8px;
-  padding: 16px;
+  padding: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 2px solid transparent;
   transition: all 0.3s ease;
   cursor: pointer;
+  min-height: 44px;
+}
+
+@media (min-width: 640px) {
+  .zone-card {
+    padding: 16px;
+  }
 }
 
 .zone-card:hover {
@@ -70,42 +111,75 @@
 
 .zone-icon {
   color: #1A581E;
+  flex-shrink: 0;
 }
 
 .zone-name {
   font-family: var(--font-tilt), 'Tilt Warp', cursive;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: #1A581E;
   margin: 0;
 }
 
+@media (min-width: 640px) {
+  .zone-name {
+    font-size: 14px;
+  }
+}
+
 .zone-count {
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   color: #6b7280;
   margin: 0;
+  line-height: 1.8;
+}
+
+@media (min-width: 640px) {
+  .zone-count {
+    font-size: 14px;
+  }
 }
 
 /* Map Container */
 .map-container {
   position: relative;
   background-color: #ffffff;
-  border-radius: 16px;
+  border-radius: 12px;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  padding: 24px 32px;
+  padding: 16px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+@media (min-width: 640px) {
+  .map-container {
+    border-radius: 16px;
+    padding: 24px 32px;
+  }
+}
+
 .map-wrapper {
   position: relative;
   width: 100%;
-  max-width: 380px;
+  max-width: 260px;
   margin: 0 auto;
   aspect-ratio: 1 / 1;
+}
+
+@media (min-width: 480px) {
+  .map-wrapper {
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 768px) {
+  .map-wrapper {
+    max-width: 380px;
+  }
 }
 
 /* Legend */
@@ -117,93 +191,42 @@
   background-color: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(4px);
   border-radius: 8px;
-  padding: 12px;
+  padding: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 640px) {
+  .map-legend {
+    padding: 12px;
+  }
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   color: #374151;
 }
 
-.legend-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .content-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .zone-cards-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-}
-
-@media (max-width: 768px) {
-  .project-area-section {
-    padding: 40px 16px 60px;
-  }
-
-  .section-title {
-    margin-bottom: 32px;
-  }
-
-  .zone-cards-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 16px;
-  }
-
-  .zone-card {
-    padding: 12px;
-  }
-
-  .zone-name {
-    font-size: 13px;
-  }
-
-  .zone-count {
-    font-size: 13px;
-  }
-
-  .map-container {
-    padding: 16px;
-  }
-
-  .map-wrapper {
-    max-width: 280px;
-  }
-
+@media (min-width: 640px) {
   .legend-item {
-    font-size: 11px;
+    gap: 8px;
+    font-size: 12px;
   }
 }
 
-@media (max-width: 480px) {
-  .project-area-section {
-    padding: 32px 12px 48px;
-  }
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 
-  .zone-card {
-    padding: 10px;
-  }
-
-  .map-wrapper {
-    max-width: 240px;
-  }
-
+@media (min-width: 640px) {
   .legend-dot {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
   }
 }

@@ -1,3 +1,5 @@
+/* ===== Team Member Section (Mobile-First) ===== */
+
 /* Section - NO outer padding */
 .team-member-section {
   width: 100%;
@@ -6,16 +8,44 @@
   background-color: white;
 }
 
-/* Container - DYNAMIC BACKGROUND BASED ON TEAM */
+/* Container - DYNAMIC BACKGROUND BASED ON TEAM — Mobile-first padding */
 .team-member-container {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  border-radius: 40px;
-  padding: 40px 60px 80px 60px;
+  border-radius: 20px;
+  padding: 24px 16px 40px 16px;
   transition: background 0.6s ease-in-out;
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 480px) {
+  .team-member-container {
+    padding: 28px 24px 48px 24px;
+    border-radius: 25px;
+  }
+}
+
+@media (min-width: 768px) {
+  .team-member-container {
+    padding: 32px 32px 56px 32px;
+    border-radius: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .team-member-container {
+    padding: 36px 48px 72px 48px;
+    border-radius: 35px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .team-member-container {
+    padding: 40px 60px 80px 60px;
+    border-radius: 40px;
+  }
 }
 
 /* FORESTRY TEAM - Green Gradient */
@@ -53,29 +83,74 @@
   }
 }
 
-/* Section Title - TILT WARP */
+/* Section Title - TILT WARP — Mobile-first sizing */
 .team-title {
   font-family: var(--font-tilt), 'Tilt Warp', cursive;
   font-weight: 400;
   font-style: normal;
-  font-size: 48px;
+  font-size: 28px;
   line-height: 100%;
   letter-spacing: 0%;
   color: #ffffff;
   text-align: center;
-  margin: 0 0 40px 0;
+  margin: 0 0 24px 0;
   position: relative;
   z-index: 1;
+}
+
+@media (min-width: 480px) {
+  .team-title {
+    font-size: 32px;
+    margin-bottom: 28px;
+  }
+}
+
+@media (min-width: 768px) {
+  .team-title {
+    font-size: 36px;
+    margin-bottom: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .team-title {
+    font-size: 42px;
+    margin-bottom: 36px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .team-title {
+    font-size: 48px;
+    margin-bottom: 40px;
+  }
 }
 
 /* Team Toggle Container */
 .team-toggle-container {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 50px;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
   position: relative;
   z-index: 1;
+}
+
+@media (min-width: 640px) {
+  .team-toggle-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .team-toggle-container {
+    gap: 20px;
+    margin-bottom: 50px;
+  }
 }
 
 /* Toggle Buttons */
@@ -83,19 +158,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 28px;
+  padding: 10px 20px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   color: #ffffff;
   font-family: var(--font-inria), 'Inria Serif', serif;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  width: 100%;
+  max-width: 280px;
+  min-height: 44px;
+}
+
+@media (min-width: 640px) {
+  .team-toggle-btn {
+    width: auto;
+    max-width: none;
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .team-toggle-btn {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
 }
 
 .team-toggle-btn::before {
@@ -144,15 +238,36 @@
   color: #ffffff;
 }
 
-/* Team Members Grid */
+/* Team Members Grid — Mobile-first: 1 column */
 .team-members-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 35px;
+  grid-template-columns: 1fr;
+  gap: 28px;
   justify-items: center;
   align-items: start;
   position: relative;
   z-index: 1;
+}
+
+@media (min-width: 480px) {
+  .team-members-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .team-members-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .team-members-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 35px;
+  }
 }
 
 /* Individual Member Card */
@@ -160,11 +275,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
   width: 100%;
   max-width: 260px;
   opacity: 0;
   animation: fadeInUp 0.6s ease forwards;
+}
+
+@media (min-width: 768px) {
+  .member-card {
+    gap: 25px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .member-card {
+    gap: 30px;
+  }
 }
 
 @keyframes fadeInUp {
@@ -179,19 +306,37 @@
   }
 }
 
+/* Member Image Wrapper — responsive sizes */
 .member-image-wrapper {
   position: relative;
-  width: 200px;
-  height: 267px;
+  width: 140px;
+  height: 187px;
   transition: transform 0.4s ease;
+}
+
+@media (min-width: 480px) {
+  .member-image-wrapper {
+    width: 150px;
+    height: 200px;
+  }
+}
+
+@media (min-width: 768px) {
+  .member-image-wrapper {
+    width: 170px;
+    height: 227px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .member-image-wrapper {
+    width: 200px;
+    height: 267px;
+  }
 }
 
 .member-card:hover .member-image-wrapper {
   transform: scale(1.08);
-}
-
-.member-card:hover .member-image-wrapper::after {
-  opacity: 1;
 }
 
 /* FORESTRY team glow effect */
@@ -241,16 +386,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   text-align: center;
   width: 100%;
-  padding: 0 15px;
+  padding: 0 10px;
+}
+
+@media (min-width: 768px) {
+  .member-info {
+    gap: 8px;
+    padding: 0 15px;
+  }
 }
 
 /* Member Name */
 .member-name {
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
@@ -258,10 +410,22 @@
   transition: color 0.3s ease;
 }
 
+@media (min-width: 640px) {
+  .member-name {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .member-name {
+    font-size: 18px;
+  }
+}
+
 /* Member Role - Different colors per team */
 .member-role {
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   margin: 0;
   line-height: 1.3;
@@ -280,10 +444,16 @@
   color: #ffffff;
 }
 
+@media (min-width: 1024px) {
+  .member-role {
+    font-size: 14px;
+  }
+}
+
 /* Member ID */
 .member-id {
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
   margin: 0;
@@ -295,135 +465,9 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Responsive Design */
-
-/* Tablet: 3 columns */
-@media (max-width: 1200px) {
-  .team-member-container {
-    padding: 35px 40px 70px 40px;
-  }
-
-  .team-members-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-  }
-
-  .member-image-wrapper {
-    width: 170px;
-    height: 227px;
-  }
-
-  .member-card {
-    gap: 25px;
-  }
-
-  .team-title {
-    font-size: 42px;
-    margin-bottom: 35px;
-  }
-
-  .team-toggle-container {
-    gap: 15px;
-  }
-
-  .team-toggle-btn {
-    padding: 12px 24px;
-    font-size: 14px;
-  }
-}
-
-/* Small Tablet: 2 columns */
-@media (max-width: 768px) {
-  .team-member-container {
-    padding: 30px 25px 50px 25px;
-    border-radius: 30px;
-  }
-
-  .team-members-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-  }
-
-  .member-card {
-    gap: 20px;
-  }
-
-  .member-image-wrapper {
-    width: 160px;
-    height: 214px;
-  }
-
-  .team-title {
-    font-size: 36px;
-    margin-bottom: 30px;
-  }
-
-  .team-toggle-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 25px;
-  }
-
-  .team-toggle-btn {
-    width: 100%;
-    max-width: 280px;
-  }
-
-  .member-name {
-    font-size: 16px;
-  }
-
-  .member-role {
-    font-size: 13px;
-  }
-
+@media (min-width: 1024px) {
   .member-id {
-    font-size: 11px;
-  }
-}
-
-/* Mobile: 1 column */
-@media (max-width: 480px) {
-  .team-member-container {
-    padding: 25px 20px 40px 20px;
-    border-radius: 25px;
-  }
-
-  .team-members-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-
-  .member-card {
-    gap: 20px;
-  }
-
-  .member-image-wrapper {
-    width: 150px;
-    height: 200px;
-  }
-
-  .team-title {
-    font-size: 32px;
-    margin-bottom: 25px;
-  }
-
-  .team-toggle-btn {
-    padding: 10px 20px;
-    font-size: 13px;
-  }
-
-  .member-name {
-    font-size: 16px;
-  }
-
-  .member-role {
-    font-size: 13px;
-  }
-
-  .member-id {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 

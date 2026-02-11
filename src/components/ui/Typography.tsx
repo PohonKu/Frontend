@@ -48,10 +48,10 @@ const variantStyles: Record<TypoVariant, string> = {
   c1: "font-sans text-sm text-gray-500",
   c2: "font-sans text-xs text-gray-400",
 
-  // ── Tilt Warp: Specific Design Variants ──
-  "tilt-title": "font-tilt text-[96px] leading-[121px] tracking-normal flex items-center",
-  "tilt-subtitle": "font-tilt text-[56px] leading-[100%] tracking-normal",
-  "tilt-label": "font-tilt text-[24px] leading-[30px] tracking-normal",
+  // ── Tilt Warp: Specific Design Variants (responsive) ──
+  "tilt-title": "font-tilt text-[36px] sm:text-[48px] md:text-[64px] lg:text-[80px] xl:text-[96px] leading-tight tracking-normal flex items-center",
+  "tilt-subtitle": "font-tilt text-[28px] sm:text-[36px] md:text-[44px] lg:text-[56px] leading-tight tracking-normal",
+  "tilt-label": "font-tilt text-[18px] md:text-[24px] leading-snug tracking-normal",
   "tilt-zone": "font-tilt text-[14px] leading-[100%] tracking-normal",
 
   // ── Inria Serif: Buttons & Navigation ──

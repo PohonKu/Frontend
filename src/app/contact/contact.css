@@ -13,7 +13,7 @@
   position: relative;
   min-height: 100vh;
   max-height: 100vh;
-  padding: 24px 60px;
+  padding: 24px 16px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -21,6 +21,24 @@
   align-items: center;
   overflow: hidden;
   box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .contact-section {
+    padding: 24px 24px;
+  }
+}
+
+@media (min-width: 768px) {
+  .contact-section {
+    padding: 24px 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contact-section {
+    padding: 24px 60px;
+  }
 }
 
 /* Background - Forest Image with Warm Overlay */
@@ -616,7 +634,6 @@
   .contact-section {
     min-height: auto;
     max-height: none;
-    padding: 40px 24px;
   }
 
   .contact-grid {

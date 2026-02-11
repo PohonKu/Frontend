@@ -43,14 +43,6 @@ export const ProjectArea = () => {
         }
     ];
 
-    const textStyle = {
-        fontFamily: 'Inter',
-        fontWeight: 400,
-        fontStyle: 'normal',
-        fontSize: '16px',
-        lineHeight: '1.8',
-        letterSpacing: '0%'
-    };
 
     return (
         <section id="project-area" className="project-area-section">
@@ -68,10 +60,10 @@ export const ProjectArea = () => {
 
                     {/* Left: Description */}
                     <div className="flex flex-col order-2 lg:order-1">
-                        <p className="text-black text-left" style={textStyle}>
+                        <p className="description-text">
                             Lokasi proyek PohonKu berada di Taman Hutan Raya (Tahura) Bunder, Gunungkidul, Daerah Istimewa Yogyakarta. Kawasan seluas ±25 hektar ini merupakan pusat konservasi keanekaragaman hayati khas ekosistem karst.
                         </p>
-                        <p className="text-black text-left" style={textStyle}>
+                        <p className="description-text">
                             Tahura Bunder dipilih karena keunikan ekosistemnya yang menjadi habitat bagi berbagai spesies tanaman langka. Melalui program adopsi, kami berkomitmen melestarikan keanekaragaman hayati sambil memberikan edukasi kepada masyarakat tentang pentingnya konservasi lingkungan.
                         </p>
 
@@ -92,7 +84,7 @@ export const ProjectArea = () => {
                                             {zone.name}
                                         </h3>
                                     </div>
-                                    <p className="zone-count" style={textStyle}>
+                                    <p className="zone-count">
                                         {zone.trees} Jenis Tanaman
                                     </p>
                                 </div>
@@ -117,7 +109,7 @@ export const ProjectArea = () => {
                                             <stop offset="100%" style={{ stopColor: '#C8E6C9', stopOpacity: 1 }} />
                                         </linearGradient>
                                         <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                                            <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.2"/>
+                                            <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.2" />
                                         </filter>
                                     </defs>
 

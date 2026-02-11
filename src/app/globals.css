@@ -3,6 +3,12 @@
 /* Smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 :root {
@@ -37,25 +43,20 @@ body {
   font-family: var(--font-sans), 'Inter', sans-serif;
 }
 
-/* Restore list styles that Tailwind removes */
-ul,
-ol {
+/* Restore list styles only in content areas (not nav/cards) */
+.about-text ul,
+.about-text ol,
+.mission-list,
+.sdg-content ul,
+.sdg-content ol {
   list-style-type: disc !important;
   list-style-position: outside !important;
   padding-left: 20px !important;
 }
 
-ul li,
-ol li {
+.about-text li,
+.mission-list li {
   display: list-item !important;
   list-style-type: disc !important;
   list-style-position: outside !important;
-}
-
-ol {
-  list-style-type: decimal !important;
-}
-
-ol li {
-  list-style-type: decimal !important;
 }
