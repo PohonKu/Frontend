@@ -72,7 +72,7 @@ export default function TreeCard({ species, onAdopt, onClick }: TreeCardProps) {
       {/* Content */}
       <div className="p-5">
         {/* Local Name - Serif, Bold */}
-        <h3 className="text-xl font-bold text-gray-900 mb-1 font-serif">
+        <h3 className="text-xl font-normal text-gray-900 mb-1 font-tilt">
           {species.localName}
         </h3>
 
@@ -109,12 +109,11 @@ export default function TreeCard({ species, onAdopt, onClick }: TreeCardProps) {
           onMouseLeave={() => setIsHoveringButton(false)}
           disabled={!isAvailable}
           className={`
-            w-full font-semibold py-3 px-6 rounded-lg transition-all duration-200 ease-out
+            w-full font-semibold py-3 px-6 rounded-lg transition-all duration-200 ease-out font-inria
             transform active:scale-95 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2
-            ${
-              isAvailable
-                ? 'bg-[#1A581E] hover:bg-[#124416] text-white focus:ring-[#1A581E]'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            ${isAvailable
+              ? 'bg-[#1A581E] hover:bg-[#124416] text-white focus:ring-[#1A581E]'
+              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
             }
           `}
         >

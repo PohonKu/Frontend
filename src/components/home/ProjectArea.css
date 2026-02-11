@@ -29,7 +29,7 @@
 
 /* Description Text */
 .description-text {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: 16px;
   line-height: 1.8;
   color: #000000;
@@ -73,15 +73,15 @@
 }
 
 .zone-name {
-  font-family: 'Tilt Warp', cursive;
+  font-family: var(--font-tilt), 'Tilt Warp', cursive;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   color: #1A581E;
   margin: 0;
 }
 
 .zone-count {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: 14px;
   color: #6b7280;
   margin: 0;
@@ -125,7 +125,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: 12px;
   color: #374151;
 }
@@ -150,12 +150,60 @@
 }
 
 @media (max-width: 768px) {
+  .project-area-section {
+    padding: 40px 16px 60px;
+  }
+
+  .section-title {
+    margin-bottom: 32px;
+  }
+
   .zone-cards-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .zone-card {
+    padding: 12px;
+  }
+
+  .zone-name {
+    font-size: 13px;
+  }
+
+  .zone-count {
+    font-size: 13px;
   }
 
   .map-container {
-    padding: 20px;
+    padding: 16px;
+  }
+
+  .map-wrapper {
+    max-width: 280px;
+  }
+
+  .legend-item {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-area-section {
+    padding: 32px 12px 48px;
+  }
+
+  .zone-card {
+    padding: 10px;
+  }
+
+  .map-wrapper {
+    max-width: 240px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
   }
 }

@@ -93,10 +93,10 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
     <div className="w-full">
       {/* Page Header */}
       <div className="mb-8 md:mb-10 text-center px-4">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 md:mb-4" style={{ fontFamily: 'Tilt Warp, serif' }}>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-normal text-gray-900 mb-3 md:mb-4 font-tilt">
           Koleksi PohonKu
         </h1>
-        <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
+        <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl mx-auto font-sans">
           Jelajahi koleksi pohon langka dan bersejarah yang kami jaga. Setiap pohon memiliki cerita unik yang patut dibanggakan.
         </p>
       </div>

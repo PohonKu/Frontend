@@ -77,7 +77,7 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
               <div className="space-y-6">
                 {/* Title & Scientific Name with Enhanced Typography */}
                 <div className="space-y-2">
-                  <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 font-serif leading-tight tracking-tight">
+                  <h2 className="text-4xl sm:text-5xl font-normal text-gray-900 font-tilt leading-tight tracking-tight">
                     {species.localName}
                   </h2>
                   <p className="text-lg sm:text-xl text-gray-500 italic font-light">
@@ -126,13 +126,12 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                   onClick={() => onAdopt?.(species.id)}
                   disabled={!isAvailable}
                   className={`
-                    ${styles.ctaButton} w-full font-bold text-lg py-4 px-8 rounded-2xl
+                    ${styles.ctaButton} w-full font-bold text-lg py-4 px-8 rounded-2xl font-inria
                     transform active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-offset-2
                     shadow-lg hover:shadow-2xl
-                    ${
-                      isAvailable
-                        ? 'bg-linear-to-r from-[#1A581E] to-[#1a6b2e] hover:from-[#124416] hover:to-[#145824] text-white focus:ring-[#1A581E]/50'
-                        : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'
+                    ${isAvailable
+                      ? 'bg-linear-to-r from-[#1A581E] to-[#1a6b2e] hover:from-[#124416] hover:to-[#145824] text-white focus:ring-[#1A581E]/50'
+                      : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'
                     }
                   `}
                 >
@@ -147,7 +146,7 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                   <button
                     onClick={() => setActiveTab('deskripsi')}
                     className={`
-                      flex-1 px-5 py-3 font-semibold text-sm rounded-lg transition-all duration-200
+                      flex-1 px-5 py-3 font-semibold text-sm rounded-lg transition-all duration-200 font-inria
                       ${activeTab === 'deskripsi'
                         ? 'bg-white text-[#1A581E] shadow-md'
                         : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
@@ -159,7 +158,7 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                   <button
                     onClick={() => setActiveTab('cerita')}
                     className={`
-                      flex-1 px-5 py-3 font-semibold text-sm rounded-lg transition-all duration-200
+                      flex-1 px-5 py-3 font-semibold text-sm rounded-lg transition-all duration-200 font-inria
                       ${activeTab === 'cerita'
                         ? 'bg-white text-[#1A581E] shadow-md'
                         : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'

@@ -51,8 +51,10 @@
 }
 
 .contactTitle {
+  font-family: var(--font-tilt), 'Tilt Warp', cursive;
   font-size: 48px;
-  font-weight: 700;
+  font-weight: 400;
+  font-style: normal;
   color: #ffffff;
   margin: 0 0 12px 0;
   line-height: 1.2;
@@ -215,8 +217,10 @@
 }
 
 .formTitle {
+  font-family: var(--font-tilt), 'Tilt Warp', cursive;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 400;
+  font-style: normal;
   color: #1e5a2b;
   margin: 0 0 32px 0;
 }

@@ -33,9 +33,9 @@
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50px;
   color: #ffffff;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-tilt), 'Tilt Warp', cursive;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -65,7 +65,7 @@
 
 .footer-copyright {
   color: #D9D9D9;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: 14px;
   margin: 0;
   text-align: center;
@@ -120,7 +120,7 @@
   color: #ffffff;
   padding: 6px 12px;
   border-radius: 6px;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 500;
   white-space: nowrap;
@@ -222,5 +222,21 @@
   .social-link svg {
     width: 16px;
     height: 16px;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+  .footer-buttons {
+    max-width: 100%;
+  }
+
+  .footer-btn {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+
+  .footer-copyright {
+    font-size: 11px;
   }
 }

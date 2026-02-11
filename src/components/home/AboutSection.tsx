@@ -8,13 +8,16 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
   return (
     <section id="about" className={`about-section ${className}`}>
       <div className="about-container">
-        {/* Header */}
-        <h1 className="about-title">PohonKu</h1>
+        {/* Top: PohonKu title + description (left-aligned) */}
+        <div className="about-hero">
+          <h1 className="about-brand">PohonKu</h1>
+          <p className="about-intro">
+            PohonKu merupakan program adopsi tanaman langka yang mengajak masyarakat untuk terlibat langsung dalam upaya konservasi tanaman langka. Pengadopsi atau dikenal dengan <em>Bestree</em> akan mendapat laporan perkembangan tanaman, sertifikat adopsi, dan akun personal untuk memantau dampak lingkungan seperti serapan karbon dan simpanan air. Sasaran utama dari bisnis ini adalah pecinta lingkungan utamanya generasi muda, keluarga untuk edukasi anak, serta perusahaan yang menjalankan program CSR. Kanal distribusi utamanya berupa <em>website</em> dan media sosial, didukung kerja sama dengan NGO, kampus, serta kehadiran di <em>event</em> bertema lingkungan.
+          </p>
+        </div>
 
-        {/* Main Description */}
-        <p className="about-description">
-          PohonKu merupakan program adopsi tanaman langka yang mengajak masyarakat untuk terlibat langsung dalam upaya konservasi tanaman langka. Pengadopsi atau dikenal dengan <em>Bestree</em> akan mendapat laporan perkembangan tanaman, sertifikat adopsi, dan akun personal untuk memantau dampak lingkungan seperti serapan karbon dan simpanan air. Sasaran utama dari bisnis ini adalah pecinta lingkungan utamanya generasi muda, keluarga untuk edukasi anak, serta perusahaan yang menjalankan program CSR. Kanal distribusi utamanya berupa <em>website</em> dan media sosial, didukung kerja sama dengan NGO, kampus, serta kehadiran di <em>event</em> bertema lingkungan.
-        </p>
+        {/* Center: About title */}
+        <h2 className="about-title">About</h2>
 
         {/* Content Grid */}
         <div className="about-content">
@@ -23,8 +26,11 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
             {/* Placeholder for image */}
           </div>
 
-          {/* Lorem Ipsum Text */}
+          {/* Description Text */}
           <div className="about-text">
+            <p>
+              PohonKu merupakan program adopsi tanaman langka yang mengajak masyarakat untuk terlibat langsung dalam upaya konservasi tanaman langka. Pengadopsi atau dikenal dengan <em>Bestree</em> akan mendapat laporan perkembangan tanaman, sertifikat adopsi, dan akun personal untuk memantau dampak lingkungan seperti serapan karbon dan simpanan air. Sasaran utama dari bisnis ini adalah pecinta lingkungan utamanya generasi muda, keluarga untuk edukasi anak, serta perusahaan yang menjalankan program CSR. Kanal distribusi utamanya berupa <em>website</em> dan media sosial, didukung kerja sama dengan NGO, kampus, serta kehadiran di <em>event</em> bertema lingkungan.
+            </p>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
@@ -35,7 +41,7 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
         <div className="vision-mission-grid">
           {/* Vision */}
           <div className="vision-card">
-            <h2 className="card-title">Visi:</h2>
+            <h3 className="card-title">Visi:</h3>
             <p className="card-content">
               Menjadi <em>platform</em> adopsi tanaman langka terpercaya dalam pelestarian lingkungan di Indonesia
             </p>
@@ -43,7 +49,7 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
 
           {/* Mission */}
           <div className="mission-card">
-            <h2 className="card-title">Misi:</h2>
+            <h3 className="card-title">Misi:</h3>
             <ul className="mission-list">
               <li>Melestarikan keanekaragaman hayati melalui program adopsi tanaman langka</li>
               <li>Memfasilitasi kolaborasi antara publik dan komunitas pecinta lingkungan untuk pelestarian lingkungan hidup</li>
