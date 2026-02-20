@@ -6,12 +6,18 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { Typography } from '@/components/ui/Typography';
 import { usePathname } from 'next/navigation';
+import { LoginButton } from '@/components/laodingButton/page';
+import {ProfileImage} from '@/components/profile/page';
+
 
 export const Navbar = () => {
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const handleLogin = () =>{
+                  window.location.href = 'http://localhost:2000/api/v1/auth/google';
+  }
 
   const dropdownLinks = [
     { label: 'About', href: '/#about', sectionId: 'about' },
@@ -141,18 +147,16 @@ export const Navbar = () => {
             </Typography>
           </Link>
         </div>
+        
 
         {/* --- PROFILE SECTION --- */}
         <div className="hidden lg:flex items-center">
-          <Link href="/profile" className="hover:opacity-80 transition-opacity transform hover:scale-110 transition-transform duration-200">
-            <Image
-              src="/images/guestProfile.svg"
-              alt="Profile"
-              width={36}
-              height={36}
-              className="rounded-full border-2 border-transparent hover:border-[#1A581E] transition-colors"
-            />
-          </Link>
+          <div className="hidden lg:flex">
+            <LoginButton />
+          </div>
+          <div className="hidden lg:flex">
+            <ProfileImage/>
+          </div>
         </div>
 
         {/* --- MOBILE HAMBURGER --- */}
@@ -216,6 +220,8 @@ export const Navbar = () => {
                 Adopt a Tree
               </Typography>
             </Link>
+
+           
 
             <Link
               href="/profile"
