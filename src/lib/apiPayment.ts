@@ -18,4 +18,10 @@ export const orderApi = {
       method: 'POST',
     });
   },
+
+  async getPendingPayments(orderId: string) {
+    return apiFetch<any>(`/api/v1/orders/${orderId}`, {
+      method: 'GET',
+    });
+  }
 };
