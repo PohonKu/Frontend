@@ -146,6 +146,16 @@ export const Navbar = () => {
               Adopt a Tree
             </Typography>
           </Link>
+
+          <Link
+            href="/dashboard"
+            className="bg-[#1A581E] hover:bg-[#029146] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
+          >
+            <Typography variant="button" className="text-white text-sm font-semibold">
+              Dashboard
+            </Typography>
+          </Link>
+
         </div>
         
 
@@ -204,6 +214,14 @@ export const Navbar = () => {
 
           <Link
             href="/trees"
+            className="block py-2 border-b border-gray-100 text-gray-900 hover:text-[#1A581E] transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <Typography variant="nav-link">Tree List</Typography>
+          </Link>
+
+          <Link
+            href="/dashboard"
             className="block py-2 border-b border-gray-100 text-gray-900 hover:text-[#1A581E] transition-colors"
             onClick={() => setIsMobileMenuOpen(false)}
           >

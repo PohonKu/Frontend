@@ -34,7 +34,7 @@ export default function ServerSideSearchSpecies({
   const [hasSearched, setHasSearched] = useState(true);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
 
-  const categories = ['Tropis', 'Subtropis', 'Hutan', 'Buah', 'Medis'];
+  const categories = ['Tanaman Perspektif Keistimewaan', 'Tanaman Toponimi Gunungkidul', 'Tanaman Native Karst', 'Tanaman Sumbu Filosofi', 'Medis'];
 
   const fetchSpecies = async (search: string = '', category: string = '') => {
     try {
