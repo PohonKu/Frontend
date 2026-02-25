@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Tree as RawTree } from '@/types';
 import { TreeCluster } from './types';
-import TreeCard, { TreeSpeciesCard } from '@/components/ui/treeCard';
+import TreeCard, { TreeSpeciesCard } from '@/components/ui/TreeCard';
 import TreeDetailModal from '@/components/ui/TreeDetailModal';
 import CatalogTabs from './CatalogTabs';
 

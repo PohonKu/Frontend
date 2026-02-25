@@ -1,4 +1,4 @@
-import { apiFetch } from './wraper';
+import { apiFetch } from './wrapper';
 
 interface CreateOrderPayload {
   speciesId: string;

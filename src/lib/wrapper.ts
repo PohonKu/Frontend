@@ -4,7 +4,7 @@ export async function apiFetch<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
-  const token = localStorage.getItem('access_token');
+  const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
 
   if (!BASE_URL) {
     console.error('❌ NEXT_PUBLIC_API_URL is not set in environment variables');

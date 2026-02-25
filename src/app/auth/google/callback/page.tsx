@@ -1,10 +1,10 @@
 // src/app/auth/google/callback/page.tsx
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function GoogleCallbackPage() {
+function GoogleCallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -21,8 +21,11 @@ export default function GoogleCallbackPage() {
 
       console.log('✅ Login Google berhasil!');
 
-      // Redirect ke halaman utama
-      router.push('/');
+      const redirect = localStorage.getItem('post_login_redirect') || '/dashboard';
+      localStorage.removeItem('post_login_redirect');
+
+      // Redirect ke halaman yang disimpan atau default
+      router.push(redirect);
     } else {
       console.error('❌ Login Google gagal:', error);
 
@@ -39,5 +42,20 @@ export default function GoogleCallbackPage() {
         <p className="text-gray-600">Memproses login Google...</p>
       </div>
     </div>
+  );
+}
+
+export default function GoogleCallbackPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4" />
+          <p className="text-gray-600">Memuat rute...</p>
+        </div>
+      </div>
+    }>
+      <GoogleCallbackContent />
+    </Suspense>
   );
 }

@@ -8,7 +8,7 @@ interface LoginButtonProps {
 }
 
 export const LoginButton: React.FC<LoginButtonProps> = ({
-  redirectUrl = 'https://be-production-1e0b.up.railway.app/api/v1/auth/google',
+  redirectUrl = '/login',
 }) => {
   const handleLogin = () => {
     window.location.href = redirectUrl;

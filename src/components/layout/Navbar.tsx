@@ -6,18 +6,14 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { Typography } from '@/components/ui/Typography';
 import { usePathname } from 'next/navigation';
-import { LoginButton } from '@/components/laodingButton/page';
-import {ProfileImage} from '@/components/profile/page';
-
+import { ProfileImage } from '@/components/profile/page';
 
 export const Navbar = () => {
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const handleLogin = () =>{
-                  window.location.href = 'http://localhost:2000/api/v1/auth/google';
-  }
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const dropdownLinks = [
     { label: 'About', href: '/#about', sectionId: 'about' },
@@ -46,6 +42,9 @@ export const Navbar = () => {
 
   // Handle scroll effect for navbar shadow
   useEffect(() => {
+    // Check auth status
+    setIsLoggedIn(!!localStorage.getItem('access_token'));
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
@@ -95,8 +94,8 @@ export const Navbar = () => {
             {/* Dropdown Menu */}
             <div
               className={`absolute top-full left-0 mt-2 w-52 bg-[#1A581E] rounded-lg overflow-hidden transition-all duration-200 ${isDropdownOpen
-                  ? 'opacity-100 visible translate-y-0'
-                  : 'opacity-0 invisible -translate-y-2'
+                ? 'opacity-100 visible translate-y-0'
+                : 'opacity-0 invisible -translate-y-2'
                 }`}
             >
               <div className="py-2">
@@ -139,7 +138,7 @@ export const Navbar = () => {
 
           {/* CTA Button */}
           <Link
-            href="/adopt"
+            href={isLoggedIn ? "/adopt" : "/login?redirect=/adopt"}
             className="bg-[#1A581E] hover:bg-[#029146] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
           >
             <Typography variant="button" className="text-white text-sm font-semibold">
@@ -147,25 +146,13 @@ export const Navbar = () => {
             </Typography>
           </Link>
 
-          <Link
-            href="/dashboard"
-            className="bg-[#1A581E] hover:bg-[#029146] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
-          >
-            <Typography variant="button" className="text-white text-sm font-semibold">
-              Dashboard
-            </Typography>
-          </Link>
-
         </div>
-        
+
 
         {/* --- PROFILE SECTION --- */}
         <div className="hidden lg:flex items-center">
           <div className="hidden lg:flex">
-            <LoginButton />
-          </div>
-          <div className="hidden lg:flex">
-            <ProfileImage/>
+            <ProfileImage />
           </div>
         </div>
 
@@ -220,17 +207,9 @@ export const Navbar = () => {
             <Typography variant="nav-link">Tree List</Typography>
           </Link>
 
-          <Link
-            href="/dashboard"
-            className="block py-2 border-b border-gray-100 text-gray-900 hover:text-[#1A581E] transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            <Typography variant="nav-link">Tree List</Typography>
-          </Link>
-
           <div className="flex flex-col gap-3 pt-2">
             <Link
-              href="/adopt"
+              href={isLoggedIn ? "/adopt" : "/login?redirect=/adopt"}
               className="bg-[#1A581E] text-white py-3 rounded-lg text-center hover:bg-[#029146] transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -238,11 +217,8 @@ export const Navbar = () => {
                 Adopt a Tree
               </Typography>
             </Link>
-
-           
-
             <Link
-              href="/profile"
+              href={isLoggedIn ? "/dashboard" : "/login?redirect=/dashboard"}
               className="text-center py-2 text-gray-500 hover:text-[#1A581E] transition-colors flex items-center justify-center gap-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -251,7 +227,7 @@ export const Navbar = () => {
                 alt="Profile"
                 width={24}
                 height={24}
-                className="rounded-full border-2 border-transparent hover:border-[#1A581E] transition-colors"
+                className="rounded-full border-2 border-transparent hover:border-[#1A581E] transition-colors lg:hidden"
               />
               <Typography variant="nav-link">Profile</Typography>
             </Link>

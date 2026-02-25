@@ -25,7 +25,7 @@ class GetTree {
     return res.json();
   }
 
-  async getSpeciesByCategory(category: string){
+  async getSpeciesByCategory(category: string) {
     const res = await fetch(`${BASE_URL}/api/v1/trees/species/category/${category}`, {
       cache: "no-store",
     });
@@ -39,18 +39,18 @@ class GetTree {
 
   async searchSpecies(searchName?: string, category?: string) {
     const params = new URLSearchParams();
-    
+
     if (searchName) {
       params.append('search', searchName);
     }
-    
+
     if (category) {
       params.append('category', category);
     }
 
     const queryString = params.toString();
-    const url = queryString 
-      ? `${BASE_URL}/api/v1/trees/species?${queryString}` 
+    const url = queryString
+      ? `${BASE_URL}/api/v1/trees/species?${queryString}`
       : `${BASE_URL}/api/v1/trees/species`;
 
     const res = await fetch(url, {

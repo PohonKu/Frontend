@@ -45,7 +45,7 @@ export const ProfileImage = () => {
           // Token expired atau invalid
           const errorData = await res.json();
           console.error('❌ API Error:', errorData);
-          
+
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
           setLoading(false);
@@ -66,7 +66,7 @@ export const ProfileImage = () => {
 
     fetchUser();
   }, []);
-  
+
 
 
   // Loading state
@@ -81,7 +81,7 @@ export const ProfileImage = () => {
   // Belum login - tampilkan icon guest
   if (!user) {
     return (
-      <Link href="/login">
+      <Link href="/login?redirect=/dashboard">
         <Image
           src="/images/guestProfile.svg"
           alt="Guest"
@@ -96,7 +96,7 @@ export const ProfileImage = () => {
   // Sudah login - tampilkan avatar
   return (
     <Link
-      href="/profile"
+      href="/dashboard"
       className="hover:opacity-80 transition-opacity transform hover:scale-110 duration-200"
     >
       <Image
