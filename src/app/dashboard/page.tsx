@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Home, LayoutDashboard, Settings, LogOut, X, Download, MapPin, Calendar, Trees, Droplets, Wind } from 'lucide-react';
+import { Home, LayoutDashboard, Settings, LogOut, X, Download, MapPin, Calendar, Trees, Droplets, Wind, CheckCircle, Leaf } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { dashboardApi } from '@/lib/apiDashboard';
 import { Typography } from '@/components/ui/Typography';
