@@ -21,12 +21,17 @@ interface Adoption {
   treeName: string;
   treeType: string;
   location: string;
-  status: string;
+  status: string; // Used for listing status (Aktif dsb)
   plantedAt: string;
   lastUpdated: string;
   imageUrl?: string;
   coordinates?: string;
   carbonAbsorbed: number;
+  // New Time-Based Properties
+  adoptionDurationMonths: number;
+  growthPhase: string; // Seedling, Sapling, Pole, Tree
+  healthStatus: string; // Adaptasi, Sehat, Kritis
+  nextUpdateDate: string;
 }
 
 // --- Constants & Styling ---
@@ -48,6 +53,51 @@ const getDistributionData = (adoptions: Adoption[], key: keyof Adoption) => {
   });
   return Object.keys(counts).map(name => ({ name, value: counts[name] }));
 };
+
+const getTotalCarbon = (adoptions: Adoption[]): number => {
+  return adoptions.reduce((sum, tree) => sum + tree.carbonAbsorbed, 0);
+};
+
+// Calculate nearest expiration date based on plantedAt + adoptionDurationMonths
+const getNearestExpiry = (adoptions: Adoption[]): string => {
+  if (adoptions.length === 0) return '-';
+  let nearestExpiryTime = Infinity;
+  let nearestDateStr = '-';
+
+  adoptions.forEach(tree => {
+    const plantedDate = new Date(tree.plantedAt);
+    if (!isNaN(plantedDate.getTime()) && tree.adoptionDurationMonths) {
+      const expiryDate = new Date(plantedDate);
+      expiryDate.setMonth(expiryDate.getMonth() + tree.adoptionDurationMonths);
+      if (expiryDate.getTime() < nearestExpiryTime) {
+        nearestExpiryTime = expiryDate.getTime();
+        nearestDateStr = expiryDate.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+    }
+  });
+  return nearestDateStr === '-' ? '-' : nearestDateStr;
+};
+
+const getUpcomingUpdate = (adoptions: Adoption[]): string => {
+  if (adoptions.length === 0) return '-';
+  let nearestUpdateTime = Infinity;
+  let nearestDateStr = '-';
+  const now = new Date().getTime();
+
+  adoptions.forEach(tree => {
+    const nextUpdate = new Date(tree.nextUpdateDate);
+    if (!isNaN(nextUpdate.getTime()) && nextUpdate.getTime() > now) {
+      if (nextUpdate.getTime() < nearestUpdateTime) {
+        nearestUpdateTime = nextUpdate.getTime();
+        nearestDateStr = nextUpdate.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+    }
+  });
+  // If no future updates are found just return the earliest general update
+  if (nearestDateStr === '-' && adoptions[0]?.nextUpdateDate) return new Date(adoptions[0].nextUpdateDate).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+  return nearestDateStr;
+};
+
 
 const getCarbonDistribution = (adoptions: Adoption[]) => {
   return adoptions
@@ -127,16 +177,16 @@ const TreeDetailModal = ({ isOpen, onClose, tree }: { isOpen: boolean; onClose: 
         <div className="p-6">
           <div className="grid grid-cols-2 gap-4">
             <div className="p-3 border border-gray-200 rounded-lg">
-              <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider block mb-1">Jenis Pohon</span>
-              <p className="font-semibold text-gray-900">{tree.treeType}</p>
+              <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider block mb-1">Masa Adopsi</span>
+              <p className="font-semibold text-gray-900">{tree.adoptionDurationMonths / 12} Tahun</p>
             </div>
             <div className="p-3 border border-gray-200 rounded-lg">
               <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider block mb-1">Tanggal Tanam</span>
               <p className="font-semibold text-gray-900">{tree.plantedAt}</p>
             </div>
             <div className="p-3 border border-gray-200 rounded-lg">
-              <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider block mb-1">Koordinat</span>
-              <p className="font-semibold text-gray-900 text-sm">{tree.coordinates || '-7.8288, 110.3783'}</p>
+              <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider block mb-1">Fase Pertumbuhan</span>
+              <p className="font-semibold text-gray-900 text-sm">{tree.growthPhase}</p>
             </div>
             <div className="p-3 border border-gray-200 rounded-lg">
               <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider block mb-1">Serapan Karbon</span>
@@ -146,7 +196,7 @@ const TreeDetailModal = ({ isOpen, onClose, tree }: { isOpen: boolean; onClose: 
           <div className="mt-6">
             <h4 className="font-medium text-gray-900 mb-2 uppercase text-xs tracking-wider">Status & Pembaruan</h4>
             <div className="flex items-center gap-3">
-              <span className="px-3 py-1 bg-[#1E562A]/10 text-[#1E562A] border border-[#1E562A]/20 rounded-md text-xs font-bold uppercase tracking-wide">{tree.status}</span>
+              <span className="px-3 py-1 bg-[#1E562A]/10 text-[#1E562A] border border-[#1E562A]/20 rounded-md text-xs font-bold uppercase tracking-wide">{tree.healthStatus}</span>
               <span className="text-sm text-gray-600 font-medium">Diperbarui: {new Date(tree.lastUpdated).toLocaleDateString('id-ID')}</span>
             </div>
           </div>
@@ -267,10 +317,10 @@ export default function Dashboard() {
 
         // ALWAYS USE MOCK DATA that fulfills strict UI layout definition and properties
         const mockAdoptions: Adoption[] = [
-          { id: '1', treeName: 'Pohon Mangga Golek', treeType: 'Mangifera indica', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '12 Jan 2024', lastUpdated: '2024-03-10T08:00:00Z', carbonAbsorbed: 12.5 },
-          { id: '2', treeName: 'Pohon Jati Emas', treeType: 'Tectona grandis', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '20 Feb 2024', lastUpdated: '2024-03-25T09:30:00Z', carbonAbsorbed: 8.2 },
-          { id: '3', treeName: 'Pohon Sengon Laut', treeType: 'Paraserianthes falcataria', location: 'Gunung Kidul, Yogyakarta', status: 'Baru Tanam', plantedAt: '05 Mar 2024', lastUpdated: '2024-03-05T14:15:00Z', carbonAbsorbed: 1.1 },
-          { id: '4', treeName: 'Pohon Jati Emas', treeType: 'Tectona grandis', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '15 Jan 2024', lastUpdated: '2024-03-28T11:20:00Z', carbonAbsorbed: 9.0 },
+          { id: '1', treeName: 'Pohon Mangga Golek', treeType: 'Mangifera indica', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '12 Jan 2024', lastUpdated: '2024-03-10T08:00:00Z', carbonAbsorbed: 12.5, adoptionDurationMonths: 12, growthPhase: 'Sapling', healthStatus: 'Sehat', nextUpdateDate: '2026-03-10T08:00:00Z' },
+          { id: '2', treeName: 'Pohon Jati Emas', treeType: 'Tectona grandis', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '20 Feb 2024', lastUpdated: '2024-03-25T09:30:00Z', carbonAbsorbed: 8.2, adoptionDurationMonths: 24, growthPhase: 'Seedling', healthStatus: 'Adaptasi', nextUpdateDate: '2026-04-25T09:30:00Z' },
+          { id: '3', treeName: 'Pohon Sengon Laut', treeType: 'Paraserianthes falcataria', location: 'Gunung Kidul, Yogyakarta', status: 'Baru Tanam', plantedAt: '05 Mar 2024', lastUpdated: '2024-03-05T14:15:00Z', carbonAbsorbed: 1.1, adoptionDurationMonths: 12, growthPhase: 'Seedling', healthStatus: 'Adaptasi', nextUpdateDate: '2025-09-05T14:15:00Z' },
+          { id: '4', treeName: 'Pohon Jati Emas', treeType: 'Tectona grandis', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '15 Jan 2024', lastUpdated: '2024-03-28T11:20:00Z', carbonAbsorbed: 9.0, adoptionDurationMonths: 36, growthPhase: 'Pole', healthStatus: 'Sehat', nextUpdateDate: '2026-03-28T11:20:00Z' },
         ];
 
         setAdoptions(mockAdoptions);
@@ -311,6 +361,11 @@ export default function Dashboard() {
   }
 
   // Derive charts purely from user's adoption array
+  const growthPhaseData = getDistributionData(adoptions, 'growthPhase');
+  const healthStatusData = getDistributionData(adoptions, 'healthStatus');
+  const totalCarbon = getTotalCarbon(adoptions);
+  const nextUpdateStr = getUpcomingUpdate(adoptions);
+  const nearestExpiryStr = getNearestExpiry(adoptions);
   const treeTypeData = getDistributionData(adoptions, 'treeType');
   const treeStatusData = getDistributionData(adoptions, 'status');
   const carbonData = getCarbonDistribution(adoptions);
@@ -370,44 +425,53 @@ export default function Dashboard() {
           <section className="bg-[#1E562A] rounded-xl p-8 mb-10 shadow-lg border border-[#153f1e] animate-in fade-in slide-in-from-bottom-6 duration-700" style={{ animationDelay: '100ms', animationFillMode: 'both' }}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
-              {/* Card 1: Data Text */}
-              <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <div>
-                  <h3 className="text-gray-500 font-bold text-xs mb-3 uppercase tracking-widest">Informasi Adopsi</h3>
-                  <div className="mb-5">
-                    <span className="text-5xl font-bold text-gray-900 tracking-tighter">{adoptions.length}</span>
-                    <span className="text-sm font-semibold text-gray-500 ml-2 uppercase tracking-wide">Pohon</span>
+              {/* Card 1 & 2: Text Stats Span 2 Columns */}
+              <div className="lg:col-span-2 grid grid-cols-2 gap-4">
+                {/* Total Trees */}
+                <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-100 flex flex-col justify-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                  <h3 className="text-gray-500 font-bold text-xs mb-1 uppercase tracking-widest">Total Inventaris</h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-4xl font-bold text-gray-900 tracking-tighter">{adoptions.length}</span>
+                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Pohon</span>
                   </div>
                 </div>
-                <div className="space-y-3 pt-4 border-t border-gray-100">
-                  <div className="flex items-center justify-between text-sm font-medium">
-                    <span className="text-gray-500">Lokasi Utama</span>
-                    <span className="text-gray-900 text-right max-w-[120px] truncate" title="Tahura Bunder">Tahura Bunder</span>
+
+                {/* Total Carbon */}
+                <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-100 flex flex-col justify-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                  <h3 className="text-gray-500 font-bold text-xs mb-1 uppercase tracking-widest">Akumulasi Serapan</h3>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-3xl font-bold text-gray-900 tracking-tighter">{totalCarbon.toFixed(1)}</span>
+                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">kg CO2</span>
                   </div>
-                  <div className="flex items-center justify-between text-sm font-medium">
-                    <span className="text-gray-500">Status Umum</span>
-                    <span className="text-[#1E562A] font-bold">Aktif</span>
+                </div>
+
+                {/* Next Update */}
+                <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-100 flex flex-col justify-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Calendar className="w-3.5 h-3.5 text-blue-500" />
+                    <h3 className="text-gray-500 font-bold text-xs uppercase tracking-widest">Pembaruan Berikutnya</h3>
                   </div>
-                  <div className="flex items-center justify-between text-sm font-medium">
-                    <span className="text-gray-500">Update Terakhir</span>
-                    <span className="text-gray-900">{latestUpdateStr}</span>
+                  <span className="text-sm font-bold text-gray-900 truncate" title={nextUpdateStr}>{nextUpdateStr}</span>
+                </div>
+
+                {/* Nearest Expiry */}
+                <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-100 flex flex-col justify-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-2 h-2 rounded-full bg-orange-400"></div>
+                    <h3 className="text-gray-500 font-bold text-xs uppercase tracking-widest">Tenggat Terdekat</h3>
                   </div>
+                  <span className="text-sm font-bold text-gray-900 truncate" title={nearestExpiryStr}>{nearestExpiryStr}</span>
                 </div>
               </div>
 
-              {/* Card 2: Donut Chart 1 (Jenis Pohon) */}
+              {/* Card 3: Donut Chart 1 (Fase Pertumbuhan) */}
               <div className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <DonutChart data={treeTypeData} title="Komposisi Spesies" />
+                <DonutChart data={growthPhaseData} title="Fase Pertumbuhan" />
               </div>
 
-              {/* Card 3: Donut Chart 2 (Distribusi Serapan Karbon) */}
+              {/* Card 4: Donut Chart 2 (Status Kesehatan) */}
               <div className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <DonutChart data={carbonData} title="Serapan Karbon (Top 5)" />
-              </div>
-
-              {/* Card 4: Donut Chart 3 (Status) */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <DonutChart data={treeStatusData} title="Distribusi Status" />
+                <DonutChart data={healthStatusData} title="Status Kesehatan" />
               </div>
 
             </div>
@@ -447,6 +511,10 @@ export default function Dashboard() {
                       <div className="absolute inset-0 bg-gray-200 flex items-center justify-center -z-10">
                         <Trees className="w-8 h-8 text-gray-400" />
                       </div>
+                      <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded shadow-sm flex items-center gap-1.5 border border-white/50">
+                        <div className={`w-1.5 h-1.5 rounded-full ${tree.healthStatus === 'Sehat' ? 'bg-green-500' : tree.healthStatus === 'Kritis' ? 'bg-red-500' : 'bg-orange-400'}`}></div>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-gray-700">{tree.healthStatus}</span>
+                      </div>
                     </div>
 
                     <div className="p-4 flex flex-col flex-1">
@@ -454,6 +522,10 @@ export default function Dashboard() {
                         <div className="flex items-start justify-between text-xs font-medium">
                           <span className="text-gray-500 uppercase tracking-wider">Lokasi</span>
                           <span className="text-gray-900 text-right max-w-[120px] truncate" title={tree.location}>{tree.location}</span>
+                        </div>
+                        <div className="flex items-start justify-between text-xs font-medium">
+                          <span className="text-gray-500 uppercase tracking-wider">Fase</span>
+                          <span className="text-gray-900 text-right font-semibold">{tree.growthPhase}</span>
                         </div>
                         <div className="flex items-start justify-between text-xs font-medium">
                           <span className="text-gray-500 uppercase tracking-wider">Serapan</span>
