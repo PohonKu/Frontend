@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Home, LayoutDashboard, Settings, LogOut, X, Download, MapPin, Calendar, Trees, Droplets, Wind, CheckCircle, Leaf } from 'lucide-react';
+import { Home, LayoutDashboard, Settings, LogOut, X, Download, MapPin, Calendar, Trees, Droplets, Wind, CheckCircle, Leaf, Info } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { dashboardApi } from '@/lib/apiDashboard';
 import { Typography } from '@/components/ui/Typography';
@@ -106,8 +106,19 @@ const getCarbonDistribution = (adoptions: Adoption[]) => {
     .slice(0, 5); // Top 5
 };
 
+// --- UI Tooltip Component ---
+const TooltipInfo = ({ text }: { text: string }) => (
+  <div className="group relative inline-flex items-center ml-1.5 cursor-help">
+    <Info className="w-3.5 h-3.5 text-gray-400 hover:text-[#1E562A] transition-colors" />
+    <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-gray-900 text-white text-[10px] leading-relaxed rounded shadow-xl transition-all duration-200 z-50 text-center pointer-events-none font-medium">
+      {text}
+      <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+    </div>
+  </div>
+);
+
 // --- Simple Donut Chart Component ---
-const DonutChart = ({ data, title }: { data: { name: string, value: number }[], title: string }) => {
+const DonutChart = ({ data, title, tooltipText }: { data: { name: string, value: number }[], title: string, tooltipText?: string }) => {
   if (!data || data.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center p-4 h-full">
@@ -119,7 +130,10 @@ const DonutChart = ({ data, title }: { data: { name: string, value: number }[], 
 
   return (
     <div className="flex flex-col items-center justify-center p-4 h-full">
-      <Typography variant="body" className="font-semibold text-gray-700 mb-2">{title}</Typography>
+      <div className="flex items-center justify-center mb-2">
+        <Typography variant="body" className="font-semibold text-gray-700">{title}</Typography>
+        {tooltipText && <TooltipInfo text={tooltipText} />}
+      </div>
       <div className="h-48 w-full relative">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -429,8 +443,10 @@ export default function Dashboard() {
               <div className="lg:col-span-2 grid grid-cols-2 gap-4">
                 {/* Total Trees */}
                 <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-100 flex flex-col justify-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                  <h3 className="text-gray-500 font-bold text-xs mb-1 uppercase tracking-widest">Total Inventaris</h3>
-                  <div className="flex items-baseline gap-2">
+                  <h3 className="text-gray-500 font-bold text-xs mb-1 uppercase tracking-widest flex items-center">
+                    Total Inventaris
+                  </h3>
+                  <div className="flex items-baseline gap-2 mt-1">
                     <span className="text-4xl font-bold text-gray-900 tracking-tighter">{adoptions.length}</span>
                     <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Pohon</span>
                   </div>
@@ -438,8 +454,11 @@ export default function Dashboard() {
 
                 {/* Total Carbon */}
                 <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-100 flex flex-col justify-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                  <h3 className="text-gray-500 font-bold text-xs mb-1 uppercase tracking-widest">Akumulasi Serapan</h3>
-                  <div className="flex items-baseline gap-1.5">
+                  <h3 className="text-gray-500 font-bold text-xs mb-1 uppercase tracking-widest flex items-center">
+                    Akumulasi Serapan
+                    <TooltipInfo text="Total estimasi gas karbon (CO2) yang berhasil diserap dan dikurangi oleh seluruh pohon Anda." />
+                  </h3>
+                  <div className="flex items-baseline gap-1.5 mt-1">
                     <span className="text-3xl font-bold text-gray-900 tracking-tighter">{totalCarbon.toFixed(1)}</span>
                     <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">kg CO2</span>
                   </div>
@@ -449,7 +468,10 @@ export default function Dashboard() {
                 <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-100 flex flex-col justify-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                   <div className="flex items-center gap-2 mb-2">
                     <Calendar className="w-3.5 h-3.5 text-blue-500" />
-                    <h3 className="text-gray-500 font-bold text-xs uppercase tracking-widest">Pembaruan Berikutnya</h3>
+                    <h3 className="text-gray-500 font-bold text-xs uppercase tracking-widest flex items-center">
+                      Pembaruan Berikutnya
+                      <TooltipInfo text="Estimasi tanggal di mana tim PohonKu akan mengunggah foto perkembangan pohon yang Anda adopsi." />
+                    </h3>
                   </div>
                   <span className="text-sm font-bold text-gray-900 truncate" title={nextUpdateStr}>{nextUpdateStr}</span>
                 </div>
@@ -458,7 +480,10 @@ export default function Dashboard() {
                 <div className="bg-white rounded-lg p-5 shadow-sm border border-gray-100 flex flex-col justify-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-2 h-2 rounded-full bg-orange-400"></div>
-                    <h3 className="text-gray-500 font-bold text-xs uppercase tracking-widest">Tenggat Terdekat</h3>
+                    <h3 className="text-gray-500 font-bold text-xs uppercase tracking-widest flex items-center">
+                      Akhir Masa Adopsi
+                      <TooltipInfo text="Tanggal paling awal dari salah satu masa berlaku pohon adopsi Anda yang akan segera habis." />
+                    </h3>
                   </div>
                   <span className="text-sm font-bold text-gray-900 truncate" title={nearestExpiryStr}>{nearestExpiryStr}</span>
                 </div>
@@ -466,12 +491,20 @@ export default function Dashboard() {
 
               {/* Card 3: Donut Chart 1 (Fase Pertumbuhan) */}
               <div className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <DonutChart data={growthPhaseData} title="Fase Pertumbuhan" />
+                <DonutChart
+                  data={growthPhaseData}
+                  title="Fase Pertumbuhan"
+                  tooltipText="Tahapan usia pohon: Seedling (Bibit muda), Sapling (Pancang muda), Pole (Pohon tiang), dan Tree (Pohon dewasa yang rindang)."
+                />
               </div>
 
               {/* Card 4: Donut Chart 2 (Status Kesehatan) */}
               <div className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                <DonutChart data={healthStatusData} title="Status Kesehatan" />
+                <DonutChart
+                  data={healthStatusData}
+                  title="Status Kesehatan"
+                  tooltipText="Kondisi kesehatan pohon Anda: Adaptasi (Baru dipindah ke tanah), Sehat (Tumbuh optimal), dan Kritis (Membutuhkan perawatan khusus)."
+                />
               </div>
 
             </div>
