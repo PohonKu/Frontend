@@ -19,6 +19,9 @@ function GoogleCallbackContent() {
       localStorage.setItem('access_token', accessToken);
       localStorage.setItem('refresh_token', refreshToken);
 
+      // Dispatch event to update navbar state across the app
+      window.dispatchEvent(new Event('auth-change'));
+
       console.log('✅ Login Google berhasil!');
 
       const redirect = localStorage.getItem('post_login_redirect') || '/dashboard';

@@ -40,17 +40,33 @@ export const Navbar = () => {
     }
   };
 
-  // Handle scroll effect for navbar shadow
+  // Handle auth state and scroll effect
   useEffect(() => {
-    // Check auth status
-    setIsLoggedIn(!!localStorage.getItem('access_token'));
+    // Function to check and set auth status
+    const checkAuthStatus = () => {
+      setIsLoggedIn(!!localStorage.getItem('access_token'));
+    };
+
+    // Initial check
+    checkAuthStatus();
+
+    // Listen to custom event for login/logout
+    window.addEventListener('auth-change', checkAuthStatus);
+
+    // Listen to storage events (useful across tabs)
+    window.addEventListener('storage', checkAuthStatus);
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    return () => {
+      window.removeEventListener('auth-change', checkAuthStatus);
+      window.removeEventListener('storage', checkAuthStatus);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [pathname]); // Re-check on route change
 
   return (
     <nav className={`sticky top-0 z-50 bg-white transition-shadow duration-300 ${isScrolled ? 'shadow-md' : ''}`}>

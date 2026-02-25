@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 // 1. Import font baru: Tilt_Warp dan Inria_Serif
 import { Inter, Tilt_Warp, Inria_Serif } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
+import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
 
 // Inter — body text, descriptions, labels
 const sans = Inter({
@@ -44,7 +44,7 @@ export default function RootLayout({
         ${inriaSerif.variable} 
         font-sans antialiased bg-gray-50 text-gray-900
       `}>
-        <Navbar />
+        <NavbarWrapper />
         {children}
       </body>
     </html>

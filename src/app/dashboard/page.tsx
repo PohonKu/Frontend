@@ -229,7 +229,8 @@ export default function Dashboard() {
         }
 
         // Fetch user data
-        const userRes = await fetch(process.env.NEXT_PUBLIC_API_URL ? `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/me` : 'http://localhost:2000/api/v1/auth/me', {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+        const userRes = await fetch(`${apiUrl}/api/v1/auth/me`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
 
@@ -285,6 +286,7 @@ export default function Dashboard() {
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    window.dispatchEvent(new Event('auth-change'));
     router.push('/');
   };
 

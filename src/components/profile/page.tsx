@@ -33,7 +33,8 @@ export const ProfileImage = () => {
         }
 
         // ✅ FIX: Kirim token via Authorization header
-        const res = await fetch('http://localhost:2000/api/v1/auth/me', {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+        const res = await fetch(`${apiUrl}/api/v1/auth/me`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -48,6 +49,7 @@ export const ProfileImage = () => {
 
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
+          window.dispatchEvent(new Event('auth-change'));
           setLoading(false);
           return;
         }
