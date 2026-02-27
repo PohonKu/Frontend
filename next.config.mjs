@@ -15,13 +15,18 @@ const nextConfig = {
         hostname: 'lh3.googleusercontent.com',
         pathname: '/**',
       },
-      
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+
     ],
-    
-    domains: ['placeholder.com'], 
-    
-    
-    
+
+    domains: ['placeholder.com'],
+
+
+
   },
 };
 

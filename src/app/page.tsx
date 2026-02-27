@@ -1,4 +1,4 @@
-import { Header } from '@/components/home/Header';
+import { Hero } from '@/components/home/Hero';
 import { AboutSection } from '@/components/home/AboutSection';
 import { ProjectArea } from '@/components/home/ProjectArea';
 import { TeamMember } from '@/components/home/TeamMember';
@@ -8,7 +8,7 @@ import { Footer } from '@/components/home/Footer';
 export default function Home() {
   return (
     <main>
-      <Header />
+      <Hero />
       <AboutSection />
       <ProjectArea />
       <TeamMember />

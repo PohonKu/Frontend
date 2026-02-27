@@ -57,7 +57,7 @@ export const Navbar = () => {
     window.addEventListener('storage', checkAuthStatus);
 
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
 
@@ -68,8 +68,15 @@ export const Navbar = () => {
     };
   }, [pathname]); // Re-check on route change
 
+  const isHomePage = pathname === '/';
+  const isTransparent = isHomePage && !isScrolled && !isMobileMenuOpen;
+
+  const textColorClass = isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-900 group-hover/btn:text-[#1A581E]';
+  const navLinkClass = isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-900 group-hover/nav:text-[#1A581E]';
+  const lineClass = isTransparent ? 'bg-white' : 'bg-[#1A581E]';
+
   return (
-    <nav className={`sticky top-0 z-50 bg-white transition-shadow duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isTransparent ? 'bg-transparent py-2' : 'bg-white shadow-md'}`}>
       <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
 
         {/* --- LOGO --- */}
@@ -79,7 +86,7 @@ export const Navbar = () => {
             alt="PohonKu Logo"
             width={96}
             height={72}
-            className="w-16 h-12 md:w-24 md:h-18 object-contain"
+            className={`w-16 h-12 md:w-24 md:h-18 object-contain transition-all duration-300 ${isTransparent ? 'brightness-0 invert' : ''}`}
             priority
           />
         </Link>
@@ -96,13 +103,13 @@ export const Navbar = () => {
             <button className="flex items-center gap-1 focus:outline-none group/btn">
               <Typography
                 variant="nav-link"
-                className="text-gray-900 group-hover/btn:text-[#1A581E] transition-colors"
+                className={`transition-colors ${textColorClass}`}
               >
                 PohonKu
               </Typography>
               <ChevronDown
                 size={12}
-                className={`text-gray-900 group-hover/btn:text-[#1A581E] transition-all duration-300 ${isDropdownOpen ? 'rotate-180 text-[#1A581E]' : ''
+                className={`transition-all duration-300 ${textColorClass} ${isDropdownOpen ? 'rotate-180 text-[#1A581E]' : ''
                   }`}
               />
             </button>
@@ -136,20 +143,20 @@ export const Navbar = () => {
             href="/contact"
             className="relative group/nav py-1"
           >
-            <Typography variant="nav-link" className="text-gray-900 group-hover/nav:text-[#1A581E] transition-colors">
+            <Typography variant="nav-link" className={`transition-colors ${navLinkClass}`}>
               Contact
             </Typography>
-            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#1A581E] scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-left"></span>
+            <span className={`absolute bottom-0 left-0 w-full h-0.5 scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-left ${lineClass}`}></span>
           </Link>
 
           <Link
             href="/trees"
             className="relative group/nav py-1"
           >
-            <Typography variant="nav-link" className="text-gray-900 group-hover/nav:text-[#1A581E] transition-colors">
+            <Typography variant="nav-link" className={`transition-colors ${navLinkClass}`}>
               Tree List
             </Typography>
-            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#1A581E] scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-left"></span>
+            <span className={`absolute bottom-0 left-0 w-full h-0.5 scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-left ${lineClass}`}></span>
           </Link>
 
           {/* CTA Button */}
@@ -174,7 +181,7 @@ export const Navbar = () => {
 
         {/* --- MOBILE HAMBURGER --- */}
         <button
-          className="lg:hidden p-2 text-gray-900 hover:text-[#1A581E] transition-colors"
+          className={`lg:hidden p-2 transition-colors ${isTransparent ? 'text-white' : 'text-gray-900 hover:text-[#1A581E]'}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
         >
