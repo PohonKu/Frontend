@@ -7,7 +7,6 @@ import './TeamMember.css';
 interface TeamMemberData {
   name: string;
   role: string;
-  id: string;
   image?: string;
 }
 
@@ -18,18 +17,15 @@ export const TeamMember = () => {
 
   const dummyMember: TeamMemberData = {
     name: "Nama Anggota",
-    role: "Peran Anggota",
-    id: "21/000000/XX/000"
+    role: "Peran Anggota"
   };
 
-  const forestryTeam: TeamMemberData[] = Array(4).fill(dummyMember).map((member, index) => ({
-    ...member,
-    id: `21/123456/PA/00${index + 1}`
+  const forestryTeam: TeamMemberData[] = Array(4).fill(dummyMember).map((member) => ({
+    ...member
   }));
 
-  const webTeam: TeamMemberData[] = Array(4).fill(dummyMember).map((member, index) => ({
-    ...member,
-    id: `21/654321/WD/00${index + 1}`
+  const webTeam: TeamMemberData[] = Array(4).fill(dummyMember).map((member) => ({
+    ...member
   }));
 
   const currentTeam = activeTeam === 'forestry' ? forestryTeam : webTeam;
@@ -79,7 +75,6 @@ export const TeamMember = () => {
               <div className="member-info">
                 <h3 className="member-name">{member.name}</h3>
                 <p className={`member-role ${activeTeam}`}>{member.role}</p>
-                <p className="member-id">{member.id}</p>
               </div>
             </div>
           ))}
