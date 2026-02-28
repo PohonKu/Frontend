@@ -70,8 +70,9 @@ export const Navbar = () => {
   const isHomePage = pathname === '/';
   const isTreesPage = pathname?.startsWith('/trees');
   const isAdoptPage = pathname?.startsWith('/adopt');
+  const isContactPage = pathname === '/contact';
 
-  const isTransparentRoute = isHomePage || isTreesPage || isAdoptPage;
+  const isTransparentRoute = isHomePage || isTreesPage || isAdoptPage || isContactPage;
   const isTransparent = isTransparentRoute && !isScrolled && !isMobileMenuOpen;
 
   const textColorClass = isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-900 group-hover/btn:text-[#1A581E]';

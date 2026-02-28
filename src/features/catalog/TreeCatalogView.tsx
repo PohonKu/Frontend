@@ -101,15 +101,16 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
         </p>
       </div>
 
-      {/* Search Bar */}
-      <div className="mb-6 md:mb-8 flex justify-center px-4">
-        <div className="relative w-full max-w-2xl">
+      {/* Control Bar (Search & Filters) */}
+      <div className="mb-8 md:mb-10 px-4 flex flex-col items-center gap-5 md:gap-6 w-full max-w-7xl mx-auto">
+        {/* Search Bar */}
+        <div className="relative w-full max-w-[600px] shrink-0">
           <input
             type="text"
             placeholder="Search by tree name (e.g., Nangka, Manggis)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2.5 md:px-5 md:py-3 pl-10 md:pl-12 text-sm md:text-base border-2 border-gray-200 rounded-full focus:outline-none focus:border-[#1A581E] focus:ring-2 focus:ring-[#1A581E]/20 transition-all text-gray-700 placeholder-gray-400"
+            className="w-full px-4 py-2.5 md:px-5 md:py-3 pl-10 md:pl-12 text-sm md:text-base bg-white border border-gray-200 rounded-full focus:outline-none focus:border-[#1A581E] focus:ring-4 focus:ring-[#1A581E]/10 transition-all shadow-sm hover:shadow-md text-gray-700 placeholder-gray-400"
           />
           <svg
             className="absolute left-3.5 md:left-4 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-gray-400"
@@ -125,15 +126,15 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
             />
           </svg>
         </div>
-      </div>
 
-      {/* Tabs/Filters */}
-      <div className="mb-8 flex justify-center">
-        <CatalogTabs
-          activeCluster={activeCluster}
-          onClusterChange={setActiveCluster}
-          counts={clusterCounts}
-        />
+        {/* Tabs/Filters */}
+        <div className="w-full flex justify-center">
+          <CatalogTabs
+            activeCluster={activeCluster}
+            onClusterChange={setActiveCluster}
+            counts={clusterCounts}
+          />
+        </div>
       </div>
 
       {/* Results Info */}

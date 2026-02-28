@@ -85,71 +85,15 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                   </p>
                 </div>
 
-                {/* Price & Stock Card with Enhanced Design */}
-                <div className={`${styles.priceCard} bg-linear-to-br from-green-50 to-emerald-50 rounded-2xl p-6 sm:p-7 border-2 border-green-100 shadow-sm`}>
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="flex-1">
-                      <p className="text-xs sm:text-sm font-medium text-gray-600 mb-1 uppercase tracking-wide">Price per Tree</p>
-                      <p className="text-3xl sm:text-4xl font-bold text-[#1A581E] leading-none">
-                        {formatPrice(species.price)}
-                      </p>
-                    </div>
-                    <div className="text-right flex-1">
-                      <p className="text-xs sm:text-sm font-medium text-gray-600 mb-1 uppercase tracking-wide">Available Stock</p>
-                      <p className="text-3xl sm:text-4xl font-bold text-gray-900 leading-none">
-                        {species.stock}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Availability Status with Enhanced Design */}
-                  <div className="pt-5 border-t-2 border-green-200/60">
-                    {isAvailable ? (
-                      <div className="flex items-center gap-3 text-[#1A581E]">
-                        <div className="relative">
-                          <div className="w-3 h-3 bg-[#1A581E] rounded-full animate-pulse" />
-                          <div className="absolute inset-0 w-3 h-3 bg-[#1A581E] rounded-full animate-ping opacity-75" />
-                        </div>
-                        <span className="font-semibold text-sm sm:text-base">Ready for Adoption</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center gap-3 text-gray-500">
-                        <div className="w-3 h-3 bg-gray-400 rounded-full" />
-                        <span className="font-semibold text-sm sm:text-base">Currently Out of Stock</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* CTA Button with Enhanced Design */}
-                <button
-                  onClick={() => onAdopt?.(species.id)}
-                  disabled={!isAvailable}
-                  className={`
-                    ${styles.ctaButton} w-full font-bold text-lg py-4 px-8 rounded-2xl font-inria
-                    transform active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-offset-2
-                    shadow-lg hover:shadow-2xl
-                    ${isAvailable
-                      ? 'bg-linear-to-r from-[#1A581E] to-[#1a6b2e] hover:from-[#124416] hover:to-[#145824] text-white focus:ring-[#1A581E]/50'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'
-                    }
-                  `}
-                >
-                  {isAvailable ? 'Adopt This Tree Now' : 'Sold Out'}
-                </button>
-              </div>
-
-              {/* Right Column - Rich Details */}
-              <div className="space-y-6">
-                {/* Enhanced Tab Switcher */}
-                <div className="flex gap-1 bg-gray-100 rounded-xl p-1.5">
+                {/* Enhanced Underline Tabs */}
+                <div className="flex gap-6 border-b border-gray-200 mt-6">
                   <button
                     onClick={() => setActiveTab('deskripsi')}
                     className={`
-                      flex-1 px-5 py-3 font-semibold text-sm rounded-lg transition-all duration-200 font-inria
+                      pb-3 font-semibold text-base transition-all duration-200 font-inria
                       ${activeTab === 'deskripsi'
-                        ? 'bg-white text-[#1A581E] shadow-md'
-                        : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
+                        ? 'text-gray-900 border-b-2 border-[#1A581E]'
+                        : 'text-gray-500 hover:text-gray-700 border-b-2 border-transparent'
                       }
                     `}
                   >
@@ -158,10 +102,10 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                   <button
                     onClick={() => setActiveTab('cerita')}
                     className={`
-                      flex-1 px-5 py-3 font-semibold text-sm rounded-lg transition-all duration-200 font-inria
+                      pb-3 font-semibold text-base transition-all duration-200 font-inria
                       ${activeTab === 'cerita'
-                        ? 'bg-white text-[#1A581E] shadow-md'
-                        : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'
+                        ? 'text-gray-900 border-b-2 border-[#1A581E]'
+                        : 'text-gray-500 hover:text-gray-700 border-b-2 border-transparent'
                       }
                     `}
                   >
@@ -169,29 +113,29 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                   </button>
                 </div>
 
-                {/* Tab Content with Animation */}
-                <div className={`${styles.tabContent} min-h-55`}>
+                {/* Tab Content */}
+                <div className={`${styles.tabContent} min-h-[12rem] pt-6`}>
                   {activeTab === 'deskripsi' ? (
-                    <div className="prose prose-sm max-w-none">
-                      <p className="text-gray-700 leading-relaxed text-base">{species.description}</p>
+                    <div className="prose prose-sm sm:prose-base max-w-none">
+                      <p className="text-gray-700 leading-relaxed">{species.description}</p>
                     </div>
                   ) : (
-                    <div className="prose prose-sm max-w-none text-gray-700">
-                      <p className="text-base leading-relaxed italic text-gray-500">
+                    <div className="prose prose-sm sm:prose-base max-w-none text-gray-700">
+                      <p className="leading-relaxed italic text-gray-500">
                         Cerita & filosofi tentang {species.localName} akan segera ditambahkan...
                       </p>
                     </div>
                   )}
                 </div>
 
-                {/* Enhanced Fun Fact Box */}
+                {/* Subtle Fun Fact Box */}
                 {species.description && (
-                  <div className={`${styles.funFactBox} bg-linear-to-br from-amber-50 to-yellow-50 border-l-4 border-amber-400 rounded-r-xl p-5 shadow-sm`}>
+                  <div className="mt-8 bg-[#F9FAFB] border-l-4 border-[#1A581E] rounded-r-lg p-5">
                     <div className="flex items-start gap-4">
                       <div className="shrink-0 mt-0.5">
-                        <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-100">
                           <svg
-                            className="w-5 h-5 text-amber-600"
+                            className="w-5 h-5 text-[#1A581E]"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -204,16 +148,66 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                         </div>
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs font-bold text-amber-800 mb-2 uppercase tracking-wide">
+                        <p className="text-xs font-bold text-gray-900 mb-1.5 uppercase tracking-wide">
                           Fun Fact
                         </p>
-                        <p className="text-sm text-amber-900 leading-relaxed font-medium">
+                        <p className="text-sm text-gray-600 leading-relaxed">
                           Tanaman ini memiliki keunikan khusus dan memainkan peran penting dalam ekosistem lokal.
                         </p>
                       </div>
                     </div>
                   </div>
                 )}
+              </div>
+
+              {/* Right Column - Action Area */}
+              <div className="space-y-8">
+                {/* Price & Stock Area (Clean White Background) */}
+                <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-lg shadow-gray-100/50">
+                  <div className="mb-8">
+                    <p className="text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider">Adoption Price</p>
+                    <p className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-none mb-4">
+                      {formatPrice(species.price)}
+                    </p>
+                    <div className="flex items-center gap-4 text-sm">
+                      <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">
+                        Stock: {species.stock}
+                      </span>
+                      {isAvailable ? (
+                        <div className="flex items-center gap-2 text-[#1A581E] font-medium">
+                          <span className="relative flex h-2.5 w-2.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1A581E] opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#1A581E]"></span>
+                          </span>
+                          Ready for Adoption
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2 text-gray-500 font-medium">
+                          <span className="w-2.5 h-2.5 bg-gray-400 rounded-full"></span>
+                          Out of Stock
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Primary CTA Button */}
+                  <button
+                    onClick={() => onAdopt?.(species.id)}
+                    disabled={!isAvailable}
+                    className={`
+                      w-full font-bold text-lg py-4 px-8 rounded-xl font-inria
+                      transform transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2
+                      ${isAvailable
+                        ? 'bg-[#1A581E] hover:bg-[#154617] text-white shadow-lg shadow-[#1A581E]/30 focus:ring-[#1A581E]/50'
+                        : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                      }
+                    `}
+                  >
+                    {isAvailable ? 'Adopt This Tree Now' : 'Sold Out'}
+                  </button>
+                </div>
+
+
               </div>
             </div>
           </div>

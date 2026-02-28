@@ -18,8 +18,8 @@ const CLUSTERS: TreeCluster[] = [
 
 export default function CatalogTabs({ activeCluster, onClusterChange, counts }: CatalogTabsProps) {
   return (
-    <div className="flex flex-wrap gap-3 items-center">
-      <span className="text-sm font-medium text-gray-700 mr-2">Filter:</span>
+    <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4">
+      <span className="text-sm font-medium text-gray-500 hidden md:inline-block">Filter:</span>
       {CLUSTERS.map((cluster) => {
         const isActive = activeCluster === cluster;
         const count = counts?.[cluster] || 0;
@@ -29,25 +29,20 @@ export default function CatalogTabs({ activeCluster, onClusterChange, counts }: 
             key={cluster}
             onClick={() => onClusterChange(cluster)}
             className={`
-              relative px-5 py-2.5 rounded-full font-medium text-sm
-              transition-all duration-200 ease-out
+              relative px-5 py-2.5 rounded-full font-medium text-sm whitespace-nowrap
+              transition-all duration-200 ease-out border
               ${isActive
-                ? 'bg-[#1A581E] text-white shadow-md'
-                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-[#1A581E]/30'
+                ? 'bg-[#1A581E] border-[#1A581E] text-white shadow-md'
+                : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:text-gray-900 hover:bg-gray-50'
               }
-              focus:outline-none focus:ring-2 focus:ring-[#1A581E] focus:ring-offset-2
-              transform active:scale-95
+              focus:outline-none focus:ring-4 focus:ring-[#1A581E]/20
+              transform active:scale-95 flex items-center gap-1.5
             `}
           >
-            {cluster}
+            <span>{cluster}</span>
             {count > 0 && (
-              <span
-                className={`
-                  ml-2 text-xs px-2 py-0.5 rounded-full
-                  ${isActive ? 'bg-white/20' : 'bg-gray-100'}
-                `}
-              >
-                {count}
+              <span className={isActive ? 'text-white/90' : 'text-gray-500'}>
+                ({count})
               </span>
             )}
           </button>
