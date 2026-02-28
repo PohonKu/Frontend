@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Tilt_Warp, Inria_Serif } from "next/font/google";
 import "./globals.css";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
-import { Footer } from "@/components/home/Footer";
+import { FooterWrapper } from "@/components/home/FooterWrapper";
 
 // Inter — body text, descriptions, labels
 const sans = Inter({
@@ -49,7 +49,7 @@ export default function RootLayout({
         <main className="flex-grow">
           {children}
         </main>
-        <Footer />
+        <FooterWrapper />
       </body>
     </html>
   );

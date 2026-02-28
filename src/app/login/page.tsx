@@ -93,7 +93,7 @@ function LoginContent() {
 
 export default function LoginPage() {
     return (
-        <div className="min-h-[calc(100vh-80px)] w-full flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-100 p-4">
+        <div className="min-h-screen pt-20 w-full flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-100 p-4">
             <Suspense fallback={
                 <div className="animate-pulse flex flex-col items-center">
                     <div className="w-12 h-12 rounded-full border-4 border-[#1A581E] border-t-transparent animate-spin mb-4" />
