@@ -67,9 +67,12 @@ export const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [pathname]); // Re-check on route change
-
   const isHomePage = pathname === '/';
-  const isTransparent = isHomePage && !isScrolled && !isMobileMenuOpen;
+  const isTreesPage = pathname?.startsWith('/trees');
+  const isAdoptPage = pathname?.startsWith('/adopt');
+
+  const isTransparentRoute = isHomePage || isTreesPage || isAdoptPage;
+  const isTransparent = isTransparentRoute && !isScrolled && !isMobileMenuOpen;
 
   const textColorClass = isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-900 group-hover/btn:text-[#1A581E]';
   const navLinkClass = isTransparent ? 'text-white hover:text-gray-200' : 'text-gray-900 group-hover/nav:text-[#1A581E]';
@@ -77,22 +80,24 @@ export const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isTransparent ? 'bg-transparent py-2' : 'bg-white shadow-md'}`}>
-      <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+      <div className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center">
 
         {/* --- LOGO --- */}
-        <Link href="/" className="flex-shrink-0 hover:opacity-80 transition-opacity">
-          <Image
-            src="/images/Logo.svg"
-            alt="PohonKu Logo"
-            width={96}
-            height={72}
-            className={`w-16 h-12 md:w-24 md:h-18 object-contain transition-all duration-300 ${isTransparent ? 'brightness-0 invert' : ''}`}
-            priority
-          />
-        </Link>
+        <div className="flex-1 flex justify-start items-center">
+          <Link href="/" className="flex-shrink-0 hover:opacity-80 transition-opacity">
+            <Image
+              src="/images/Logo.svg"
+              alt="PohonKu Logo"
+              width={160}
+              height={120}
+              className={`w-28 h-18 md:w-36 md:h-24 object-contain transition-all duration-300 ${isTransparent ? 'brightness-0 invert' : ''}`}
+              priority
+            />
+          </Link>
+        </div>
 
-        {/* --- DESKTOP NAVIGATION --- */}
-        <div className="hidden lg:flex items-center gap-6 xl:gap-10">
+        {/* --- DESKTOP NAV LINKS --- */}
+        <div className="hidden lg:flex items-center justify-center gap-6 xl:gap-10">
 
           {/* PohonKu Dropdown */}
           <div
@@ -136,7 +141,7 @@ export const Navbar = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </div >
 
           {/* Navigation Links */}
           <Link
@@ -159,10 +164,14 @@ export const Navbar = () => {
             <span className={`absolute bottom-0 left-0 w-full h-0.5 scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-left ${lineClass}`}></span>
           </Link>
 
-          {/* CTA Button */}
+          {/* CTA Button placed among links */}
           <Link
             href={isLoggedIn ? "/adopt" : "/login?redirect=/adopt"}
-            className="bg-[#1A581E] hover:bg-[#029146] text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
+            className={`transition-all duration-300 px-5 py-2 rounded-lg hover:shadow-lg hover:scale-105 active:scale-95 ml-2 border 
+              ${isTransparent
+                ? 'bg-transparent border-transparent text-white hover:bg-[#1A581E] hover:border-[#1A581E]'
+                : 'bg-[#1A581E] border-[#1A581E] text-white hover:bg-[#029146] hover:border-[#029146]'
+              }`}
           >
             <Typography variant="button" className="text-white text-sm font-semibold">
               Adopt a Tree
@@ -171,22 +180,22 @@ export const Navbar = () => {
 
         </div>
 
-
-        {/* --- PROFILE SECTION --- */}
-        <div className="hidden lg:flex items-center">
-          <div className="hidden lg:flex">
+        {/* --- RIGHT ACTIONS --- */}
+        <div className="flex-1 flex justify-end items-center gap-5">
+          {/* PROFILE (Desktop only) */}
+          <div className="hidden lg:flex items-center">
             <ProfileImage />
           </div>
-        </div>
 
-        {/* --- MOBILE HAMBURGER --- */}
-        <button
-          className={`lg:hidden p-2 transition-colors ${isTransparent ? 'text-white' : 'text-gray-900 hover:text-[#1A581E]'}`}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          {/* --- MOBILE HAMBURGER --- */}
+          <button
+            className={`lg:hidden p-2 transition-colors ${isTransparent ? 'text-white' : 'text-gray-900 hover:text-[#1A581E]'}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* --- MOBILE MENU --- */}

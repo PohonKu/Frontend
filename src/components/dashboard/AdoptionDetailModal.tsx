@@ -105,7 +105,7 @@ export default function AdoptionDetailModal({
             className="w-full h-full object-cover"
             onError={(e) => {
               (e.target as HTMLImageElement).src =
-                'https://via.placeholder.com/500x300?text=Pohon';
+                'https://placehold.co/500x300?text=Pohon';
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">

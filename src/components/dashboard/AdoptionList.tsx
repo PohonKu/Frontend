@@ -91,7 +91,7 @@ export default function AdoptionList({
               className="w-full h-full object-cover hover:scale-105 transition-transform"
               onError={(e) => {
                 (e.target as HTMLImageElement).src =
-                  'https://via.placeholder.com/300x200?text=Pohon';
+                  'https://placehold.co/300x200?text=Pohon';
               }}
             />
             {/* Status Badge */}

@@ -3,7 +3,6 @@ import { AboutSection } from '@/components/home/AboutSection';
 import { ProjectArea } from '@/components/home/ProjectArea';
 import { TeamMember } from '@/components/home/TeamMember';
 import { GoalsSection } from '@/components/home/GoalsSection';
-import { Footer } from '@/components/home/Footer';
 
 export default function Home() {
   return (
@@ -13,7 +12,6 @@ export default function Home() {
       <ProjectArea />
       <TeamMember />
       <GoalsSection />
-      <Footer />
     </main>
   );
 }

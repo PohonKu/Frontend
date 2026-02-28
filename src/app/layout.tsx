@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Tilt_Warp, Inria_Serif } from "next/font/google";
 import "./globals.css";
 import { NavbarWrapper } from "@/components/layout/NavbarWrapper";
+import { Footer } from "@/components/home/Footer";
 
 // Inter — body text, descriptions, labels
 const sans = Inter({
@@ -42,10 +43,13 @@ export default function RootLayout({
         ${sans.variable} 
         ${tiltWarp.variable} 
         ${inriaSerif.variable} 
-        font-sans antialiased bg-gray-50 text-gray-900
+        font-sans antialiased bg-gray-50 text-gray-900 min-h-screen flex flex-col
       `}>
         <NavbarWrapper />
-        {children}
+        <main className="flex-grow">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
