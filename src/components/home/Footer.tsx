@@ -2,16 +2,18 @@
 
 import { usePathname } from 'next/navigation';
 import { Instagram, Youtube, Facebook, Twitter } from 'lucide-react';
+import Link from 'next/link';
 
-// Custom SVG icons for TikTok and Flickr
-const TiktokIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+// Custom SVG icon for TikTok
+const TiktokIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
   </svg>
 );
 
-const FlickrIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+// Custom SVG icon for Flickr
+const FlickrIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
     <circle cx="8" cy="12" r="4" />
     <circle cx="16" cy="12" r="4" />
   </svg>
@@ -25,70 +27,118 @@ export const Footer = () => {
     return null;
   }
 
-  const scrollToFAQ = () => {
-    window.location.href = '/faq';
-  };
-
-  const navigateToContact = () => {
-    window.location.href = '/contact';
-  };
-
   const socialLinks = [
-    { name: 'Instagram', icon: Instagram, href: '#', hoverClass: 'hover:bg-[#E4405F] hover:border-[#E4405F]' },
-    { name: 'YouTube', icon: Youtube, href: '#', hoverClass: 'hover:bg-[#FF0000] hover:border-[#FF0000]' },
-    { name: 'TikTok', icon: TiktokIcon, href: '#', hoverClass: 'hover:bg-[#000000] hover:border-[#000000]' },
-    { name: 'Facebook', icon: Facebook, href: '#', hoverClass: 'hover:bg-[#1877F2] hover:border-[#1877F2]' },
-    { name: 'Twitter', icon: Twitter, href: '#', hoverClass: 'hover:bg-[#1DA1F2] hover:border-[#1DA1F2]' },
-    { name: 'Flickr', icon: FlickrIcon, href: '#', hoverClass: 'hover:bg-[#0063DC] hover:border-[#0063DC]' }
+    { name: 'Instagram', icon: Instagram, href: '#' },
+    { name: 'YouTube', icon: Youtube, href: '#' },
+    { name: 'TikTok', icon: TiktokIcon, href: '#' },
+    { name: 'Facebook', icon: Facebook, href: '#' },
+    { name: 'Twitter', icon: Twitter, href: '#' },
+    { name: 'Flickr', icon: FlickrIcon, href: 'https://flickr.com' }
+  ];
+
+  const eksplorasiLinks = [
+    { name: 'Beranda', href: '/' },
+    { name: 'Koleksi Pohon', href: '/trees' },
+    { name: 'Adopsi Pohon', href: '/adopt' }
+  ];
+
+  const bantuanLinks = [
+    { name: 'FAQ', href: '/faq' },
+    { name: 'Hubungi Kami', href: '/contact' },
+    { name: 'Syarat & Ketentuan', href: '/terms' }
   ];
 
   return (
-    <footer className="w-full relative z-20 mt-auto bg-transparent pb-8 pt-4 px-6 md:px-12">
-      <div className="relative max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
+    <footer className="w-full relative z-20 mt-auto bg-[#F3F6F4] border-t border-gray-200/60">
 
-        {/* Left Section - Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto md:flex-1">
-          <button
-            onClick={scrollToFAQ}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-full border border-white/60 text-white font-tilt text-sm transition-all duration-300 hover:bg-white/10 hover:border-white focus:outline-none"
-          >
-            FAQ
-          </button>
-          <button
-            onClick={navigateToContact}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-white text-[#1A581E] font-tilt text-sm transition-all duration-300 hover:bg-white/90 hover:shadow-lg focus:outline-none"
-          >
-            HUBUNGI KAMI
-          </button>
-        </div>
+      {/* Top Area - Grid Container */}
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
 
-        {/* Center Section - Copyright */}
-        <div className="flex justify-center w-full md:w-auto md:flex-1 order-3 md:order-none">
-          <p className="text-white/90 font-sans text-xs sm:text-sm text-center">
-            Copyright © {new Date().getFullYear()} PohonKu. All Rights Reserved.
-          </p>
-        </div>
+          {/* Column 1 - Brand */}
+          <div className="flex flex-col items-start">
+            <h2 className="font-serif text-3xl font-bold text-[#1A581E] tracking-wide mb-4">
+              PohonKu
+            </h2>
+            <p className="text-gray-600 font-sans leading-relaxed max-w-[280px]">
+              Melestarikan alam, mengukir kebaikan di Gunungkidul.
+            </p>
+          </div>
 
-        {/* Right Section - Social Media */}
-        <div className="flex justify-center md:justify-end w-full md:w-auto md:flex-1 gap-3 flex-wrap">
-          {socialLinks.map((social) => {
-            const Icon = social.icon;
-            return (
-              <a
-                key={social.name}
-                href={social.href}
-                className={`group relative flex items-center justify-center w-10 h-10 rounded-full border border-white/40 text-white bg-white/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${social.hoverClass}`}
-                aria-label={social.name}
-              >
-                <Icon width={18} height={18} />
-                <span className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs font-medium text-white bg-black/90 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                  {social.name}
-                </span>
-              </a>
-            );
-          })}
+          {/* Column 2 - Eksplorasi Shortcuts */}
+          <div className="flex flex-col">
+            <h3 className="font-sans font-semibold text-lg text-[#1A581E] mb-6 relative w-max before:absolute before:bottom-[-4px] before:left-0 before:w-1/2 before:h-[2px] before:bg-transparent hover:before:bg-[#1A581E] before:transition-colors before:duration-300">
+              Eksplorasi
+            </h3>
+            <ul className="flex flex-col space-y-4">
+              {eksplorasiLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="font-sans text-gray-600 hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3 - Bantuan */}
+          <div className="flex flex-col">
+            <h3 className="font-sans font-semibold text-lg text-[#1A581E] mb-6 relative w-max before:absolute before:bottom-[-4px] before:left-0 before:w-1/2 before:h-[2px] before:bg-transparent hover:before:bg-[#1A581E] before:transition-colors before:duration-300">
+              Bantuan
+            </h3>
+            <ul className="flex flex-col space-y-4">
+              {bantuanLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="font-sans text-gray-600 hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
         </div>
       </div>
+
+      {/* Bottom Area - Copyright & Socials */}
+      <div className="border-t border-gray-200/60">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-6">
+
+          <div className="text-sm font-sans text-gray-500 text-center md:text-left">
+            Copyright © 2026 PohonKu. All Rights Reserved.
+          </div>
+
+          <div className="flex items-center justify-center gap-5 flex-wrap">
+            {socialLinks.map((social) => {
+              const Icon = social.icon;
+              return (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target={social.name === 'Flickr' ? '_blank' : undefined}
+                  rel={social.name === 'Flickr' ? 'noopener noreferrer' : undefined}
+                  className="text-gray-400 hover:text-[#1A581E] transition-all duration-300 hover:-translate-y-[2px] focus:outline-none"
+                  aria-label={social.name}
+                >
+                  {social.name === 'TikTok' ? (
+                    <Icon className="w-[18px] h-[18px]" />
+                  ) : (
+                    <Icon strokeWidth={1.5} className="w-[20px] h-[20px]" />
+                  )}
+                </a>
+              );
+            })}
+          </div>
+
+        </div>
+      </div>
+
     </footer>
   );
 };
