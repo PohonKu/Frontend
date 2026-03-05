@@ -26,9 +26,9 @@ export const ImpactStats = () => {
     const activeAdopters = useNumberAnimation(860);
 
     return (
-        <section className="w-full bg-[#FAFAFA] py-24 border-b border-gray-200">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-gray-300">
+        <section className="w-full bg-white py-16">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
 
                     {/* Stat 1 */}
                     <div className="flex flex-col items-center justify-center p-4">

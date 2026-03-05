@@ -85,7 +85,7 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     {FEATURED_TREES.map((tree) => (
-                        <div key={tree.id} className="group flex flex-col bg-[#FAFAFA] border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl">
+                        <div key={tree.id} className="group flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
 
                             {/* Image Area */}
                             <div className="relative h-80 w-full overflow-hidden">
@@ -99,7 +99,7 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
 
                                 {/* Elegant Badge */}
                                 <div className="absolute top-5 left-5">
-                                    <span className="bg-[#FAFAFA]/90 backdrop-blur-sm text-[#1A3626] border border-[#1A3626]/20 text-[10px] uppercase tracking-[0.2em] px-4 py-2 font-sans">
+                                    <span className="bg-white/90 backdrop-blur-sm text-[#1A581E] border border-gray-200 text-[10px] uppercase tracking-[0.15em] px-3 py-1.5 rounded-full font-sans font-medium">
                                         {tree.badge}
                                     </span>
                                 </div>
@@ -121,7 +121,7 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
 
                                 <button
                                     onClick={() => handleAdopt(tree)}
-                                    className="w-full bg-transparent border border-[#1A3626] text-[#1A3626] hover:bg-[#1A3626] hover:text-[#FAFAFA] font-medium py-3 text-sm tracking-widest uppercase transition-colors font-sans"
+                                    className="w-full bg-white border border-[#1A581E] text-[#1A581E] hover:bg-[#1A581E] hover:text-white font-medium py-3 text-sm tracking-wider uppercase transition-colors duration-300 rounded-lg font-sans"
                                 >
                                     Adopsi Sekarang
                                 </button>

@@ -45,11 +45,11 @@ const STEPS = [
 
 export const HowItWorks = () => {
     return (
-        <section className="py-24 bg-[#FAFAFA] border-t border-gray-200">
+        <section className="py-20 bg-white">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <div className="text-center mb-20">
-                    <h2 className="text-3xl md:text-4xl font-tilt font-bold text-[#111827] mb-6">
+                <div className="text-center mb-14">
+                    <h2 className="text-3xl md:text-4xl font-tilt font-bold text-[#1A581E] mb-6">
                         Langkah Menuju Kebaikan
                     </h2>
                     <div className="w-12 h-[1px] bg-[#1A3626] mx-auto"></div>
@@ -57,9 +57,9 @@ export const HowItWorks = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                     {STEPS.map((step) => (
-                        <div key={step.id} className="flex flex-col items-center text-center group">
+                        <div key={step.id} className="flex flex-col items-center text-center group p-6 rounded-xl transition-transform duration-300 hover:-translate-y-1">
 
-                            <div className="text-[#1A3626] mb-6 opactity-80 group-hover:scale-110 transition-transform duration-500">
+                            <div className="text-[#1A581E] mb-6 opacity-80">
                                 {step.icon}
                             </div>
 

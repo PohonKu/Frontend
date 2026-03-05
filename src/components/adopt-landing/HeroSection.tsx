@@ -31,7 +31,7 @@ export const HeroSection = ({ treeName, setTreeName }: HeroSectionProps) => {
 
                 {/* Right Column: Elegant Glassmorphism Card */}
                 <div className="flex-1 w-full max-w-md">
-                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+                    <div className="bg-white rounded-2xl p-8 shadow-lg relative overflow-hidden">
 
                         <div className="space-y-8 relative z-10">
                             {/* Illustration Area: The Wooden Tag (Elegant) */}
@@ -52,7 +52,7 @@ export const HeroSection = ({ treeName, setTreeName }: HeroSectionProps) => {
                                         value={treeName}
                                         onChange={(e) => setTreeName(e.target.value)}
                                         placeholder="Tulis nama untuk ukiran pohon..."
-                                        className="w-full bg-white/20 text-[#FAFAFA] placeholder-white/70 px-5 py-4 rounded-xl border-none focus:ring-1 focus:ring-white/50 focus:bg-white/30 transition-all outline-none text-lg font-light font-sans"
+                                        className="w-full bg-gray-100 text-gray-800 placeholder-gray-400 px-5 py-4 rounded-xl border border-gray-200 focus:ring-1 focus:ring-[#1A581E] focus:border-[#1A581E] transition-all outline-none text-lg font-light font-sans"
                                         maxLength={30}
                                     />
                                 </div>
@@ -62,7 +62,7 @@ export const HeroSection = ({ treeName, setTreeName }: HeroSectionProps) => {
                                         const element = document.getElementById('featured-trees');
                                         element?.scrollIntoView({ behavior: 'smooth' });
                                     }}
-                                    className="w-full bg-[#1A3626] hover:bg-[#12261b] text-[#FAFAFA] font-medium py-4 rounded-xl text-lg transition-all shadow-lg border border-[#2b4c38] font-sans"
+                                    className="w-full bg-[#1A581E] hover:bg-[#145216] text-white font-medium py-4 rounded-xl text-lg transition-colors duration-300 font-sans"
                                 >
                                     Ukir Nama Ini
                                 </button>
