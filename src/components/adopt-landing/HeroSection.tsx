@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-export const HeroSection = () => {
-    const [treeName, setTreeName] = useState('');
+interface HeroSectionProps {
+    treeName: string;
+    setTreeName: (name: string) => void;
+}
+
+export const HeroSection = ({ treeName, setTreeName }: HeroSectionProps) => {
 
     return (
         <section className="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden">

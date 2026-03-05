@@ -99,9 +99,9 @@ export const Hero = () => {
 
                     <Link
                         href={slides[currentSlide].ctaLink}
-                        className="inline-block bg-white text-gray-900 px-8 py-4 rounded-full hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95"
+                        className="group inline-block bg-white px-8 py-4 rounded-full transition-all duration-400 ease-in-out hover:bg-[#1A581E] hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
                     >
-                        <Typography variant="button" className="text-gray-900 font-bold text-base md:text-lg">
+                        <Typography variant="button" className="text-gray-900 group-hover:text-white font-bold text-base md:text-lg transition-colors duration-400 ease-in-out">
                             {slides[currentSlide].ctaText}
                         </Typography>
                     </Link>
@@ -111,17 +111,17 @@ export const Hero = () => {
             {/* Navigation Arrows */}
             <button
                 onClick={prevSlide}
-                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm"
+                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-2 text-white/60 hover:text-white hover:-translate-x-2 transition-all duration-300 group"
                 aria-label="Previous slide"
             >
-                <ChevronLeft size={24} />
+                <ChevronLeft size={48} strokeWidth={1} className="drop-shadow-lg group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
             </button>
             <button
                 onClick={nextSlide}
-                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors backdrop-blur-sm"
+                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2 text-white/60 hover:text-white hover:translate-x-2 transition-all duration-300 group"
                 aria-label="Next slide"
             >
-                <ChevronRight size={24} />
+                <ChevronRight size={48} strokeWidth={1} className="drop-shadow-lg group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
             </button>
 
             {/* Dot Indicators */}
