@@ -1,4 +1,13 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import NameTagModal from '@/components/adopt/NameTagModal';
+import PaymentModal from '@/components/adopt/PaymentModal';
+import { orderApi } from '@/lib/apiPayment';
+
+interface FeaturedTreesProps {
+    prefilledName?: string;
+}
 
 const FEATURED_TREES = [
     {
@@ -27,7 +36,39 @@ const FEATURED_TREES = [
     }
 ];
 
-export const FeaturedTrees = () => {
+export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
+    const [pendingSpecies, setPendingSpecies] = useState<{ id: string; name: string } | null>(null);
+    const [activeOrderId, setActiveOrderId] = useState<string | null>(null);
+    const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+
+    const handleAdopt = (tree: { id: string; name: string }) => {
+        setPendingSpecies(tree);
+    };
+
+    const handleNameSubmit = async (nameOnTag: string) => {
+        if (!pendingSpecies) return;
+
+        setIsCreatingOrder(true);
+        try {
+            const response = await orderApi.createOrder({
+                speciesId: pendingSpecies.id,
+                nameOnTag,
+            });
+
+            if (response.success && response.data?.id) {
+                setPendingSpecies(null);
+                setActiveOrderId(response.data.id);
+            } else {
+                alert(response.message || 'Gagal membuat pesanan adopsi.');
+            }
+        } catch (error: any) {
+            console.error('Error creating order:', error);
+            alert(error.message || 'Terjadi kesalahan koneksi saat membuat pesanan.');
+        } finally {
+            setIsCreatingOrder(false);
+        }
+    };
+
     return (
         <section id="featured-trees" className="py-24 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,9 +114,15 @@ export const FeaturedTrees = () => {
                                     <p className="text-xl font-medium text-[#111827] font-sans">
                                         Rp {tree.price.toLocaleString('id-ID')}
                                     </p>
+                                    <p className="text-xs text-gray-500 mt-1 uppercase tracking-wider font-sans">
+                                        Durasi Adopsi: 1 Tahun
+                                    </p>
                                 </div>
 
-                                <button className="w-full bg-transparent border border-[#1A3626] text-[#1A3626] hover:bg-[#1A3626] hover:text-[#FAFAFA] font-medium py-3 text-sm tracking-widest uppercase transition-colors font-sans">
+                                <button
+                                    onClick={() => handleAdopt(tree)}
+                                    className="w-full bg-transparent border border-[#1A3626] text-[#1A3626] hover:bg-[#1A3626] hover:text-[#FAFAFA] font-medium py-3 text-sm tracking-widest uppercase transition-colors font-sans"
+                                >
                                     Adopsi Sekarang
                                 </button>
                             </div>
@@ -84,6 +131,34 @@ export const FeaturedTrees = () => {
                 </div>
 
             </div>
+
+            {/* Name Tag Modal */}
+            {pendingSpecies && (
+                <NameTagModal
+                    speciesName={pendingSpecies.name}
+                    initialName={prefilledName}
+                    onClose={() => setPendingSpecies(null)}
+                    onSubmit={handleNameSubmit}
+                />
+            )}
+
+            {/* Loading Overlay */}
+            {isCreatingOrder && (
+                <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center backdrop-blur-sm">
+                    <div className="bg-white p-6 rounded-2xl flex flex-col items-center">
+                        <div className="animate-spin rounded-full h-10 w-10 border-4 border-[#1A581E] border-t-transparent mb-4"></div>
+                        <p className="text-gray-900 font-medium font-sans">Menyiapkan Pesanan...</p>
+                    </div>
+                </div>
+            )}
+
+            {/* Payment Modal */}
+            {activeOrderId && (
+                <PaymentModal
+                    orderId={activeOrderId}
+                    onClose={() => setActiveOrderId(null)}
+                />
+            )}
         </section>
     );
 };

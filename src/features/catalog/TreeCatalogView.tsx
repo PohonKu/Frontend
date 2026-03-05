@@ -6,6 +6,9 @@ import { TreeCluster } from './types';
 import TreeCard, { TreeSpeciesCard } from '@/components/ui/TreeCard';
 import TreeDetailModal from '@/components/ui/TreeDetailModal';
 import CatalogTabs from './CatalogTabs';
+import NameTagModal from '@/components/adopt/NameTagModal';
+import PaymentModal from '@/components/adopt/PaymentModal';
+import { orderApi } from '@/lib/apiPayment';
 
 interface TreeCatalogViewProps {
   trees: RawTree[];
@@ -15,6 +18,11 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
   const [activeCluster, setActiveCluster] = useState<TreeCluster>('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecies, setSelectedSpecies] = useState<TreeSpeciesCard | null>(null);
+
+  // Adoption Flow States
+  const [pendingSpecies, setPendingSpecies] = useState<TreeSpeciesCard | null>(null);
+  const [activeOrderId, setActiveOrderId] = useState<string | null>(null);
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
 
   // Group by species and calculate stock
   const groupedSpecies = useMemo(() => {
@@ -84,9 +92,36 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
   }, [groupedSpecies]);
 
   const handleAdopt = (speciesId: string) => {
-    // TODO: Implement adoption logic
-    console.log('Adopting species:', speciesId);
-    // You could navigate to adoption form, open payment modal, etc.
+    const species = groupedSpecies.find((s) => s.id === speciesId);
+    if (species) {
+      setPendingSpecies(species);
+    }
+  };
+
+  const handleNameSubmit = async (nameOnTag: string) => {
+    if (!pendingSpecies) return;
+
+    setIsCreatingOrder(true);
+    try {
+      const response = await orderApi.createOrder({
+        speciesId: pendingSpecies.id,
+        nameOnTag,
+      });
+
+      if (response.success && response.data?.id) {
+        // Close modals and open payment
+        setPendingSpecies(null);
+        setSelectedSpecies(null);
+        setActiveOrderId(response.data.id);
+      } else {
+        alert(response.message || 'Gagal membuat pesanan adopsi.');
+      }
+    } catch (error: any) {
+      console.error('Error creating order:', error);
+      alert(error.message || 'Terjadi kesalahan koneksi saat membuat pesanan.');
+    } finally {
+      setIsCreatingOrder(false);
+    }
   };
 
   return (
@@ -179,6 +214,33 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
           species={selectedSpecies}
           onClose={() => setSelectedSpecies(null)}
           onAdopt={handleAdopt}
+        />
+      )}
+
+      {/* Name Tag Modal */}
+      {pendingSpecies && (
+        <NameTagModal
+          speciesName={pendingSpecies.localName}
+          onClose={() => setPendingSpecies(null)}
+          onSubmit={handleNameSubmit}
+        />
+      )}
+
+      {/* Loading Overlay when creating order */}
+      {isCreatingOrder && (
+        <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center backdrop-blur-sm">
+          <div className="bg-white p-6 rounded-2xl flex flex-col items-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-4 border-[#1A581E] border-t-transparent mb-4"></div>
+            <p className="text-gray-900 font-medium font-sans">Menyiapkan Pesanan...</p>
+          </div>
+        </div>
+      )}
+
+      {/* Payment Modal */}
+      {activeOrderId && (
+        <PaymentModal
+          orderId={activeOrderId}
+          onClose={() => setActiveOrderId(null)}
         />
       )}
     </div>

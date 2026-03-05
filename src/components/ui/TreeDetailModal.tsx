@@ -165,13 +165,21 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                 {/* Price & Stock Area (Clean White Background) */}
                 <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-lg shadow-gray-100/50">
                   <div className="mb-8">
-                    <p className="text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider">Adoption Price</p>
-                    <p className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-none mb-4">
-                      {formatPrice(species.price)}
+                    <p className="text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider font-sans">Harga Adopsi</p>
+                    <div className="flex items-baseline gap-2 mb-4">
+                      <p className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-none font-inria">
+                        {formatPrice(species.price)}
+                      </p>
+                      <span className="text-sm text-gray-500 font-sans">/ 1 Tahun</span>
+                    </div>
+
+                    <p className="text-xs text-gray-500 mb-4 italic font-sans">
+                      *Adopsi berlaku untuk masa perawatan 1 tahun. Setelah habis, status adopsi akan kadaluarsa.
                     </p>
-                    <div className="flex items-center gap-4 text-sm">
+
+                    <div className="flex items-center gap-4 text-sm font-sans">
                       <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">
-                        Stock: {species.stock}
+                        Sisa: {species.stock}
                       </span>
                       {isAvailable ? (
                         <div className="flex items-center gap-2 text-[#1A581E] font-medium">
@@ -179,12 +187,12 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1A581E] opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#1A581E]"></span>
                           </span>
-                          Ready for Adoption
+                          Tersedia untuk Diadopsi
                         </div>
                       ) : (
                         <div className="flex items-center gap-2 text-gray-500 font-medium">
                           <span className="w-2.5 h-2.5 bg-gray-400 rounded-full"></span>
-                          Out of Stock
+                          Stok Habis
                         </div>
                       )}
                     </div>
@@ -195,7 +203,7 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                     onClick={() => onAdopt?.(species.id)}
                     disabled={!isAvailable}
                     className={`
-                      w-full font-bold text-lg py-4 px-8 rounded-xl font-inria
+                      w-full font-bold text-lg py-4 px-8 rounded-xl font-inria tracking-wide
                       transform transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2
                       ${isAvailable
                         ? 'bg-[#1A581E] hover:bg-[#154617] text-white shadow-lg shadow-[#1A581E]/30 focus:ring-[#1A581E]/50'
@@ -203,7 +211,7 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                       }
                     `}
                   >
-                    {isAvailable ? 'Adopt This Tree Now' : 'Sold Out'}
+                    {isAvailable ? 'Adopsi Pohon Ini' : 'Habis Terjual'}
                   </button>
                 </div>
 

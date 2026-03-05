@@ -1,17 +1,19 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import HeroSection from '@/components/adopt-landing/HeroSection';
 import ImpactStats from '@/components/adopt-landing/ImpactStats';
 import FeaturedTrees from '@/components/adopt-landing/FeaturedTrees';
 import HowItWorks from '@/components/adopt-landing/HowItWorks';
 
 export default function AdoptLandingPage() {
+  const [heroName, setHeroName] = useState('');
+
   return (
     <main className="min-h-screen bg-[#FAFAFA]">
-      <HeroSection />
+      <HeroSection treeName={heroName} setTreeName={setHeroName} />
       <ImpactStats />
-      <FeaturedTrees />
+      <FeaturedTrees prefilledName={heroName} />
       <HowItWorks />
     </main>
   );
