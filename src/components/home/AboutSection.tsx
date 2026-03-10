@@ -29,6 +29,18 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
           {/* Subtle decorations to make it less plain but minimalist */}
           <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute -top-16 -left-16 w-56 h-56 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
+          {/* Background tree illustration */}
+          <div
+            className="absolute inset-0 pointer-events-none z-0"
+            style={{
+              backgroundImage: "url('/gambarCici/bg1.svg')",
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center',
+              filter: 'invert(1)',
+              opacity: 0.06,
+            }}
+          />
 
           {/* Visi */}
           <div className="flex flex-col items-center text-center space-y-4 relative z-10">
