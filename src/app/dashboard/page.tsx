@@ -8,6 +8,7 @@ import { Home, LayoutDashboard, Settings, LogOut, X, Download, MapPin, Calendar,
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { dashboardApi } from '@/lib/apiDashboard';
 import { Typography } from '@/components/ui/Typography';
+import AdoptionDetailModal from '@/components/dashboard/AdoptionDetailModal';
 
 // --- Types ---
 interface User {
@@ -21,21 +22,28 @@ interface Adoption {
   treeName: string;
   treeType: string;
   location: string;
-  status: string; // Used for listing status (Aktif dsb)
+  status: string;
   plantedAt: string;
   lastUpdated: string;
   imageUrl?: string;
   coordinates?: string;
   carbonAbsorbed: number;
-  // New Time-Based Properties
   adoptionDurationMonths: number;
-  growthPhase: string; // Seedling, Sapling, Pole, Tree
-  healthStatus: string; // Adaptasi, Sehat, Kritis
+  growthPhase: string;
+  healthStatus: string;
   nextUpdateDate: string;
 }
 
 // --- Constants & Styling ---
 const CHART_COLORS = ['#1E562A', '#4CAF50', '#8BC34A', '#C8E6C9', '#E8F5E9'];
+
+// --- Mock data fallback ---
+const MOCK_ADOPTIONS: Adoption[] = [
+  { id: '1', treeName: 'Pohon Mangga Golek', treeType: 'Mangifera indica', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '12 Jan 2024', lastUpdated: '2024-03-10T08:00:00Z', carbonAbsorbed: 12.5, adoptionDurationMonths: 12, growthPhase: 'Sapling', healthStatus: 'Sehat', nextUpdateDate: '2026-03-10T08:00:00Z' },
+  { id: '2', treeName: 'Pohon Jati Emas', treeType: 'Tectona grandis', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '20 Feb 2024', lastUpdated: '2024-03-25T09:30:00Z', carbonAbsorbed: 8.2, adoptionDurationMonths: 24, growthPhase: 'Seedling', healthStatus: 'Adaptasi', nextUpdateDate: '2026-04-25T09:30:00Z' },
+  { id: '3', treeName: 'Pohon Sengon Laut', treeType: 'Paraserianthes falcataria', location: 'Gunung Kidul, Yogyakarta', status: 'Baru Tanam', plantedAt: '05 Mar 2024', lastUpdated: '2024-03-05T14:15:00Z', carbonAbsorbed: 1.1, adoptionDurationMonths: 12, growthPhase: 'Seedling', healthStatus: 'Adaptasi', nextUpdateDate: '2025-09-05T14:15:00Z' },
+  { id: '4', treeName: 'Pohon Jati Emas', treeType: 'Tectona grandis', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '15 Jan 2024', lastUpdated: '2024-03-28T11:20:00Z', carbonAbsorbed: 9.0, adoptionDurationMonths: 36, growthPhase: 'Pole', healthStatus: 'Sehat', nextUpdateDate: '2026-03-28T11:20:00Z' },
+];
 
 // --- Helper Functions ---
 const getLatestUpdate = (adoptions: Adoption[]): string => {
@@ -58,7 +66,6 @@ const getTotalCarbon = (adoptions: Adoption[]): number => {
   return adoptions.reduce((sum, tree) => sum + tree.carbonAbsorbed, 0);
 };
 
-// Calculate nearest expiration date based on plantedAt + adoptionDurationMonths
 const getNearestExpiry = (adoptions: Adoption[]): string => {
   if (adoptions.length === 0) return '-';
   let nearestExpiryTime = Infinity;
@@ -93,17 +100,15 @@ const getUpcomingUpdate = (adoptions: Adoption[]): string => {
       }
     }
   });
-  // If no future updates are found just return the earliest general update
   if (nearestDateStr === '-' && adoptions[0]?.nextUpdateDate) return new Date(adoptions[0].nextUpdateDate).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
   return nearestDateStr;
 };
-
 
 const getCarbonDistribution = (adoptions: Adoption[]) => {
   return adoptions
     .map(tree => ({ name: tree.treeName, value: tree.carbonAbsorbed }))
     .sort((a, b) => b.value - a.value)
-    .slice(0, 5); // Top 5
+    .slice(0, 5);
 };
 
 // --- UI Tooltip Component ---
@@ -234,11 +239,8 @@ const CertificateModal = ({ isOpen, onClose, userName, treeName }: { isOpen: boo
           <X className="w-4 h-4" />
         </button>
 
-        {/* Certificate Border Design */}
         <div className="border-[12px] border-[#1E562A] p-2 bg-gray-50">
           <div className="border-4 border-double border-[#1E562A] p-12 flex flex-col items-center text-center relative overflow-hidden bg-white">
-
-            {/* Watermark logo */}
             <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
               <Image src="/images/Logo.svg" alt="Watermark" width={500} height={500} className="grayscale" />
             </div>
@@ -263,7 +265,6 @@ const CertificateModal = ({ isOpen, onClose, userName, treeName }: { isOpen: boo
                 <p className="text-sm text-gray-600 mt-1 font-serif">{new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
               </div>
 
-              {/* Seal/Stamp */}
               <div className="w-28 h-28 border-4 border-[#1E562A] rounded-full flex items-center justify-center bg-white">
                 <div className="w-24 h-24 border border-[#1E562A] rounded-full flex items-center justify-center flex-col">
                   <span className="text-[#1E562A] font-serif font-bold text-[10px] tracking-widest uppercase">Verified</span>
@@ -282,7 +283,6 @@ const CertificateModal = ({ isOpen, onClose, userName, treeName }: { isOpen: boo
           </div>
         </div>
 
-        {/* Action button */}
         <div className="flex justify-end mt-4 px-2">
           <button className="flex items-center gap-2 bg-[#1E562A] text-white px-5 py-2.5 rounded hover:bg-[#153f1e] transition-colors shadow-sm font-semibold text-sm">
             <Download className="w-4 h-4" /> Unduh Dokumen (PDF)
@@ -300,12 +300,17 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [adoptions, setAdoptions] = useState<Adoption[]>([]);
+  const [dataSource, setDataSource] = useState<'api' | 'mock'>('mock');
 
   // Modal states
   const [selectedTree, setSelectedTree] = useState<Adoption | null>(null);
   const [isTreeModalOpen, setIsTreeModalOpen] = useState(false);
   const [certificateTree, setCertificateTree] = useState<Adoption | null>(null);
   const [isCertificateModalOpen, setIsCertificateModalOpen] = useState(false);
+
+  // Adoption detail modal state (real API data)
+  const [adoptionDetail, setAdoptionDetail] = useState<any | null>(null);
+  const [isDetailLoading, setIsDetailLoading] = useState(false);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -329,15 +334,42 @@ export default function Dashboard() {
         const userData = await userRes.json();
         setUser(userData.data);
 
-        // ALWAYS USE MOCK DATA that fulfills strict UI layout definition and properties
-        const mockAdoptions: Adoption[] = [
-          { id: '1', treeName: 'Pohon Mangga Golek', treeType: 'Mangifera indica', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '12 Jan 2024', lastUpdated: '2024-03-10T08:00:00Z', carbonAbsorbed: 12.5, adoptionDurationMonths: 12, growthPhase: 'Sapling', healthStatus: 'Sehat', nextUpdateDate: '2026-03-10T08:00:00Z' },
-          { id: '2', treeName: 'Pohon Jati Emas', treeType: 'Tectona grandis', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '20 Feb 2024', lastUpdated: '2024-03-25T09:30:00Z', carbonAbsorbed: 8.2, adoptionDurationMonths: 24, growthPhase: 'Seedling', healthStatus: 'Adaptasi', nextUpdateDate: '2026-04-25T09:30:00Z' },
-          { id: '3', treeName: 'Pohon Sengon Laut', treeType: 'Paraserianthes falcataria', location: 'Gunung Kidul, Yogyakarta', status: 'Baru Tanam', plantedAt: '05 Mar 2024', lastUpdated: '2024-03-05T14:15:00Z', carbonAbsorbed: 1.1, adoptionDurationMonths: 12, growthPhase: 'Seedling', healthStatus: 'Adaptasi', nextUpdateDate: '2025-09-05T14:15:00Z' },
-          { id: '4', treeName: 'Pohon Jati Emas', treeType: 'Tectona grandis', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '15 Jan 2024', lastUpdated: '2024-03-28T11:20:00Z', carbonAbsorbed: 9.0, adoptionDurationMonths: 36, growthPhase: 'Pole', healthStatus: 'Sehat', nextUpdateDate: '2026-03-28T11:20:00Z' },
-        ];
+        // Try fetching real adoptions from API first
+        try {
+          const apiData = await dashboardApi.getDashboard();
+          const list = apiData?.success ? apiData.data : (Array.isArray(apiData) ? apiData : null);
 
-        setAdoptions(mockAdoptions);
+          if (list && Array.isArray(list) && list.length > 0) {
+            // Map API response to our Adoption shape if needed
+            const mapped: Adoption[] = list.map((item: any) => ({
+              id: item.adoptionId || item.id || '',
+              treeName: item.species?.name || item.treeName || 'Pohon',
+              treeType: item.species?.latinName || item.treeType || '',
+              location: item.tree?.latitude && item.tree?.longitude
+                ? `${item.tree.latitude}, ${item.tree.longitude}`
+                : item.location || 'Tahura Bunder, Yogyakarta',
+              status: item.tree?.status || item.status || 'Aktif',
+              plantedAt: item.tree?.plantedAt || item.adoptedAt || item.plantedAt || '-',
+              lastUpdated: item.tree?.latestUpdate || item.lastUpdated || new Date().toISOString(),
+              imageUrl: item.species?.imageUrl || item.species?.mainImageUrl || item.imageUrl,
+              carbonAbsorbed: item.species?.carbonRate || item.species?.carbonAbsorptionRate || item.carbonAbsorbed || 0,
+              adoptionDurationMonths: item.adoptionDurationMonths || 12,
+              growthPhase: item.growthPhase || 'Seedling',
+              healthStatus: item.healthStatus || 'Adaptasi',
+              nextUpdateDate: item.nextUpdateDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
+            }));
+            setAdoptions(mapped);
+            setDataSource('api');
+          } else {
+            // API returned empty or unexpected shape — use mock
+            setAdoptions(MOCK_ADOPTIONS);
+            setDataSource('mock');
+          }
+        } catch (apiErr) {
+          console.warn('API adoptions not available, using mock data:', apiErr);
+          setAdoptions(MOCK_ADOPTIONS);
+          setDataSource('mock');
+        }
 
       } catch (error) {
         console.error('Failed to fetch dashboard data:', error);
@@ -356,7 +388,22 @@ export default function Dashboard() {
     router.push('/');
   };
 
-  const openTreeDetail = (tree: Adoption) => {
+  const openTreeDetail = async (tree: Adoption) => {
+    // Try fetching full detail from API first
+    setIsDetailLoading(true);
+    try {
+      const detailData = await dashboardApi.getAdoptionDetail(tree.id);
+      const detail = detailData?.success ? detailData.data : detailData;
+      if (detail && detail.adoptionId) {
+        setAdoptionDetail(detail);
+        setIsDetailLoading(false);
+        return;
+      }
+    } catch (err) {
+      console.warn('API detail not available, using local modal:', err);
+    }
+    // Fallback: show the simpler inline detail modal
+    setIsDetailLoading(false);
     setSelectedTree(tree);
     setIsTreeModalOpen(true);
   };
@@ -380,10 +427,6 @@ export default function Dashboard() {
   const totalCarbon = getTotalCarbon(adoptions);
   const nextUpdateStr = getUpcomingUpdate(adoptions);
   const nearestExpiryStr = getNearestExpiry(adoptions);
-  const treeTypeData = getDistributionData(adoptions, 'treeType');
-  const treeStatusData = getDistributionData(adoptions, 'status');
-  const carbonData = getCarbonDistribution(adoptions);
-  const latestUpdateStr = getLatestUpdate(adoptions);
 
   return (
     <div className="flex h-screen bg-gray-100 font-sans overflow-hidden">
@@ -433,6 +476,11 @@ export default function Dashboard() {
           <header className="mb-8 animate-in fade-in slide-in-from-left-4 duration-700">
             <h1 className="text-3xl font-serif font-bold text-gray-900 tracking-tight">Halo, {user?.fullName || 'Pengguna'}</h1>
             <p className="text-gray-600 font-serif mt-1 font-medium">Terima kasih telah mengadopsi pohon dan ikut serta dalam pelestarian bumi.</p>
+            {dataSource === 'mock' && (
+              <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded px-3 py-1.5 mt-3 inline-block font-medium">
+                Data ditampilkan dari sumber lokal. Sinkronisasi dengan server akan dilakukan saat API siap.
+              </p>
+            )}
           </header>
 
           {/* Summary Section */}
@@ -605,6 +653,24 @@ export default function Dashboard() {
       {/* Render Modals */}
       <TreeDetailModal isOpen={isTreeModalOpen} onClose={() => setIsTreeModalOpen(false)} tree={selectedTree} />
       <CertificateModal isOpen={isCertificateModalOpen} onClose={() => setIsCertificateModalOpen(false)} userName={user?.fullName || ''} treeName={certificateTree?.treeName || ''} />
+
+      {/* Loading overlay for detail fetch */}
+      {isDetailLoading && (
+        <div className="fixed inset-0 bg-gray-900/50 z-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-xl flex flex-col items-center shadow-xl">
+            <div className="w-8 h-8 rounded-full border-2 border-gray-300 border-t-[#1E562A] animate-spin mb-3" />
+            <p className="text-gray-600 text-sm font-medium">Memuat detail adopsi...</p>
+          </div>
+        </div>
+      )}
+
+      {/* Full adoption detail modal (from API) */}
+      {adoptionDetail && !isDetailLoading && (
+        <AdoptionDetailModal
+          adoption={adoptionDetail}
+          onClose={() => setAdoptionDetail(null)}
+        />
+      )}
 
     </div>
   );

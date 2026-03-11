@@ -110,11 +110,10 @@ export const LiveSearchSpecies: React.FC<LiveSearchProps> = ({
               className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">Semua Kategori</option>
-              <option value="Tropis">Tropis</option>
-              <option value="Subtropis">Subtropis</option>
-              <option value="Hutan">Hutan</option>
-              <option value="Buah">Buah</option>
-              <option value="Medis">Medis</option>
+              <option value="Tanaman Perspektif Keistimewaan">Perspektif Keistimewaan</option>
+              <option value="Tanaman Toponimi Gunungkidul">Toponimi Gunungkidul</option>
+              <option value="Tanaman Native Karst">Native Karst</option>
+              <option value="Tanaman Sumbu Filosofi">Sumbu Filosofi</option>
             </select>
 
             {/* Clear Button */}

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { X, MapPin, Download, Leaf } from 'lucide-react';
 
 interface DetailAdoption {
   adoptionId: string;
@@ -79,26 +80,31 @@ const formatDate = (dateString: string): string => {
   });
 };
 
+const getStatusStyle = (status: string) => {
+  const map: Record<string, string> = {
+    PAID: 'bg-[#1E562A]/10 text-[#1E562A] border-[#1E562A]/20',
+    PENDING: 'bg-amber-50 text-amber-700 border-amber-200',
+    FAILED: 'bg-red-50 text-red-700 border-red-200',
+    SOLD: 'bg-[#1E562A]/10 text-[#1E562A] border-[#1E562A]/20',
+    AVAILABLE: 'bg-blue-50 text-blue-700 border-blue-200',
+    RESERVED: 'bg-orange-50 text-orange-700 border-orange-200',
+    ABANDONED: 'bg-red-50 text-red-700 border-red-200',
+  };
+  return map[status] || 'bg-gray-50 text-gray-700 border-gray-200';
+};
+
 export default function AdoptionDetailModal({
   adoption,
   onClose,
 }: AdoptionDetailModalProps) {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-gray-900/60 z-50 flex items-center justify-center p-4" onClick={onClose}>
       <div
-        className="bg-white rounded-xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 bg-white rounded-full hover:bg-gray-100 transition-colors z-10"
-        >
-          ✕
-        </button>
-
         {/* Header Image */}
-        <div className="relative h-64 bg-gray-200 overflow-hidden">
+        <div className="relative h-56 bg-gray-200 overflow-hidden">
           <img
             src={adoption.species.mainImageUrl}
             alt={adoption.species.name}
@@ -108,179 +114,186 @@ export default function AdoptionDetailModal({
                 'https://placehold.co/500x300?text=Pohon';
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
-            <h1 className="text-3xl font-bold text-white mb-1">
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent" />
+
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 bg-white/90 rounded-md hover:bg-white transition-colors z-10 shadow-sm border border-gray-200"
+          >
+            <X className="w-4 h-4 text-gray-700" />
+          </button>
+
+          <div className="absolute bottom-5 left-6">
+            <h1 className="text-3xl font-serif font-bold text-white tracking-wide mb-1">
               {adoption.species.name}
             </h1>
-            <p className="text-white/90 italic">{adoption.species.latinName}</p>
+            <p className="text-white/80 italic text-sm font-serif">{adoption.species.latinName}</p>
           </div>
         </div>
 
         {/* Content */}
         <div className="p-8">
-          {/* Adopsi Info */}
+
+          {/* Informasi Adopsi */}
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4 pb-3 border-b border-gray-200">
               Informasi Adopsi
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-xs text-gray-600 font-semibold mb-1">Nama Tag</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="p-3 border border-gray-200 rounded-lg">
+                <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-1">Nama Tag</p>
                 <p className="text-sm font-bold text-gray-900">{adoption.nameOnTag}</p>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-xs text-gray-600 font-semibold mb-1">No. Adopsi</p>
+              <div className="p-3 border border-gray-200 rounded-lg">
+                <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-1">No. Adopsi</p>
                 <p className="text-sm font-bold text-gray-900">{adoption.order.orderNumber}</p>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-xs text-gray-600 font-semibold mb-1">Tanggal</p>
+              <div className="p-3 border border-gray-200 rounded-lg">
+                <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-1">Tanggal</p>
                 <p className="text-sm font-bold text-gray-900">
                   {new Date(adoption.adoptedAt).toLocaleDateString('id-ID')}
                 </p>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-xs text-gray-600 font-semibold mb-1">Status</p>
-                <p className={`text-xs font-bold px-2 py-1 rounded ${adoption.order.paymentStatus === 'PAID' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+              <div className="p-3 border border-gray-200 rounded-lg">
+                <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-1">Status</p>
+                <span className={`text-xs font-bold px-2 py-1 rounded border ${getStatusStyle(adoption.order.paymentStatus)}`}>
                   {adoption.order.paymentStatus}
-                </p>
+                </span>
               </div>
             </div>
           </section>
 
-          {/* Pohon Info */}
+          {/* Data Pohon */}
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4 pb-3 border-b border-gray-200">
               Data Pohon
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
-                <p className="text-xs text-blue-700 font-semibold mb-1">Nomor Seri</p>
-                <p className="text-sm font-bold text-blue-900">{adoption.tree.serialNumber}</p>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-1">Nomor Seri</p>
+                <p className="text-sm font-bold text-gray-900">{adoption.tree.serialNumber}</p>
               </div>
-              <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
-                <p className="text-xs text-blue-700 font-semibold mb-1">Status</p>
-                <p className="text-sm font-bold text-blue-900">{adoption.tree.status}</p>
+              <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-1">Status</p>
+                <span className={`text-xs font-bold px-2 py-1 rounded border ${getStatusStyle(adoption.tree.status)}`}>
+                  {adoption.tree.status}
+                </span>
               </div>
-              <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
-                <p className="text-xs text-blue-700 font-semibold mb-1">Kategori</p>
-                <p className="text-sm font-bold text-blue-900">{adoption.species.category}</p>
+              <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-1">Kategori</p>
+                <p className="text-sm font-bold text-gray-900">{adoption.species.category}</p>
               </div>
             </div>
             {adoption.tree.latitude && adoption.tree.longitude && (
-              <div className="mt-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                <p className="text-xs text-orange-700 font-semibold mb-1">📍 Lokasi</p>
-                <p className="text-sm text-orange-900">
-                  {adoption.tree.latitude}, {adoption.tree.longitude}
-                </p>
+              <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-100 flex items-start gap-2">
+                <MapPin className="w-3.5 h-3.5 text-gray-500 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-0.5">Lokasi Koordinat</p>
+                  <p className="text-sm text-gray-900 font-medium">
+                    {adoption.tree.latitude}, {adoption.tree.longitude}
+                  </p>
+                </div>
               </div>
             )}
           </section>
 
-          {/* Spesies Info */}
+          {/* Tentang Spesies */}
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4 pb-3 border-b border-gray-200">
               Tentang Spesies
             </h2>
-            <p className="text-gray-700 mb-4 leading-relaxed">
+            <p className="text-gray-700 mb-4 leading-relaxed text-sm">
               {adoption.species.description}
             </p>
             {adoption.species.storyContent && (
-              <div className="bg-purple-50 border-l-4 border-purple-300 p-4 rounded mb-4">
-                <h3 className="font-semibold text-purple-900 mb-2">Cerita Menarik</h3>
-                <p className="text-sm text-purple-800 leading-relaxed">
+              <div className="bg-[#1E562A]/5 border-l-4 border-[#1E562A]/30 p-4 rounded-r mb-4">
+                <h3 className="font-semibold text-gray-900 mb-2 text-xs uppercase tracking-wider">Cerita Menarik</h3>
+                <p className="text-sm text-gray-700 leading-relaxed">
                   {adoption.species.storyContent}
                 </p>
               </div>
             )}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-              <div className="bg-green-50 p-3 rounded-lg">
-                <p className="text-xs text-green-700 font-semibold mb-1">Karbon/Tahun</p>
-                <p className="text-sm font-bold text-green-900">
+              <div className="p-3 bg-[#1E562A]/5 rounded-lg border border-[#1E562A]/10">
+                <p className="text-[10px] text-[#1E562A]/70 font-semibold uppercase tracking-wider mb-1">Karbon/Tahun</p>
+                <p className="text-sm font-bold text-gray-900">
                   {adoption.species.carbonAbsorptionRate} ton
                 </p>
               </div>
-              <div className="bg-green-50 p-3 rounded-lg">
-                <p className="text-xs text-green-700 font-semibold mb-1">Harga</p>
-                <p className="text-sm font-bold text-green-900">
+              <div className="p-3 bg-[#1E562A]/5 rounded-lg border border-[#1E562A]/10">
+                <p className="text-[10px] text-[#1E562A]/70 font-semibold uppercase tracking-wider mb-1">Harga</p>
+                <p className="text-sm font-bold text-gray-900">
                   {formatCurrency(adoption.species.basePrice)}
                 </p>
               </div>
-              <div className="bg-green-50 p-3 rounded-lg">
-                <p className="text-xs text-green-700 font-semibold mb-1">Stok</p>
-                <p className="text-sm font-bold text-green-900">
+              <div className="p-3 bg-[#1E562A]/5 rounded-lg border border-[#1E562A]/10">
+                <p className="text-[10px] text-[#1E562A]/70 font-semibold uppercase tracking-wider mb-1">Stok Tersedia</p>
+                <p className="text-sm font-bold text-gray-900">
                   {adoption.species.availabelStok}
                 </p>
               </div>
-              <div className="bg-green-50 p-3 rounded-lg">
-                <p className="text-xs text-green-700 font-semibold mb-1">Tereservasi</p>
-                <p className="text-sm font-bold text-green-900">
+              <div className="p-3 bg-[#1E562A]/5 rounded-lg border border-[#1E562A]/10">
+                <p className="text-[10px] text-[#1E562A]/70 font-semibold uppercase tracking-wider mb-1">Tereservasi</p>
+                <p className="text-sm font-bold text-gray-900">
                   {adoption.species.reservedStok}
                 </p>
               </div>
             </div>
           </section>
 
-          {/* Pesanan */}
+          {/* Detail Pesanan */}
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4 pb-3 border-b border-gray-200">
               Detail Pesanan
             </h2>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 space-y-2">
+            <div className="bg-gray-50 border border-gray-100 rounded-lg p-4 space-y-2.5">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-green-700">Nomor Pesanan</span>
-                <span className="font-semibold text-green-900">
-                  {adoption.order.orderNumber}
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-sm border-t border-green-200 pt-2">
-                <span className="text-green-700 font-semibold">Total Harga</span>
-                <span className="font-bold text-lg text-green-900">
-                  {formatCurrency(adoption.order.totalAmount)}
-                </span>
+                <span className="text-gray-500 font-medium">Nomor Pesanan</span>
+                <span className="font-semibold text-gray-900">{adoption.order.orderNumber}</span>
               </div>
               <div className="flex justify-between items-center text-sm">
-                <span className="text-green-700">Metode</span>
-                <span className="font-semibold text-green-900">
-                  {adoption.order.paymentMethod}
-                </span>
+                <span className="text-gray-500 font-medium">Metode</span>
+                <span className="font-semibold text-gray-900">{adoption.order.paymentMethod}</span>
               </div>
               <div className="flex justify-between items-center text-sm">
-                <span className="text-green-700">Tanggal</span>
-                <span className="font-semibold text-green-900">
-                  {formatDate(adoption.order.createdAt)}
-                </span>
+                <span className="text-gray-500 font-medium">Tanggal</span>
+                <span className="font-semibold text-gray-900">{formatDate(adoption.order.createdAt)}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm border-t border-gray-200 pt-2.5 font-semibold">
+                <span className="text-gray-700">Total Harga</span>
+                <span className="text-lg text-gray-900">{formatCurrency(adoption.order.totalAmount)}</span>
               </div>
             </div>
           </section>
 
           {/* Pemilik */}
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4 pb-3 border-b border-gray-200">
               Pemilik
             </h2>
-            <div className="flex items-center gap-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
-              <div className="w-12 h-12 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold text-lg flex-shrink-0">
+            <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+              <div className="w-11 h-11 rounded-full bg-[#1E562A] text-white flex items-center justify-center font-bold text-lg flex-shrink-0 font-serif">
                 {adoption.owner.fullName.charAt(0).toUpperCase()}
               </div>
               <div>
-                <p className="font-semibold text-gray-900">
-                  {adoption.owner.fullName}
-                </p>
-                <p className="text-sm text-gray-600">{adoption.owner.email}</p>
+                <p className="font-semibold text-gray-900">{adoption.owner.fullName}</p>
+                <p className="text-sm text-gray-500">{adoption.owner.email}</p>
               </div>
             </div>
           </section>
 
           {/* Sertifikat */}
           {adoption.certificateUrl && (
-            <section className="mb-8">
+            <section className="mb-4">
               <a
                 href={adoption.certificateUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#1E562A] hover:bg-[#153f1e] text-white font-semibold rounded-lg transition-colors text-sm"
               >
-                📄 Unduh Sertifikat
+                <Download className="w-4 h-4" />
+                Unduh Sertifikat
               </a>
             </section>
           )}
@@ -290,7 +303,7 @@ export default function AdoptionDetailModal({
         <div className="border-t border-gray-200 bg-gray-50 px-8 py-4 flex gap-3 justify-end rounded-b-xl">
           <button
             onClick={onClose}
-            className="px-6 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 font-semibold rounded-lg transition-colors"
+            className="px-5 py-2 text-gray-700 bg-gray-200 hover:bg-gray-300 font-semibold rounded-lg transition-colors text-sm"
           >
             Tutup
           </button>
@@ -299,7 +312,7 @@ export default function AdoptionDetailModal({
               href={adoption.certificateUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors"
+              className="px-5 py-2 bg-[#1E562A] hover:bg-[#153f1e] text-white font-semibold rounded-lg transition-colors text-sm"
             >
               Unduh Sertifikat
             </a>
