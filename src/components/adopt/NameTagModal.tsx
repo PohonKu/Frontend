@@ -63,7 +63,7 @@ export default function NameTagModal({ speciesName, onClose, onSubmit, initialNa
                                 if (error) setError('');
                             }}
                             placeholder="Contoh: Keluarga John Doe"
-                            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1A581E] focus:border-transparent transition-all font-sans"
+                            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1A581E] focus:border-transparent transition-all font-sans text-gray-900"
                             autoFocus
                         />
                         {error && <p className="text-red-500 text-xs mt-2 font-sans">{error}</p>}

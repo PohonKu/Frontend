@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NameTagModal from '@/components/adopt/NameTagModal';
 import PaymentModal from '@/components/adopt/PaymentModal';
 import { orderApi } from '@/lib/apiPayment';
@@ -9,13 +9,26 @@ interface FeaturedTreesProps {
     prefilledName?: string;
 }
 
-const FEATURED_TREES = [
+// Fallback image maps from original hardcoded values to ensure beautiful UI
+const FALLBACK_IMAGES: Record<string, string> = {
+    'Nangka': 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=800&auto=format&fit=crop',
+    'Gayam': 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=800&auto=format&fit=crop',
+    'Beringin': 'https://images.unsplash.com/photo-1508349937151-22b68b72d5b1?q=80&w=800&auto=format&fit=crop'
+};
+
+const FALLBACK_BADGES: Record<string, string> = {
+    'Nangka': 'Terlaris',
+    'Gayam': 'Sangat Langka',
+    'Beringin': 'Terlaris'
+};
+
+const DEFAULT_TREES = [
     {
         id: 'spec_001',
         name: 'Nangka',
         latinName: 'Artocarpus heterophyllus',
         price: 150000,
-        image: 'https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=800&auto=format&fit=crop',
+        image: FALLBACK_IMAGES['Nangka'],
         badge: 'Terlaris'
     },
     {
@@ -23,7 +36,7 @@ const FEATURED_TREES = [
         name: 'Gayam',
         latinName: 'Inocarpus fagifer',
         price: 250000,
-        image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=800&auto=format&fit=crop',
+        image: FALLBACK_IMAGES['Gayam'],
         badge: 'Sangat Langka'
     },
     {
@@ -31,15 +44,60 @@ const FEATURED_TREES = [
         name: 'Beringin',
         latinName: 'Ficus benjamina',
         price: 200000,
-        image: 'https://images.unsplash.com/photo-1508349937151-22b68b72d5b1?q=80&w=800&auto=format&fit=crop',
+        image: FALLBACK_IMAGES['Beringin'],
         badge: 'Terlaris'
     }
 ];
 
 export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
+    const [trees, setTrees] = useState(DEFAULT_TREES);
     const [pendingSpecies, setPendingSpecies] = useState<{ id: string; name: string } | null>(null);
     const [activeOrderId, setActiveOrderId] = useState<string | null>(null);
     const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+
+    useEffect(() => {
+        const fetchSpecies = async () => {
+            try {
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+                const res = await fetch(`${apiUrl}/api/v1/trees/species`);
+                
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.success && Array.isArray(json.data)) {
+                        // We want to feature exactly these three by default, or just take the first 3
+                        const targetNames = ['Nangka', 'Gayam', 'Beringin'];
+                        const featuredSpecies = json.data.filter((s: any) => targetNames.includes(s.name));
+                        
+                        if (featuredSpecies.length > 0) {
+                            const mappedTrees = targetNames.map(targetName => {
+                                // Find the real species or fallback if missing in API
+                                const realSpecies = featuredSpecies.find((s: any) => s.name === targetName);
+                                const defaultTree = DEFAULT_TREES.find(t => t.name === targetName)!;
+                                
+                                if (realSpecies) {
+                                    return {
+                                        id: realSpecies.id, // REAL API ID
+                                        name: realSpecies.name,
+                                        latinName: realSpecies.latinName,
+                                        price: parseInt(realSpecies.basePrice) || defaultTree.price,
+                                        image: FALLBACK_IMAGES[targetName] || realSpecies.mainImageUrl, // Use unsplash to avoid placeholder crash
+                                        badge: FALLBACK_BADGES[targetName] || 'Unggulan'
+                                    };
+                                }
+                                return defaultTree;
+                            });
+                            
+                            setTrees(mappedTrees);
+                        }
+                    }
+                }
+            } catch (err) {
+                console.warn('Failed to load real species for FeaturedTrees, using fallbacks.', err);
+            }
+        };
+
+        fetchSpecies();
+    }, []);
 
     const handleAdopt = (tree: { id: string; name: string }) => {
         setPendingSpecies(tree);
@@ -84,7 +142,7 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {FEATURED_TREES.map((tree) => (
+                    {trees.map((tree) => (
                         <div key={tree.id} className="group flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
 
                             {/* Image Area */}
@@ -164,3 +222,4 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
 };
 
 export default FeaturedTrees;
+

@@ -21,9 +21,39 @@ const useNumberAnimation = (end: number, duration: number = 2000) => {
 };
 
 export const ImpactStats = () => {
-    const treesPlanted = useNumberAnimation(1200);
-    const co2Absorbed = useNumberAnimation(450);
-    const activeAdopters = useNumberAnimation(860);
+    const [stats, setStats] = useState({
+        treesPlanted: 1200,
+        co2Absorbed: 450,
+        activeAdopters: 860
+    });
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+                // Try fetching public stats if available
+                const res = await fetch(`${apiUrl}/api/v1/stats/public`);
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.success && json.data) {
+                        setStats({
+                            treesPlanted: json.data.totalTreesPlanted || 1200,
+                            co2Absorbed: json.data.totalCarbonAbsorbed || 450,
+                            activeAdopters: json.data.totalAdopters || 860
+                        });
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.warn('Public stats API not ready, falling back to dummy data', err);
+            }
+        };
+        fetchStats();
+    }, []);
+
+    const treesPlanted = useNumberAnimation(stats.treesPlanted);
+    const co2Absorbed = useNumberAnimation(stats.co2Absorbed);
+    const activeAdopters = useNumberAnimation(stats.activeAdopters);
 
     return (
         <section className="w-full bg-white py-16">
@@ -42,7 +72,7 @@ export const ImpactStats = () => {
                         <h4 className="text-4xl font-inria font-bold text-[#111827] mb-2">
                             {treesPlanted.toLocaleString()}+
                         </h4>
-                        <p className="text-gray-500 font-light tracking-[0.15em] uppercase text-xs font-sans">Pohon Berakar</p>
+                        <p className="text-gray-500 font-light tracking-[0.15em] uppercase text-xs font-sans">Pohon Teradopsi</p>
                     </div>
 
                     {/* Stat 2 */}
@@ -55,7 +85,7 @@ export const ImpactStats = () => {
                         <h4 className="text-4xl font-inria font-bold text-[#111827] mb-2">
                             {co2Absorbed.toLocaleString()} <span className="text-xl text-gray-400 font-sans">Kg</span>
                         </h4>
-                        <p className="text-gray-500 font-light tracking-[0.15em] uppercase text-xs font-sans">CO2 Terserap Bulan Ini</p>
+                        <p className="text-gray-500 font-light tracking-[0.15em] uppercase text-xs font-sans">Total CO2 Terserap</p>
                     </div>
 
                     {/* Stat 3 */}
