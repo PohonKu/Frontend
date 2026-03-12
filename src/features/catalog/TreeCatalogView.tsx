@@ -8,6 +8,7 @@ import TreeDetailModal from '@/components/ui/TreeDetailModal';
 import CatalogTabs from './CatalogTabs';
 import NameTagModal from '@/components/adopt/NameTagModal';
 import PaymentModal from '@/components/adopt/PaymentModal';
+import AuthErrorModal from '@/components/ui/AuthErrorModal';
 import { orderApi } from '@/lib/apiPayment';
 
 interface TreeCatalogViewProps {
@@ -23,6 +24,7 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
   const [pendingSpecies, setPendingSpecies] = useState<TreeSpeciesCard | null>(null);
   const [activeOrderId, setActiveOrderId] = useState<string | null>(null);
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+  const [showAuthError, setShowAuthError] = useState(false);
 
   // Group by species and calculate stock
   const groupedSpecies = useMemo(() => {
@@ -92,6 +94,12 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
   }, [groupedSpecies]);
 
   const handleAdopt = (speciesId: string) => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      setShowAuthError(true);
+      return;
+    }
+
     const species = groupedSpecies.find((s) => s.id === speciesId);
     if (species) {
       setPendingSpecies(species);
@@ -224,6 +232,11 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
           onClose={() => setPendingSpecies(null)}
           onSubmit={handleNameSubmit}
         />
+      )}
+
+      {/* Auth Error Modal */}
+      {showAuthError && (
+        <AuthErrorModal onCloseAction={() => setShowAuthError(false)} />
       )}
 
       {/* Loading Overlay when creating order */}

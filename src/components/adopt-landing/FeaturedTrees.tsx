@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import NameTagModal from '@/components/adopt/NameTagModal';
 import PaymentModal from '@/components/adopt/PaymentModal';
+import AuthErrorModal from '@/components/ui/AuthErrorModal';
 import { orderApi } from '@/lib/apiPayment';
 
 interface FeaturedTreesProps {
@@ -54,6 +55,7 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
     const [pendingSpecies, setPendingSpecies] = useState<{ id: string; name: string } | null>(null);
     const [activeOrderId, setActiveOrderId] = useState<string | null>(null);
     const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+    const [showAuthError, setShowAuthError] = useState(false);
 
     useEffect(() => {
         const fetchSpecies = async () => {
@@ -100,6 +102,11 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
     }, []);
 
     const handleAdopt = (tree: { id: string; name: string }) => {
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            setShowAuthError(true);
+            return;
+        }
         setPendingSpecies(tree);
     };
 
@@ -198,6 +205,11 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
                     onClose={() => setPendingSpecies(null)}
                     onSubmit={handleNameSubmit}
                 />
+            )}
+
+            {/* Auth Error Modal */}
+            {showAuthError && (
+                <AuthErrorModal onCloseAction={() => setShowAuthError(false)} />
             )}
 
             {/* Loading Overlay */}

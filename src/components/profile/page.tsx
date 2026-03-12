@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface User {
   id: string;
@@ -14,6 +15,7 @@ interface User {
 }
 
 export const ProfileImage = () => {
+  const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -83,7 +85,7 @@ export const ProfileImage = () => {
   // Belum login - tampilkan icon guest
   if (!user) {
     return (
-      <Link href="/login?redirect=/dashboard">
+      <Link href={`/login?redirect=${encodeURIComponent(pathname)}`}>
         <Image
           src="/images/guestProfile.svg"
           alt="Guest"

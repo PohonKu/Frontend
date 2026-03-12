@@ -167,7 +167,7 @@ export const Navbar = () => {
 
           {/* CTA Button placed among links */}
           <Link
-            href={isLoggedIn ? "/adopt" : "/login?redirect=/adopt"}
+            href={isLoggedIn ? "/adopt" : `/login?redirect=${encodeURIComponent(pathname)}`}
             className={`transition-all duration-300 px-5 py-2 rounded-lg hover:shadow-lg hover:scale-105 active:scale-95 ml-2 border 
               ${isTransparent
                 ? 'bg-transparent border-transparent text-white hover:bg-[#1A581E] hover:border-[#1A581E]'
@@ -242,7 +242,7 @@ export const Navbar = () => {
 
           <div className="flex flex-col gap-3 pt-2">
             <Link
-              href={isLoggedIn ? "/adopt" : "/login?redirect=/adopt"}
+              href={isLoggedIn ? "/adopt" : `/login?redirect=${encodeURIComponent(pathname)}`}
               className="bg-[#1A581E] text-white py-3 rounded-lg text-center hover:bg-[#029146] transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -251,7 +251,7 @@ export const Navbar = () => {
               </Typography>
             </Link>
             <Link
-              href={isLoggedIn ? "/dashboard" : "/login?redirect=/dashboard"}
+              href={isLoggedIn ? "/dashboard" : `/login?redirect=${encodeURIComponent(pathname)}`}
               className="text-center py-2 text-gray-500 hover:text-[#1A581E] transition-colors flex items-center justify-center gap-2"
               onClick={() => setIsMobileMenuOpen(false)}
             >

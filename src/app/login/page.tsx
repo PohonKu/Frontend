@@ -23,8 +23,16 @@ function LoginContent() {
     }, [searchParams]);
 
     const handleGoogleLogin = () => {
-        const redirect = searchParams.get('redirect') || '/dashboard';
-        localStorage.setItem('post_login_redirect', redirect);
+        const urlRedirect = searchParams.get('redirect');
+        if (urlRedirect) {
+            localStorage.setItem('post_login_redirect', urlRedirect);
+        } else {
+            // Keep existing or default to dashboard
+            const existing = localStorage.getItem('post_login_redirect');
+            if (!existing) {
+                localStorage.setItem('post_login_redirect', '/dashboard');
+            }
+        }
         window.location.href = `${apiUrl}/api/v1/auth/google`;
     };
 

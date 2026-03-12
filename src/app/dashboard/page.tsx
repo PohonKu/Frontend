@@ -339,7 +339,7 @@ export default function Dashboard() {
           const apiData = await dashboardApi.getDashboard();
           const list = apiData?.success ? apiData.data : (Array.isArray(apiData) ? apiData : null);
 
-          if (list && Array.isArray(list) && list.length > 0) {
+          if (list && Array.isArray(list)) {
             // Map API response to our Adoption shape if needed
             const mapped: Adoption[] = list.map((item: any) => ({
               id: item.adoptionId || item.id || '',
