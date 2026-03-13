@@ -58,17 +58,17 @@ export const TeamMember = () => {
           {currentTeam.map((member, index) => (
             <div
               key={`${activeTeam}-${index}`}
-              className={`member-card ${activeTeam} group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl rounded-tr-[3rem] cursor-pointer`}
+              className={`member-card ${activeTeam} group transition-all duration-300 hover:-translate-y-2 cursor-pointer`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Photo with Unique Curved Cutout Shape */}
-              <div className={`member-image-wrapper ${activeTeam} overflow-hidden rounded-tr-[3rem]`}>
+              <div className={`member-image-wrapper ${activeTeam}`}>
                 <Image
                   src="/images/RectangleFoto.svg"
                   alt={member.name}
                   width={200}
                   height={267}
-                  className="member-image transition-transform duration-700 ease-out group-hover:scale-110"
+                  className="member-image drop-shadow-md transition-all duration-500 ease-out group-hover:scale-105 group-hover:drop-shadow-[0_20px_25px_rgba(0,0,0,0.3)]"
                 />
               </div>
 
