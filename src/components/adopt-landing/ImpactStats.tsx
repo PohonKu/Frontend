@@ -56,13 +56,26 @@ export const ImpactStats = () => {
     const activeAdopters = useNumberAnimation(stats.activeAdopters);
 
     return (
-        <section className="w-full bg-[#1A3626] py-20 relative overflow-hidden">
+        <section className="w-full bg-[#1A3626] min-h-[80vh] flex items-center py-20 relative overflow-hidden">
             {/* Elegant Background Accents */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#A2E3B1]/30 to-transparent opacity-50"></div>
             <div className="absolute -left-32 -top-32 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
             <div className="absolute -right-32 -bottom-32 w-64 h-64 bg-[#A2E3B1]/5 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Background tree illustration */}
+            <div
+                className="absolute -top-64 left-0 right-0 -bottom-32 pointer-events-none z-0"
+                style={{
+                    backgroundImage: "url('/gambarCici/bg1.svg')",
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center bottom',
+                    filter: 'invert(1)', // Since the bg is dark green, we invert the SVG to be light
+                    opacity: 0.04,
+                }}
+            />
+
+            <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
 
                     {/* Stat 1 */}
