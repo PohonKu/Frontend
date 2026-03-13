@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, FormEvent } from 'react';
-import { MapPin, Mail, Clock } from 'lucide-react';
+import { MapPin, Mail, Clock, Phone } from 'lucide-react';
 import Image from 'next/image';
 import styles from './ContactSection.module.css';
 
@@ -147,6 +147,28 @@ export default function ContactSection() {
               <div className={styles.contactDetails}>
                 <h3 className={styles.contactLabel}>Email</h3>
                 <p className={styles.contactText}>pohonku@gmail.com</p>
+              </div>
+            </div>
+
+            {/* General Contact (Laras) */}
+            <div className={styles.contactBlock}>
+              <div className={styles.iconContainer}>
+                <Phone width={24} height={24} className={styles.contactIcon} />
+              </div>
+              <div className={styles.contactDetails}>
+                <h3 className={styles.contactLabel}>CP Informasi Umum</h3>
+                <p className={styles.contactText}>+6285715538430 (Laras)</p>
+              </div>
+            </div>
+
+            {/* Technical Contact (Arsya) */}
+            <div className={styles.contactBlock}>
+              <div className={styles.iconContainer}>
+                <Phone width={24} height={24} className={styles.contactIcon} />
+              </div>
+              <div className={styles.contactDetails}>
+                <h3 className={styles.contactLabel}>CP Masalah Teknis</h3>
+                <p className={styles.contactText}>+6281383857627 (Arsya)</p>
               </div>
             </div>
 

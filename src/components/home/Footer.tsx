@@ -53,7 +53,7 @@ export const Footer = () => {
 
       {/* Top Area - Grid Container */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
 
           {/* Column 1 - Brand */}
           <div className="flex flex-col items-start">
@@ -100,6 +100,27 @@ export const Footer = () => {
                   </Link>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          {/* Column 4 - Kontak */}
+          <div className="flex flex-col">
+            <h3 className="font-sans font-semibold text-lg text-[#1A581E] mb-6 relative w-max before:absolute before:bottom-[-4px] before:left-0 before:w-1/2 before:h-[2px] before:bg-transparent hover:before:bg-[#1A581E] before:transition-colors before:duration-300">
+              Kontak Kami
+            </h3>
+            <ul className="flex flex-col space-y-4">
+              <li className="font-sans text-gray-600">
+                <span className="block font-medium text-sm text-gray-400 mb-1">Informasi Umum</span>
+                <a href="https://wa.me/6285715538430" target="_blank" rel="noopener noreferrer" className="hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1">
+                  +62 857-1553-8430 (Laras)
+                </a>
+              </li>
+              <li className="font-sans text-gray-600">
+                <span className="block font-medium text-sm text-gray-400 mb-1">Bantuan Teknis</span>
+                <a href="https://wa.me/6281383857627" target="_blank" rel="noopener noreferrer" className="hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1">
+                  +62 813-8385-7627 (Arsya)
+                </a>
+              </li>
             </ul>
           </div>
 
