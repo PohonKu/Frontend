@@ -102,8 +102,8 @@ export default function TreeCard({ species, onAdopt, onClick }: TreeCardProps) {
         {/* Action Button - Full Width with Hover Text Change */}
         <button
           onClick={(e) => {
-            e.stopPropagation(); // Prevent card click
-            onAdopt?.(species.id);
+            e.stopPropagation(); // Prevent duplicate firing if card is also clicked
+            onClick?.();
           }}
           onMouseEnter={() => setIsHoveringButton(true)}
           onMouseLeave={() => setIsHoveringButton(false)}
