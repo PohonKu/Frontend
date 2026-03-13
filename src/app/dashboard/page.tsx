@@ -415,9 +415,67 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-2 border-gray-300 border-t-[#1E562A] animate-spin" />
-      </div>
+      <main className="min-h-screen bg-[#FDFDFD] pt-24 mt-4 animate-pulse">
+        {/* Header Skeleton */}
+        <section className="bg-white border-b border-gray-100 py-10">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="flex items-center gap-6">
+              <div className="w-20 h-20 rounded-full bg-gray-200"></div>
+              <div>
+                <div className="h-4 bg-gray-100 rounded w-32 mb-3"></div>
+                <div className="h-8 md:h-10 bg-gray-200 rounded w-48 md:w-64"></div>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-12 h-12 bg-gray-100 rounded-full"></div>
+              <div className="w-12 h-12 bg-gray-100 rounded-full"></div>
+            </div>
+          </div>
+        </section>
+
+        {/* Dashboard Content Skeleton */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-10 space-y-12">
+          
+          {/* Quick Stats Skeleton */}
+          <section>
+            <div className="h-6 bg-gray-200 rounded w-40 mb-6"></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm h-32 flex flex-col justify-between">
+                  <div className="h-4 bg-gray-100 rounded w-1/2"></div>
+                  <div className="flex items-end justify-between">
+                    <div className="h-8 bg-gray-200 rounded w-1/3"></div>
+                    <div className="w-10 h-10 bg-gray-50 rounded-lg"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Grid Skeleton */}
+          <section>
+            <div className="h-6 bg-gray-200 rounded w-48 mb-6"></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden h-[400px]">
+                  <div className="h-48 bg-gray-200 w-full"></div>
+                  <div className="p-6">
+                    <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
+                    <div className="h-4 bg-gray-100 rounded w-1/2 mb-6"></div>
+                    <div className="flex justify-between items-end mt-12">
+                      <div className="space-y-2">
+                        <div className="h-3 bg-gray-100 rounded w-16"></div>
+                        <div className="h-4 bg-gray-200 rounded w-24"></div>
+                      </div>
+                      <div className="h-10 w-24 bg-gray-100 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+      </main>
     );
   }
 
@@ -634,14 +692,33 @@ export default function Dashboard() {
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-lg border border-gray-200 p-16 text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 group hover:scale-110 transition-transform duration-300">
-                  <Trees className="w-8 h-8 text-gray-400 group-hover:text-[#1E562A] transition-colors" />
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 md:p-16 text-center animate-in fade-in slide-in-from-bottom-4 duration-700 relative overflow-hidden group/empty">
+                {/* Subtle background glow */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#CEFFD1] rounded-full blur-[80px] opacity-20 group-hover/empty:opacity-40 transition-opacity duration-700"></div>
+                
+                <div className="w-24 h-24 md:w-32 md:h-32 mx-auto mb-8 relative">
+                  <div className="absolute inset-0 bg-[#F0FDF4] rounded-full scale-0 group-hover/empty:scale-100 transition-transform duration-500 origin-center"></div>
+                  {/* Premium Planting SVG Illustration */}
+                  <svg className="w-full h-full text-[#1E562A] relative z-10 transform group-hover/empty:-translate-y-2 transition-transform duration-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25 75H75" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+                    <path d="M50 75V35" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+                    <path d="M50 55C50 55 40 45 40 37C40 29 48 25 50 35" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M50 45C50 45 60 35 60 27C60 19 52 15 50 25" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeOpacity="0.1" strokeDasharray="8 8"/>
+                    <path d="M35 85L45 75L55 85L65 75" stroke="currentColor" strokeWidth="2" strokeOpacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-1">Inventaris Kosong</h3>
-                <p className="text-gray-500 text-sm max-w-sm mx-auto mb-6">Anda belum memiliki pohon yang diadopsi dalam inventaris ini.</p>
-                <Link href="/adopt" className="px-5 py-2.5 bg-[#1E562A] text-white rounded font-semibold hover:bg-[#153f1e] hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-sm inline-block">
-                  Menuju Katalog Adopsi
+                
+                <h3 className="text-xl md:text-2xl font-tilt text-gray-900 mb-2 relative z-10">Inventaris Masih Kosong</h3>
+                <p className="text-gray-500 text-sm md:text-base max-w-sm mx-auto mb-8 font-sans leading-relaxed relative z-10">
+                  Anda belum memiliki riwayat adopsi pohon. Mari mulai berkontribusi merawat bumi bersama PohonKu.
+                </p>
+                
+                <Link href="/adopt" className="relative z-10 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#1E562A] text-white rounded-full font-semibold hover:bg-[#153f1e] hover:shadow-xl hover:shadow-[#1E562A]/20 hover:-translate-y-1 transition-all duration-300 text-sm md:text-base group">
+                  Eksplorasi Katalog
+                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
                 </Link>
               </div>
             )}

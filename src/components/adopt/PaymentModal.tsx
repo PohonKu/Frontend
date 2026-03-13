@@ -153,10 +153,19 @@ export default function PaymentModal({ orderId, onClose }: PaymentModalProps) {
 
         {/* Loading State */}
         {isLoading && !error && (
-          <div className="flex flex-col items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mb-4"></div>
-            <p className="text-gray-600 text-center">Mempersiapkan pembayaran...</p>
-            <p className="text-xs text-gray-400 mt-2">Jangan tutup halaman ini</p>
+          <div className="flex flex-col items-center justify-center py-16 animate-in fade-in duration-500">
+            <div className="relative mb-6">
+              <div className="absolute inset-0 bg-[#1E562A] blur-xl opacity-20 animate-pulse rounded-full"></div>
+              <div className="relative bg-white shadow-lg shadow-[#1E562A]/10 w-16 h-16 rounded-full flex items-center justify-center border-2 border-[#1E562A]/20">
+                <svg className="w-8 h-8 text-[#1E562A] animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                {/* Spinning outer ring */}
+                <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#1E562A] animate-spin"></div>
+              </div>
+            </div>
+            <p className="text-gray-900 font-semibold mb-2 font-tilt tracking-wide">Membuka Gerbang Pembayaran</p>
+            <p className="text-sm text-gray-500 font-sans">Menghubungkan ke midtrans secara aman...</p>
           </div>
         )}
 

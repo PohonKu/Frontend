@@ -195,12 +195,15 @@ export default function OrderModal({ species, onClose }: OrderModalProps) {
                 className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 disabled:from-gray-400 disabled:to-gray-400 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200"
               >
                 {isLoading ? (
-                  <span className="flex items-center justify-center">
-                    <span className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></span>
-                    Memproses...
+                  <span className="flex items-center justify-center gap-3">
+                    <span className="relative flex h-5 w-5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-40"></span>
+                      <span className="relative inline-flex rounded-full h-5 w-5 bg-white/30 border-2 border-white/80 border-t-white animate-spin"></span>
+                    </span>
+                    <span className="font-medium tracking-wide">Menyiapkan Pesanan...</span>
                   </span>
                 ) : (
-                  '✓ Lanjut ke Pembayaran'
+                  'Lanjut ke Pembayaran'
                 )}
               </button>
 
