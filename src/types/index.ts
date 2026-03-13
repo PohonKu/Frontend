@@ -10,19 +10,17 @@ export type TreeCategory =
 // 2. Status Pohon
 export type TreeStatus = 'available' | 'sold' | 'maintenance';
 
-// 3. Interface Spesies (Data Induk Jenis Pohon)
-export interface TreeSpecies {
+// 3. Interface Spesies (Data Induk Jenis Pohon - camelCase)
+export interface Species {
   id: string;
-  name: string;             // Contoh: "Nangka"
-  scientific_name: string;  // Contoh: "Artocarpus heterophyllus"
-  description: string;      // Deskripsi singkat
-  story_content: string;    // HTML Rich Text untuk storytelling
-  image_url: string;        // URL Gambar
-  co2_absorption: number;   // Estimasi serapan karbon (kg/thn)
-  fun_fact?: string;        // Fakta menarik tentang pohon
-
-  // Kategori Wajib Ada (Untuk Filter)
-  category: TreeCategory;
+  name: string;             
+  latinName: string;  
+  description: string;      
+  storyContent?: string;    
+  mainImageUrl: string;        
+  carbonAbsorptionRate: number;   
+  availableStock: number;   
+  category: string;
 }
 
 // 4. Interface Pohon (Unit Inventory)
@@ -45,7 +43,7 @@ export interface Tree {
 
   // Relasi ke Spesies
   species_id: string;
-  species?: TreeSpecies;    // Optional karena di database aslinya ini relation
+  species?: Species;    // Optional karena di database aslinya ini relation
 }
 
 // 5. Interface User (PLANNED: For future Guest/Login authentication feature)

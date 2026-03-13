@@ -41,9 +41,9 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
         speciesMap.set(speciesId, {
           id: speciesId,
           localName: tree.species.name,
-          scientificName: tree.species.scientific_name,
+          scientificName: tree.species.latinName,
           cluster: tree.location_block,
-          image: tree.species.image_url,
+          image: tree.species.mainImageUrl,
           price: tree.price,
           stock: 0,
           description: tree.species.description,

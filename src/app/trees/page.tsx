@@ -1,4 +1,4 @@
-import { Tree, TreeSpecies, TreeCategory } from '@/types';
+import { Tree, Species, TreeCategory } from '@/types';
 import TreeCatalogView from '@/features/catalog/TreeCatalogView';
 import { getTrees } from '@/services/mockData';
 
@@ -30,15 +30,16 @@ async function fetchTreesFromAPI(): Promise<Tree[]> {
     const totalAvailable = species.availabelStok ?? 0;
     const count = Math.max(totalAvailable, 1); // At least 1 tree per species
 
-    const mappedSpecies: TreeSpecies = {
+    const mappedSpecies: Species = {
       id: species.id,
       name: species.name,
-      scientific_name: species.latinName,
+      latinName: species.latinName,
       description: species.description || '',
-      story_content: species.storyContent || '',
-      image_url: species.mainImageUrl || '',
-      co2_absorption: species.carbonAbsorptionRate || 0,
-      category: mapCategory(species.category) as TreeCategory,
+      storyContent: species.storyContent || '',
+      mainImageUrl: species.mainImageUrl || '',
+      carbonAbsorptionRate: species.carbonAbsorptionRate || 0,
+      availableStock: totalAvailable,
+      category: mapCategory(species.category),
     };
 
     for (let i = 0; i < count; i++) {

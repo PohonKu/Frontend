@@ -1,5 +1,4 @@
-// src/services/mockData.ts
-import { Tree, TreeSpecies, TreeCategory } from '@/types';
+import { Tree, Species, TreeCategory } from '@/types';
 
 // --- 1. RAW DATA FROM EXCEL ---
 // Source: Tanaman Tema_Tahura Bunder.xlsx
@@ -48,8 +47,8 @@ const generateFunFact = (name: string, category: string): string => {
   return funFacts[Math.floor(Math.random() * funFacts.length)];
 };
 
-const generateSmartSpecies = (): TreeSpecies[] => {
-  const allSpeciesMap = new Map<string, TreeSpecies>();
+const generateSmartSpecies = (): Species[] => {
+  const allSpeciesMap = new Map<string, Species>();
 
   // Helper to process list and assign category
   // If a tree appears in multiple lists, the FIRST category it appears in will be used (Primary Category)
@@ -61,9 +60,9 @@ const generateSmartSpecies = (): TreeSpecies[] => {
         allSpeciesMap.set(cleanName, {
           id: `sp-${cleanName.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, '-')}`,
           name: cleanName,
-          scientific_name: `Scientific name of ${cleanName}`, // Placeholder
+          latinName: `Scientific name of ${cleanName}`, // Placeholder
           description: `Tanaman ${cleanName} merupakan bagian penting dari ekosistem ${cat}.`,
-          story_content: `
+          storyContent: `
             <div class="space-y-4">
               <p class="text-lg leading-relaxed">
                 <strong>${cleanName}</strong> memiliki makna mendalam dalam konteks <em>${cat}</em>.
@@ -75,10 +74,10 @@ const generateSmartSpecies = (): TreeSpecies[] => {
               </p>
             </div>
           `,
-          image_url: `https://placehold.co/600x400/228B22/FFFFFF/png?text=${encodeURIComponent(cleanName)}`,
-          co2_absorption: Math.floor(Math.random() * 40) + 10,
+          mainImageUrl: `https://placehold.co/600x400/228B22/FFFFFF/png?text=${encodeURIComponent(cleanName)}`,
+          carbonAbsorptionRate: Math.floor(Math.random() * 40) + 10,
+          availableStock: Math.floor(Math.random() * 50) + 10,
           category: cat,
-          fun_fact: generateFunFact(cleanName, cat),
         });
       }
     });
@@ -142,7 +141,7 @@ export const getTreeById = async (id: string): Promise<Tree | undefined> => {
   return MOCK_TREES.find((tree) => tree.id === id);
 };
 
-export const getSpecies = async (): Promise<TreeSpecies[]> => {
+export const getSpecies = async (): Promise<Species[]> => {
   await delay(300);
   return MOCK_SPECIES;
 };

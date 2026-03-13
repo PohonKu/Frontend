@@ -1,6 +1,6 @@
 "use client";
 
-import { Species } from "@/types/spcies";
+import { Species } from "@/types/species";
 
 type Props = {
   species: Species[];
