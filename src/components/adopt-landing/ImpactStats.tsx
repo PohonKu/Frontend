@@ -56,49 +56,54 @@ export const ImpactStats = () => {
     const activeAdopters = useNumberAnimation(stats.activeAdopters);
 
     return (
-        <section className="w-full bg-white py-16">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <section className="w-full bg-[#1A3626] py-20 relative overflow-hidden">
+            {/* Elegant Background Accents */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#A2E3B1]/30 to-transparent opacity-50"></div>
+            <div className="absolute -left-32 -top-32 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -right-32 -bottom-32 w-64 h-64 bg-[#A2E3B1]/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
 
                     {/* Stat 1 */}
                     <div className="flex flex-col items-center justify-center p-4">
-                        <div className="mb-6 text-[#1A3626]">
+                        <div className="mb-6 text-[#A2E3B1]">
                             {/* Elegant thin-line SVG */}
-                            <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                            <svg className="w-10 h-10 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8m0 0a4 4 0 01-4-4 4 4 0 018 0 4 4 0 01-4 4z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8 21h8M10 21l-2-2m6 2l2-2" />
                             </svg>
                         </div>
-                        <h4 className="text-4xl font-inria font-bold text-[#111827] mb-2">
+                        <h4 className="text-4xl md:text-5xl font-inria font-bold text-white mb-3 tracking-tight">
                             {treesPlanted.toLocaleString()}+
                         </h4>
-                        <p className="text-gray-500 font-light tracking-[0.15em] uppercase text-xs font-sans">Pohon Teradopsi</p>
+                        <p className="text-[#A2E3B1]/80 font-medium tracking-[0.2em] uppercase text-xs font-sans">Pohon Teradopsi</p>
                     </div>
 
                     {/* Stat 2 */}
-                    <div className="flex flex-col items-center justify-center p-4">
-                        <div className="mb-6 text-[#1A3626]">
-                            <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                    <div className="flex flex-col items-center justify-center p-4 pt-12 md:pt-4">
+                        <div className="mb-6 text-[#A2E3B1]">
+                            <svg className="w-10 h-10 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                             </svg>
                         </div>
-                        <h4 className="text-4xl font-inria font-bold text-[#111827] mb-2">
-                            {co2Absorbed.toLocaleString()} <span className="text-xl text-gray-400 font-sans">Kg</span>
+                        <h4 className="text-4xl md:text-5xl font-inria font-bold text-white mb-3 tracking-tight">
+                            {co2Absorbed.toLocaleString()} <span className="text-2xl text-white/50 font-sans">Kg</span>
                         </h4>
-                        <p className="text-gray-500 font-light tracking-[0.15em] uppercase text-xs font-sans">Total CO2 Terserap</p>
+                        <p className="text-[#A2E3B1]/80 font-medium tracking-[0.2em] uppercase text-xs font-sans">Total CO2 Terserap</p>
                     </div>
 
                     {/* Stat 3 */}
-                    <div className="flex flex-col items-center justify-center p-4">
-                        <div className="mb-6 text-[#1A3626]">
-                            <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                    <div className="flex flex-col items-center justify-center p-4 pt-12 md:pt-4">
+                        <div className="mb-6 text-[#A2E3B1]">
+                            <svg className="w-10 h-10 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2m14-10a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
                         </div>
-                        <h4 className="text-4xl font-inria font-bold text-[#111827] mb-2">
+                        <h4 className="text-4xl md:text-5xl font-inria font-bold text-white mb-3 tracking-tight">
                             {activeAdopters.toLocaleString()}+
                         </h4>
-                        <p className="text-gray-500 font-light tracking-[0.15em] uppercase text-xs font-sans">Pengadopsi Aktif</p>
+                        <p className="text-[#A2E3B1]/80 font-medium tracking-[0.2em] uppercase text-xs font-sans">Pengadopsi Aktif</p>
                     </div>
 
                 </div>

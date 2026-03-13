@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import NameTagModal from '@/components/adopt/NameTagModal';
 import PaymentModal from '@/components/adopt/PaymentModal';
 import AuthErrorModal from '@/components/ui/AuthErrorModal';
@@ -193,6 +194,19 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Secondary CTA to view all trees */}
+                <div className="mt-16 flex justify-center">
+                    <Link 
+                        href="/trees" 
+                        className="group flex items-center gap-3 px-8 py-4 bg-white border border-[#1A581E] text-[#1A581E] rounded-full hover:bg-[#1A581E] hover:text-white transition-all duration-300 shadow-sm hover:shadow-md"
+                    >
+                        <span className="font-sans font-medium uppercase tracking-wider text-sm">Lihat Semua Koleksi</span>
+                        <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </Link>
                 </div>
 
             </div>

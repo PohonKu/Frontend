@@ -45,35 +45,38 @@ const STEPS = [
 
 export const HowItWorks = () => {
     return (
-        <section className="py-20 bg-white">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-24 bg-[#F9F9F9] border-t border-gray-100">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <div className="text-center mb-14">
+                <div className="text-center mb-16 px-4">
                     <h2 className="text-3xl md:text-4xl font-tilt font-bold text-[#1A581E] mb-6">
                         Langkah Menuju Kebaikan
                     </h2>
-                    <div className="w-12 h-[1px] bg-[#1A3626] mx-auto"></div>
+                    <div className="w-12 h-[2px] bg-[#1A3626] mx-auto rounded-full"></div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {STEPS.map((step) => (
-                        <div key={step.id} className="flex flex-col items-center text-center group p-6 rounded-xl transition-transform duration-300 hover:-translate-y-1">
+                        <div key={step.id} className="relative flex flex-col items-center text-center group bg-white p-10 rounded-2xl shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
 
-                            <div className="text-[#1A581E] mb-6 opacity-80">
-                                {step.icon}
-                            </div>
-
-                            <div className="text-xs font-sans text-[#6B7280] tracking-[0.2em] mb-3">
+                            {/* Faint Step Number Watermark */}
+                            <div className="absolute top-4 right-6 text-6xl font-tilt font-bold text-gray-100 select-none transition-colors duration-300 group-hover:text-gray-200">
                                 {step.id}
                             </div>
 
-                            <h3 className="text-lg font-bold text-[#111827] mb-2 uppercase tracking-wide font-inria">
-                                {step.title}
-                            </h3>
+                            <div className="relative z-10 w-16 h-16 rounded-full bg-[#CEFFD1]/50 flex items-center justify-center text-[#1A581E] mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:bg-[#A2E3B1]/50">
+                                {step.icon}
+                            </div>
 
-                            <p className="text-[#4B5563] font-light text-sm leading-relaxed max-w-[200px] font-sans">
-                                {step.description}
-                            </p>
+                            <div className="relative z-10">
+                                <h3 className="text-xl font-bold text-[#111827] mb-3 font-inria">
+                                    {step.title}
+                                </h3>
+
+                                <p className="text-[#6B7280] font-light text-[15px] leading-relaxed font-sans">
+                                    {step.description}
+                                </p>
+                            </div>
 
                         </div>
                     ))}
