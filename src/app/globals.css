@@ -84,3 +84,33 @@ body {
   list-style-type: disc !important;
   list-style-position: outside !important;
 }
+
+/* ============================================
+   GLOBAL SCROLLBAR STYLING
+============================================ */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff !important; /* Force white background even in dark mode */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1A581E; /* Primary green */
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box; /* Creates the floating/inset effect */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #113c14; /* Darker primary */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1A581E #ffffff;
+}
