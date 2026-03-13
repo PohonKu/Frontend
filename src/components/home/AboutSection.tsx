@@ -31,12 +31,12 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
           <div className="absolute -top-16 -left-16 w-56 h-56 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
           {/* Background tree illustration */}
           <div
-            className="absolute inset-0 pointer-events-none z-0"
+            className="absolute top-0 left-0 right-0 -bottom-32 pointer-events-none z-0"
             style={{
               backgroundImage: "url('/gambarCici/bg1.svg')",
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
-              backgroundPosition: 'center center',
+              backgroundPosition: 'center bottom',
               filter: 'invert(1)',
               opacity: 0.06,
             }}
