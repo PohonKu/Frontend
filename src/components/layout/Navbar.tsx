@@ -109,9 +109,10 @@ export const Navbar = () => {
             <button className="flex items-center gap-1 focus:outline-none group/btn">
               <Typography
                 variant="nav-link"
-                className={`transition-colors ${textColorClass}`}
+                className={`relative transition-colors ${textColorClass}`}
               >
                 PohonKu
+                <span className={`absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center ${lineClass}`}></span>
               </Typography>
               <ChevronDown
                 size={12}
@@ -152,7 +153,7 @@ export const Navbar = () => {
             <Typography variant="nav-link" className={`transition-colors ${navLinkClass}`}>
               Contact
             </Typography>
-            <span className={`absolute bottom-0 left-0 w-full h-0.5 scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-left ${lineClass}`}></span>
+            <span className={`absolute bottom-0 left-0 w-full h-0.5 scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-center ${lineClass}`}></span>
           </Link>
 
           <Link
@@ -162,7 +163,7 @@ export const Navbar = () => {
             <Typography variant="nav-link" className={`transition-colors ${navLinkClass}`}>
               Tree List
             </Typography>
-            <span className={`absolute bottom-0 left-0 w-full h-0.5 scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-left ${lineClass}`}></span>
+            <span className={`absolute bottom-0 left-0 w-full h-0.5 scale-x-0 group-hover/nav:scale-x-100 transition-transform duration-300 origin-center ${lineClass}`}></span>
           </Link>
 
           {/* CTA Button placed among links */}

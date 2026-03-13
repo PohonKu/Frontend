@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Typography } from '@/components/ui/Typography';
+import { FadeIn } from '@/components/ui/FadeIn';
 import { MapPin, Trees, Mountain, Landmark } from 'lucide-react';
 import './ProjectArea.css';
 
@@ -45,7 +46,7 @@ export const ProjectArea = () => {
 
     return (
         <section id="project-area" className="pa-section">
-            <div className="pa-container">
+            <FadeIn className="pa-container">
 
                 {/* Header */}
                 <div className="pa-header">
@@ -180,7 +181,7 @@ export const ProjectArea = () => {
                     </div>
 
                 </div>
-            </div>
+            </FadeIn>
         </section>
     );
 };

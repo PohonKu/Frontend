@@ -6,6 +6,7 @@ import NameTagModal from '@/components/adopt/NameTagModal';
 import PaymentModal from '@/components/adopt/PaymentModal';
 import AuthErrorModal from '@/components/ui/AuthErrorModal';
 import { orderApi } from '@/lib/apiPayment';
+import { FadeIn } from '@/components/ui/FadeIn';
 
 interface FeaturedTreesProps {
     prefilledName?: string;
@@ -137,7 +138,7 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
 
     return (
         <section id="featured-trees" className="py-24 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeIn className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-tilt font-bold text-[#111827] mb-6">
@@ -209,7 +210,7 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
                     </Link>
                 </div>
 
-            </div>
+            </FadeIn>
 
             {/* Name Tag Modal */}
             {pendingSpecies && (

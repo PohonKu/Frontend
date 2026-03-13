@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { FadeIn } from '@/components/ui/FadeIn';
 import './TeamMember.css';
 
 interface TeamMemberData {
@@ -32,7 +33,7 @@ export const TeamMember = () => {
 
   return (
     <section id="team-member" className="team-member-section">
-      <div className={`team-member-container ${activeTeam}`}>
+      <FadeIn className={`team-member-container ${activeTeam}`}>
         {/* Section Title */}
         <h2 className="team-title">Team Member</h2>
 
@@ -57,17 +58,17 @@ export const TeamMember = () => {
           {currentTeam.map((member, index) => (
             <div
               key={`${activeTeam}-${index}`}
-              className={`member-card ${activeTeam}`}
+              className={`member-card ${activeTeam} group transition-all duration-300 hover:-translate-y-2 hover:shadow-xl rounded-tr-[3rem] cursor-pointer`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Photo with Unique Curved Cutout Shape */}
-              <div className={`member-image-wrapper ${activeTeam}`}>
+              <div className={`member-image-wrapper ${activeTeam} overflow-hidden rounded-tr-[3rem]`}>
                 <Image
                   src="/images/RectangleFoto.svg"
                   alt={member.name}
                   width={200}
                   height={267}
-                  className="member-image"
+                  className="member-image transition-transform duration-700 ease-out group-hover:scale-110"
                 />
               </div>
 
@@ -79,7 +80,7 @@ export const TeamMember = () => {
             </div>
           ))}
         </div>
-      </div>
+      </FadeIn>
     </section>
   );
 };

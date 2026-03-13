@@ -36,7 +36,7 @@ export default function TreeCard({ species, onAdopt, onClick }: TreeCardProps) {
   return (
     <div
       onClick={onClick}
-      className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 ease-out border border-gray-100 hover:bg-[#CEFFD1] cursor-pointer"
+      className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-[#1A581E]/10 hover:-translate-y-2 transition-all duration-500 ease-out border border-gray-100 cursor-pointer"
     >
       {/* Image Container - 4:3 Aspect Ratio */}
       <div className="relative h-48 overflow-hidden bg-gray-100">
@@ -44,7 +44,7 @@ export default function TreeCard({ species, onAdopt, onClick }: TreeCardProps) {
           src={species.image}
           alt={species.localName}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
 

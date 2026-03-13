@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { FadeIn } from '@/components/ui/FadeIn';
 import './GoalsSection.css';
 
 interface SDGItemProps {
@@ -28,7 +29,7 @@ export const GoalsSection = () => {
 
   return (
     <section id="goals" className="goals-section">
-      <div className="goals-container">
+      <FadeIn className="goals-container">
         {/* Section Title */}
         <h2 className="goals-title">Sustainable Development Goals</h2>
 
@@ -55,7 +56,7 @@ export const GoalsSection = () => {
             </div>
           ))}
         </div>
-      </div>
+      </FadeIn>
     </section>
   );
 };

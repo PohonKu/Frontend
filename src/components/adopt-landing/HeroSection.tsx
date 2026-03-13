@@ -20,7 +20,7 @@ export const HeroSection = ({ treeName, setTreeName }: HeroSectionProps) => {
             <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col md:flex-row items-center justify-between gap-16">
 
                 {/* Left Column: Copy */}
-                <div className="flex-1 text-center md:text-left text-white space-y-8">
+                <div className="flex-1 text-center md:text-left text-white space-y-8 animate-fade-in-up">
                     <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-tilt leading-tight text-[#FAFAFA]">
                         Tinggalkan Jejak Kebaikan.
                     </h1>
@@ -30,7 +30,7 @@ export const HeroSection = ({ treeName, setTreeName }: HeroSectionProps) => {
                 </div>
 
                 {/* Right Column: Elegant Glassmorphism Card */}
-                <div className="flex-1 w-full max-w-md">
+                <div className="flex-1 w-full max-w-md animate-fade-in-up" style={{ animationDelay: '200ms' }}>
                     <div className="bg-white rounded-2xl p-8 shadow-lg relative overflow-hidden">
 
                         <div className="space-y-8 relative z-10">

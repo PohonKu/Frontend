@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FadeIn } from '@/components/ui/FadeIn';
 
 const useNumberAnimation = (end: number, duration: number = 2000) => {
     const [count, setCount] = useState(0);
@@ -75,7 +76,7 @@ export const ImpactStats = () => {
                 }}
             />
 
-            <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <FadeIn className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
 
                     {/* Stat 1 */}
@@ -120,7 +121,7 @@ export const ImpactStats = () => {
                     </div>
 
                 </div>
-            </div>
+            </FadeIn>
         </section>
     );
 };

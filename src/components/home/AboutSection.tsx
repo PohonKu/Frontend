@@ -1,4 +1,5 @@
 import { Typography } from '@/components/ui/Typography';
+import { FadeIn } from '@/components/ui/FadeIn';
 
 interface AboutSectionProps {
   className?: string;
@@ -7,7 +8,7 @@ interface AboutSectionProps {
 export function AboutSection({ className = '' }: AboutSectionProps) {
   return (
     <section id="about" className={`w-full min-h-[90vh] flex items-center bg-[#FDFDFD] py-16 px-6 md:px-12 lg:px-20 ${className}`}>
-      <div className="max-w-[1400px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <FadeIn className="max-w-[1400px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
         {/* Left Side: Brand and Description */}
         <div className="flex flex-col space-y-6 md:space-y-8">
@@ -25,7 +26,7 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
         </div>
 
         {/* Right Side: Visi Misi Card */}
-        <div className="bg-[#1A581E] text-white rounded-[2rem] p-10 md:p-14 shadow-2xl flex flex-col space-y-10 relative overflow-hidden">
+        <div className="bg-[#1A581E] text-white rounded-[2rem] p-10 md:p-14 shadow-2xl flex flex-col space-y-10 relative overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-3xl">
           {/* Subtle decorations to make it less plain but minimalist */}
           <div className="absolute -bottom-24 -right-24 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute -top-16 -left-16 w-56 h-56 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
@@ -69,7 +70,7 @@ export function AboutSection({ className = '' }: AboutSectionProps) {
           </div>
 
         </div>
-      </div>
+      </FadeIn>
     </section>
   );
 }

@@ -2,6 +2,7 @@
 
 import React, { useState, FormEvent } from 'react';
 import { MapPin, Mail, Clock, Phone } from 'lucide-react';
+
 import Image from 'next/image';
 import styles from './ContactSection.module.css';
 
@@ -127,7 +128,7 @@ export default function ContactSection() {
           {/* Left Column - Contact Info */}
           <div className={styles.contactInfo}>
             {/* Location */}
-            <div className={styles.contactBlock}>
+            <div className={`${styles.contactBlock} hover:-translate-y-1 hover:bg-white/50 hover:shadow-sm transition-all duration-300 rounded-xl p-2 -mx-2`}>
               <div className={styles.iconContainer}>
                 <MapPin width={24} height={24} className={styles.contactIcon} />
               </div>
@@ -140,7 +141,7 @@ export default function ContactSection() {
             </div>
 
             {/* Email */}
-            <div className={styles.contactBlock}>
+            <div className={`${styles.contactBlock} hover:-translate-y-1 hover:bg-white/50 hover:shadow-sm transition-all duration-300 rounded-xl p-2 -mx-2`}>
               <div className={styles.iconContainer}>
                 <Mail width={24} height={24} className={styles.contactIcon} />
               </div>
@@ -151,7 +152,7 @@ export default function ContactSection() {
             </div>
 
             {/* General Contact (Laras) */}
-            <div className={styles.contactBlock}>
+            <div className={`${styles.contactBlock} hover:-translate-y-1 hover:bg-white/50 hover:shadow-sm transition-all duration-300 rounded-xl p-2 -mx-2`}>
               <div className={styles.iconContainer}>
                 <Phone width={24} height={24} className={styles.contactIcon} />
               </div>
@@ -162,7 +163,7 @@ export default function ContactSection() {
             </div>
 
             {/* Technical Contact (Arsya) */}
-            <div className={styles.contactBlock}>
+            <div className={`${styles.contactBlock} hover:-translate-y-1 hover:bg-white/50 hover:shadow-sm transition-all duration-300 rounded-xl p-2 -mx-2`}>
               <div className={styles.iconContainer}>
                 <Phone width={24} height={24} className={styles.contactIcon} />
               </div>
@@ -173,7 +174,7 @@ export default function ContactSection() {
             </div>
 
             {/* Working Hours */}
-            <div className={styles.contactBlock}>
+            <div className={`${styles.contactBlock} hover:-translate-y-1 hover:bg-white/50 hover:shadow-sm transition-all duration-300 rounded-xl p-2 -mx-2`}>
               <div className={styles.iconContainer}>
                 <Clock width={24} height={24} className={styles.contactIcon} />
               </div>

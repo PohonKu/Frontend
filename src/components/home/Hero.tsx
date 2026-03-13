@@ -79,7 +79,7 @@ export const Hero = () => {
             {/* Content Container */}
             <div className="relative z-10 w-full px-6 md:px-12 max-w-5xl mx-auto flex flex-col items-center text-center mt-12">
                 <div
-                    className="transition-all duration-700 ease-out transform translate-y-0 opacity-100"
+                    className="animate-fade-in-up"
                     key={currentSlide}
                 >
                     <Typography

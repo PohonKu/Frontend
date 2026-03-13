@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { Instagram, Youtube, Facebook, Twitter } from 'lucide-react';
 import Link from 'next/link';
+import { FadeIn } from '@/components/ui/FadeIn';
 
 // Custom SVG icon for TikTok
 const TiktokIcon = ({ className }: { className?: string }) => (
@@ -52,7 +53,7 @@ export const Footer = () => {
     <footer className="w-full relative z-20 mt-auto bg-[#F3F6F4] border-t border-gray-200/60">
 
       {/* Top Area - Grid Container */}
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-16">
+      <FadeIn className="max-w-[1440px] mx-auto px-6 md:px-12 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
 
           {/* Column 1 - Brand */}
@@ -125,7 +126,7 @@ export const Footer = () => {
           </div>
 
         </div>
-      </div>
+      </FadeIn>
 
       {/* Bottom Area - Copyright & Socials */}
       <div className="border-t border-gray-200/60">

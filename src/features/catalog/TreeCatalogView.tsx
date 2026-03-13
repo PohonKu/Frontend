@@ -205,7 +205,7 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
           ))}
         </div>
       ) : (
-        <div className="text-center py-24 md:py-32 px-4 max-w-lg mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="text-center py-24 md:py-32 px-4 max-w-lg mx-auto animate-fade-in-up duration-700">
           <div className="w-32 h-32 md:w-40 md:h-40 mx-auto mb-8 relative group">
             {/* Background glowing circle */}
             <div className="absolute inset-0 bg-[#CEFFD1]/50 rounded-full blur-2xl group-hover:bg-[#CEFFD1]/80 transition-colors duration-500"></div>
