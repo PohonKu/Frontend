@@ -21,7 +21,7 @@ export const HeroSection = ({ treeName, setTreeName }: HeroSectionProps) => {
 
                 {/* Left Column: Copy */}
                 <div className="flex-1 text-center md:text-left text-white space-y-8 animate-fade-in-up">
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-tilt leading-tight text-[#FAFAFA]">
+                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-tilt leading-tight text-[#FAFAFA]">
                         Tinggalkan Jejak Kebaikan.
                     </h1>
                     <p className="text-lg md:text-xl text-gray-300 max-w-xl mx-auto md:mx-0 font-light leading-relaxed font-sans">

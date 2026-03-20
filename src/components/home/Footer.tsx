@@ -76,7 +76,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="font-sans text-gray-600 hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1"
+                    className="font-sans py-2 text-gray-600 hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1"
                   >
                     {link.name}
                   </Link>
@@ -95,7 +95,7 @@ export const Footer = () => {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="font-sans text-gray-600 hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1"
+                    className="font-sans py-2 text-gray-600 hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1"
                   >
                     {link.name}
                   </Link>
@@ -112,13 +112,13 @@ export const Footer = () => {
             <ul className="flex flex-col space-y-4">
               <li className="font-sans text-gray-600">
                 <span className="block font-medium text-sm text-gray-400 mb-1">Informasi Umum</span>
-                <a href="https://wa.me/6285715538430" target="_blank" rel="noopener noreferrer" className="hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1">
+                <a href="https://wa.me/6285715538430" target="_blank" rel="noopener noreferrer" className="py-2 hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1">
                   +62 857-1553-8430 (Laras)
                 </a>
               </li>
               <li className="font-sans text-gray-600">
                 <span className="block font-medium text-sm text-gray-400 mb-1">Bantuan Teknis</span>
-                <a href="https://wa.me/6281383857627" target="_blank" rel="noopener noreferrer" className="hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1">
+                <a href="https://wa.me/6281383857627" target="_blank" rel="noopener noreferrer" className="py-2 hover:text-[#1A581E] transition-all duration-300 inline-block transform hover:translate-x-1">
                   +62 813-8385-7627 (Arsya)
                 </a>
               </li>
@@ -145,7 +145,7 @@ export const Footer = () => {
                   href={social.href}
                   target={social.name === 'Flickr' ? '_blank' : undefined}
                   rel={social.name === 'Flickr' ? 'noopener noreferrer' : undefined}
-                  className="text-gray-400 hover:text-[#1A581E] transition-all duration-300 hover:-translate-y-[2px] focus:outline-none"
+                  className="p-2 -m-2 text-gray-400 hover:text-[#1A581E] transition-all duration-300 hover:-translate-y-[2px] focus:outline-none"
                   aria-label={social.name}
                 >
                   {social.name === 'TikTok' ? (

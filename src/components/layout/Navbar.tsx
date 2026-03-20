@@ -191,7 +191,7 @@ export const Navbar = () => {
 
           {/* --- MOBILE HAMBURGER --- */}
           <button
-            className={`lg:hidden p-2 transition-colors ${isTransparent ? 'text-white' : 'text-gray-900 hover:text-[#1A581E]'}`}
+            className={`lg:hidden p-3 transition-colors ${isTransparent ? 'text-white' : 'text-gray-900 hover:text-[#1A581E]'}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -217,7 +217,7 @@ export const Navbar = () => {
                     handleScrollToSection(e, link.sectionId);
                     setIsMobileMenuOpen(false);
                   }}
-                  className="block text-gray-600 hover:text-[#1A581E] transition-colors cursor-pointer"
+                  className="block py-2 text-gray-600 hover:text-[#1A581E] transition-colors cursor-pointer"
                 >
                   <Typography variant="nav-link">{link.label}</Typography>
                 </a>
@@ -227,7 +227,7 @@ export const Navbar = () => {
 
           <Link
             href="/contact"
-            className="block py-2 border-b border-gray-100 text-gray-900 hover:text-[#1A581E] transition-colors"
+            className="block py-3 border-b border-gray-100 text-gray-900 hover:text-[#1A581E] transition-colors"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <Typography variant="nav-link">Contact</Typography>
@@ -235,7 +235,7 @@ export const Navbar = () => {
 
           <Link
             href="/trees"
-            className="block py-2 border-b border-gray-100 text-gray-900 hover:text-[#1A581E] transition-colors"
+            className="block py-3 border-b border-gray-100 text-gray-900 hover:text-[#1A581E] transition-colors"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <Typography variant="nav-link">Tree List</Typography>

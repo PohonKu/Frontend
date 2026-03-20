@@ -96,7 +96,7 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
   const handleAdopt = (speciesId: string) => {
     const token = localStorage.getItem('access_token');
     if (!token) {
-      setShowAuthError(true);
+      window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
       return;
     }
 

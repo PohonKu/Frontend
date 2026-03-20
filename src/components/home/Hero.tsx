@@ -77,21 +77,21 @@ export const Hero = () => {
             ))}
 
             {/* Content Container */}
-            <div className="relative z-10 w-full px-6 md:px-12 max-w-5xl mx-auto flex flex-col items-center text-center mt-12">
+            <div className="relative z-10 w-full px-6 md:px-12 max-w-5xl mx-auto flex flex-col items-center text-center mt-12 md:mt-24">
                 <div
-                    className="animate-fade-in-up"
+                    className="animate-fade-in-up w-full md:max-w-4xl flex flex-col items-center"
                     key={currentSlide}
                 >
                     <Typography
                         variant="tilt-title"
-                        className="text-white mb-6 drop-shadow-xl justify-center text-center"
+                        className="text-white mb-6 drop-shadow-xl text-center"
                     >
                         {slides[currentSlide].headline}
                     </Typography>
 
                     <Typography
                         variant="title"
-                        className="text-gray-200 mb-10 drop-shadow-md text-base md:text-lg lg:text-xl max-w-3xl mx-auto !leading-relaxed font-sans"
+                        className="text-gray-200 mb-10 drop-shadow-md text-base md:text-lg lg:text-xl max-w-3xl mx-auto !leading-relaxed font-sans text-center"
                         weight="regular"
                     >
                         {slides[currentSlide].subheadline}
@@ -99,7 +99,7 @@ export const Hero = () => {
 
                     <Link
                         href={slides[currentSlide].ctaLink}
-                        className="group inline-block bg-white px-8 py-4 rounded-full transition-all duration-400 ease-in-out hover:bg-[#1A581E] hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+                        className="group flex justify-center w-full sm:w-auto sm:inline-flex mt-4 bg-white px-8 py-4 rounded-full transition-all duration-400 ease-in-out hover:bg-[#1A581E] hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
                     >
                         <Typography variant="button" className="text-gray-900 group-hover:text-white font-bold text-base md:text-lg transition-colors duration-400 ease-in-out">
                             {slides[currentSlide].ctaText}
@@ -109,20 +109,22 @@ export const Hero = () => {
             </div>
 
             {/* Navigation Arrows */}
-            <button
-                onClick={prevSlide}
-                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-2 text-white/60 hover:text-white hover:-translate-x-2 transition-all duration-300 group"
-                aria-label="Previous slide"
-            >
-                <ChevronLeft size={48} strokeWidth={1} className="drop-shadow-lg group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
-            </button>
-            <button
-                onClick={nextSlide}
-                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2 text-white/60 hover:text-white hover:translate-x-2 transition-all duration-300 group"
-                aria-label="Next slide"
-            >
-                <ChevronRight size={48} strokeWidth={1} className="drop-shadow-lg group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
-            </button>
+            <div className="absolute inset-x-0 bottom-24 md:bottom-auto md:top-1/2 md:-translate-y-1/2 flex justify-between px-2 md:px-8 z-20 pointer-events-none">
+                <button
+                    onClick={prevSlide}
+                    className="p-2 text-white/60 hover:text-white hover:-translate-x-2 transition-all duration-300 group pointer-events-auto"
+                    aria-label="Previous slide"
+                >
+                    <ChevronLeft className="w-10 h-10 md:w-12 md:h-12 drop-shadow-lg group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" strokeWidth={1} />
+                </button>
+                <button
+                    onClick={nextSlide}
+                    className="p-2 text-white/60 hover:text-white hover:translate-x-2 transition-all duration-300 group pointer-events-auto"
+                    aria-label="Next slide"
+                >
+                    <ChevronRight className="w-10 h-10 md:w-12 md:h-12 drop-shadow-lg group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" strokeWidth={1} />
+                </button>
+            </div>
 
             {/* Dot Indicators */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">

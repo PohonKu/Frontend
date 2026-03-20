@@ -6,8 +6,8 @@ import { Navbar } from './Navbar';
 export function NavbarWrapper() {
     const pathname = usePathname();
 
-    // Hide the navbar on dashboard routes
-    if (pathname.startsWith('/dashboard')) {
+    // Hide the navbar on dashboard and login routes
+    if (pathname.startsWith('/dashboard') || pathname.startsWith('/login')) {
         return null;
     }
 

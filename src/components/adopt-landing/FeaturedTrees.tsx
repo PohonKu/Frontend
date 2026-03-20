@@ -106,7 +106,7 @@ export const FeaturedTrees = ({ prefilledName = '' }: FeaturedTreesProps) => {
     const handleAdopt = (tree: { id: string; name: string }) => {
         const token = localStorage.getItem('access_token');
         if (!token) {
-            setShowAuthError(true);
+            window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
             return;
         }
         setPendingSpecies(tree);

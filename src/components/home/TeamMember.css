@@ -306,6 +306,11 @@
   }
 }
 
+.animate-member {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
 /* Member Image Wrapper — responsive sizes */
 .member-image-wrapper {
   position: relative;
