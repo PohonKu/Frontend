@@ -30,7 +30,7 @@ function LoginContent() {
         } else {
             const existing = localStorage.getItem('post_login_redirect');
             if (!existing) {
-                localStorage.setItem('post_login_redirect', '/dashboard');
+                localStorage.setItem('post_login_redirect', '/dashboard/dashboard');
             }
         }
         // TEMPORARY BYPASS: Since Railway is down, we use a mock login flow
