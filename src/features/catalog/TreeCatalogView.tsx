@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Tree as RawTree } from '@/types';
 import { TreeCluster } from './types';
-import TreeCard, { TreeSpeciesCard } from '@/components/ui/TreeCard';
+import TreeCard, { TreeSpeciesCard } from '@/components/ui/treeCard';
 import TreeDetailModal from '@/components/ui/TreeDetailModal';
 import CatalogTabs from './CatalogTabs';
 import NameTagModal from '@/components/adopt/NameTagModal';
@@ -47,6 +47,7 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
           price: tree.price,
           stock: 0,
           description: tree.species.description,
+          storyContent: tree.species.storyContent
         });
       }
 
@@ -106,14 +107,16 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
     }
   };
 
-  const handleNameSubmit = async (nameOnTag: string) => {
+  const handleNameSubmit = async (nameOnTag: string, durationYears: number) => {
     if (!pendingSpecies) return;
+    console.log("INI", durationYears)
 
     setIsCreatingOrder(true);
     try {
       const response = await orderApi.createOrder({
         speciesId: pendingSpecies.id,
         nameOnTag,
+        durationYears,
       });
 
       if (response.success && response.data?.id) {
@@ -212,34 +215,34 @@ export default function TreeCatalogView({ trees }: TreeCatalogViewProps) {
             {/* Premium Minimalist SVG */}
             <svg className="w-full h-full text-[#1A581E] relative z-10 transform group-hover:scale-105 transition-transform duration-500 drop-shadow-sm" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
               {/* Outer soft circle */}
-              <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeOpacity="0.1" fill="#FFFFFF"/>
+              <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeOpacity="0.1" fill="#FFFFFF" />
               {/* Magnifying Glass Handle */}
-              <path d="M68 68L82 82" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeOpacity="0.4"/>
+              <path d="M68 68L82 82" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeOpacity="0.4" />
               {/* Magnifying Glass Rim */}
-              <circle cx="48" cy="48" r="28" stroke="currentColor" strokeWidth="4" fill="none"/>
+              <circle cx="48" cy="48" r="28" stroke="currentColor" strokeWidth="4" fill="none" />
               {/* Internal Sprout */}
-              <path d="M48 64V46" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
-              <path d="M48 54C48 54 41 46 41 42C41 38 45 36 48 40" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M48 48C48 48 55 40 55 36C55 32 51 30 48 34" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M48 64V46" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+              <path d="M48 54C48 54 41 46 41 42C41 38 45 36 48 40" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M48 48C48 48 55 40 55 36C55 32 51 30 48 34" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
               {/* Earth line */}
-              <path d="M38 64H58" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+              <path d="M38 64H58" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
               {/* Sparkles */}
-              <circle cx="75" cy="30" r="2" fill="currentColor" strokeOpacity="0.6"/>
-              <circle cx="25" cy="25" r="1.5" fill="currentColor" strokeOpacity="0.4"/>
+              <circle cx="75" cy="30" r="2" fill="currentColor" strokeOpacity="0.6" />
+              <circle cx="25" cy="25" r="1.5" fill="currentColor" strokeOpacity="0.4" />
             </svg>
           </div>
-          
+
           <h3 className="text-2xl md:text-3xl font-tilt text-gray-900 mb-3 tracking-tight">
             Koleksi Tidak Ditemukan
           </h3>
           <p className="text-base md:text-lg text-gray-500 font-sans leading-relaxed mb-8">
-            {searchTerm 
-              ? `Kami belum mencatat spesies dengan nama "${searchTerm}". Coba gunakan kata kunci latin atau nama lokal lain.` 
+            {searchTerm
+              ? `Kami belum mencatat spesies dengan nama "${searchTerm}". Coba gunakan kata kunci latin atau nama lokal lain.`
               : 'Belum ada koleksi spesies yang tersedia untuk filter kluster ini. Silakan coba eksplorasi kluster lainnya.'}
           </p>
-          
+
           {/* CTA to reset filters */}
-          <button 
+          <button
             onClick={() => {
               setSearchTerm('');
               setActiveCluster('All');
