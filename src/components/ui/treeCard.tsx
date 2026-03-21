@@ -12,6 +12,7 @@ export interface TreeSpeciesCard {
   price: number;
   stock: number;
   description?: string;
+  storyContent?: string;
 }
 
 interface TreeCardProps {

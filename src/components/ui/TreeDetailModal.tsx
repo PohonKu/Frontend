@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { X } from 'lucide-react';
-import { TreeSpeciesCard } from './TreeCard';
+import { TreeSpeciesCard } from './treeCard';
 import styles from './TreeDetailModal.module.css';
 
 interface TreeDetailModalProps {
@@ -122,7 +122,7 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                   ) : (
                     <div className="prose prose-sm sm:prose-base max-w-none text-gray-700">
                       <p className="leading-relaxed italic text-gray-500">
-                        Cerita & filosofi tentang {species.localName} akan segera ditambahkan...
+                        {species.storyContent}
                       </p>
                     </div>
                   )}
@@ -171,6 +171,13 @@ export default function TreeDetailModal({ species, onClose, onAdopt }: TreeDetai
                         {formatPrice(species.price)}
                       </p>
                       <span className="text-sm text-gray-500 font-sans">/ 1 Tahun</span>
+                    </div>
+                    <p className="text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider font-sans ">Atau</p>
+                    <div className="flex items-baseline gap-2 mb-4">
+                      <p className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-none font-inria">
+                        {formatPrice(300000)}
+                      </p>
+                      <span className="text-sm text-gray-500 font-sans">/ 3 Tahun</span>
                     </div>
 
                     <p className="text-xs text-gray-500 mb-4 italic font-sans">

@@ -3,6 +3,7 @@ import { apiFetch } from './wrapper';
 interface CreateOrderPayload {
   speciesId: string;
   nameOnTag: string;
+  durationYears: number;
 }
 
 export const orderApi = {

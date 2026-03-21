@@ -6,12 +6,13 @@ import { X } from 'lucide-react';
 interface NameTagModalProps {
     speciesName: string;
     onClose: () => void;
-    onSubmit: (nameOnTag: string) => void;
+    onSubmit: (nameOnTag: string, durationYears: number) => void;
     initialName?: string;
 }
 
 export default function NameTagModal({ speciesName, onClose, onSubmit, initialName = '' }: NameTagModalProps) {
     const [name, setName] = useState(initialName);
+    const [durationYears, setDurationYears] = useState<1 | 3>(1);
     const [error, setError] = useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -24,7 +25,7 @@ export default function NameTagModal({ speciesName, onClose, onSubmit, initialNa
             setError('Maksimal 30 karakter.');
             return;
         }
-        onSubmit(name.trim());
+        onSubmit(name.trim(), durationYears);
     };
 
     return (
@@ -49,7 +50,8 @@ export default function NameTagModal({ speciesName, onClose, onSubmit, initialNa
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Name Input */}
                     <div>
                         <label htmlFor="nameOnTag" className="block text-sm font-medium text-gray-700 mb-2 font-sans">
                             Nama di Tag Kayu
@@ -68,6 +70,35 @@ export default function NameTagModal({ speciesName, onClose, onSubmit, initialNa
                         />
                         {error && <p className="text-red-500 text-xs mt-2 font-sans">{error}</p>}
                         <p className="text-xs text-gray-400 mt-2 text-right">Maks. 30 karakter</p>
+                    </div>
+
+                    {/* Duration Selection */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2 font-sans">
+                            Durasi Adopsi
+                        </label>
+                        <div className="grid grid-cols-2 gap-3">
+                            {([1, 3] as const).map((year) => (
+                                <button
+                                    key={year}
+                                    type="button"
+                                    onClick={() => setDurationYears(year)}
+                                    className={`
+                                        relative flex flex-col items-center justify-center py-3 px-4 rounded-xl border-2 transition-all duration-200 font-sans
+                                        ${durationYears === year
+                                            ? 'border-[#1A581E] bg-[#1A581E]/5 text-[#1A581E]'
+                                            : 'border-gray-200 bg-gray-50 text-gray-600 hover:border-gray-300'
+                                        }
+                                    `}
+                                >
+                                    {durationYears === year && (
+                                        <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#1A581E]" />
+                                    )}
+                                    <span className="text-lg font-bold">{year}</span>
+                                    <span className="text-xs">{year === 1 ? 'Tahun' : 'Tahun'}</span>
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
                     <button
