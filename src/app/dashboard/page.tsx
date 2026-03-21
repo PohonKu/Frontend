@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Home, LayoutDashboard, Settings, LogOut, X, Download, MapPin, Calendar, Trees, Droplets, Wind, CheckCircle, Leaf, Info } from 'lucide-react';
+import { Home, LayoutDashboard, Settings, LogOut, X, Download, MapPin, Calendar, Trees, Droplets, Wind, CheckCircle, Leaf, Info, Menu } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { dashboardApi } from '@/lib/apiDashboard';
 import { Typography } from '@/components/ui/Typography';
@@ -301,6 +301,7 @@ export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [adoptions, setAdoptions] = useState<Adoption[]>([]);
   const [dataSource, setDataSource] = useState<'api' | 'mock'>('mock');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Modal states
   const [selectedTree, setSelectedTree] = useState<Adoption | null>(null);
@@ -321,18 +322,30 @@ export default function Dashboard() {
           return;
         }
 
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
-        const userRes = await fetch(`${apiUrl}/api/v1/auth/me`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+        // TEMPORARY BYPASS: Handle mock login when backend is down
+        if (token === 'mock_token_123') {
+          console.log('Using mock user data for offline testing');
+          setUser({
+            id: 'mock-user-1',
+            email: 'guest@pohonku.com',
+            name: 'PohonKu Guest (Simulasi)',
+            picture: 'https://ui-avatars.com/api/?name=PohonKu+Guest&background=1A581E&color=fff'
+          } as any);
+        } else {
+          // Normal validation
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+          const userRes = await fetch(`${apiUrl}/api/v1/auth/me`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
 
-        if (!userRes.ok) {
-          localStorage.removeItem('access_token');
-          router.push('/login');
-          return;
+          if (!userRes.ok) {
+            localStorage.removeItem('access_token');
+            router.push('/login');
+            return;
+          }
+          const userData = await userRes.json();
+          setUser(userData.data);
         }
-        const userData = await userRes.json();
-        setUser(userData.data);
 
         // Try fetching real adoptions from API first
         try {
@@ -373,6 +386,8 @@ export default function Dashboard() {
 
       } catch (error) {
         console.error('Failed to fetch dashboard data:', error);
+        localStorage.removeItem('access_token');
+        router.push('/login');
       } finally {
         setIsLoading(false);
       }
@@ -528,10 +543,53 @@ export default function Dashboard() {
 
       {/* MAIN CONTENT */}
       <main className="flex-1 overflow-y-auto w-full relative bg-gray-50/50">
-        <div className="max-w-[1400px] mx-auto px-8 py-12">
+        
+        {/* Mobile Header Menu Button */}
+        <div className="md:hidden absolute top-4 right-4 z-[30]">
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2.5 bg-white rounded-lg shadow-md border border-gray-100 text-gray-800 focus:outline-none"
+          >
+            <Menu size={24} />
+          </button>
+        </div>
+
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm md:hidden" onClick={() => setIsMobileMenuOpen(false)}>
+            <aside className="w-72 max-w-[80vw] h-full bg-[#1E562A] shadow-2xl flex flex-col shrink-0 animate-in slide-in-from-left-8" onClick={e => e.stopPropagation()}>
+              <div className="p-6 flex justify-between items-center border-b border-white/10 mb-2">
+                 <div className="bg-white rounded-lg p-3">
+                   <Image src="/images/Logo.svg" alt="PohonKu Logo" width={90} height={30} className="object-contain" />
+                 </div>
+                 <button onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:bg-white/10 p-2 rounded-full">
+                   <X size={20} />
+                 </button>
+              </div>
+              <nav className="flex-1 px-4 py-4 space-y-2">
+                <Link href="/" className="flex items-center gap-3 px-4 py-3 rounded-md text-white/70 hover:bg-white/10 hover:text-white transition-all font-semibold tracking-wide" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Home className="w-5 h-5" /> Home
+                </Link>
+                <div className="flex items-center gap-3 px-4 py-3 rounded-md bg-white/10 text-white font-semibold tracking-wide border-l-4 border-white">
+                  <LayoutDashboard className="w-5 h-5" /> Dashboard
+                </div>
+                <Link href="/settings" className="flex items-center gap-3 px-4 py-3 rounded-md text-white/70 hover:bg-white/10 hover:text-white transition-all font-semibold tracking-wide" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Settings className="w-5 h-5" /> Pengaturan
+                </Link>
+              </nav>
+              <div className="p-6">
+                <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className="w-full flex items-center justify-center gap-3 px-4 py-3.5 rounded-md text-red-500 bg-white font-bold text-sm shadow-md">
+                  <LogOut className="w-5 h-5" /> Keluar
+                </button>
+              </div>
+            </aside>
+          </div>
+        )}
+
+        <div className="max-w-[1400px] mx-auto px-5 sm:px-8 py-10 sm:py-12">
 
           {/* Header */}
-          <header className="mb-8 animate-in fade-in slide-in-from-left-4 duration-700">
+          <header className="mb-8 pt-10 md:pt-0 animate-in fade-in slide-in-from-left-4 duration-700">
             <h1 className="text-3xl font-serif font-bold text-gray-900 tracking-tight">Halo, {user?.fullName || 'Pengguna'}</h1>
             <p className="text-gray-600 font-serif mt-1 font-medium">Terima kasih telah mengadopsi pohon dan ikut serta dalam pelestarian bumi.</p>
             {dataSource === 'mock' && (

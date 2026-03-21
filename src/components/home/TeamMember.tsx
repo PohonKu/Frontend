@@ -33,7 +33,8 @@ export const TeamMember = () => {
 
   return (
     <section id="team-member" className="team-member-section">
-      <FadeIn className={`team-member-container ${activeTeam}`}>
+      <FadeIn>
+        <div className={`team-member-container ${activeTeam}`}>
         {/* Section Title */}
         <h2 className="team-title">Team Member</h2>
 
@@ -58,8 +59,8 @@ export const TeamMember = () => {
           {currentTeam.map((member, index) => (
             <div
               key={`${activeTeam}-${index}`}
-              className={`member-card ${activeTeam} group transition-all duration-300 hover:-translate-y-2 cursor-pointer`}
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={`member-card ${activeTeam} animate-member group transition-transform duration-300 hover:-translate-y-2 cursor-pointer`}
+              style={{ animationDelay: `${index * 0.15 + 0.3}s` }}
             >
               {/* Photo with Unique Curved Cutout Shape */}
               <div className={`member-image-wrapper ${activeTeam}`}>
@@ -79,6 +80,7 @@ export const TeamMember = () => {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </FadeIn>
     </section>

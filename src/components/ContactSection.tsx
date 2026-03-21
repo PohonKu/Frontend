@@ -128,59 +128,57 @@ export default function ContactSection() {
           {/* Left Column - Contact Info */}
           <div className={styles.contactInfo}>
             {/* Location */}
-            <div className={`${styles.contactBlock} hover:-translate-y-1 hover:bg-white/50 hover:shadow-sm transition-all duration-300 rounded-xl p-2 -mx-2`}>
-              <div className={styles.iconContainer}>
-                <MapPin width={24} height={24} className={styles.contactIcon} />
+            <div className={`${styles.contactBlock} group hover:-translate-y-1 hover:bg-white/5 transition-all duration-400 rounded-2xl p-4 md:p-5 -mx-4 md:-mx-5 border border-transparent hover:border-white/10 cursor-pointer`}>
+              <div className={`${styles.iconContainer} group-hover:bg-[#1A581E] group-hover:shadow-[0_0_15px_rgba(26,88,30,0.5)] transition-all duration-400`}>
+                <MapPin width={24} height={24} className={`${styles.contactIcon} group-hover:text-white transition-colors duration-400`} />
               </div>
               <div className={styles.contactDetails}>
                 <h3 className={styles.contactLabel}>Lokasi</h3>
-                <p className={styles.contactText}>
+                <p className={`${styles.contactText} mt-1 opacity-90 group-hover:opacity-100 transition-opacity leading-relaxed`}>
                   3HW4+M4W, Gading III, Gading, Kec. Playen, Kabupaten Gunungkidul, Daerah Istimewa Yogyakarta 55861
                 </p>
               </div>
             </div>
 
             {/* Email */}
-            <div className={`${styles.contactBlock} hover:-translate-y-1 hover:bg-white/50 hover:shadow-sm transition-all duration-300 rounded-xl p-2 -mx-2`}>
-              <div className={styles.iconContainer}>
-                <Mail width={24} height={24} className={styles.contactIcon} />
+            <div className={`${styles.contactBlock} group hover:-translate-y-1 hover:bg-white/5 transition-all duration-400 rounded-2xl p-4 md:p-5 -mx-4 md:-mx-5 border border-transparent hover:border-white/10 cursor-pointer`}>
+              <div className={`${styles.iconContainer} group-hover:bg-[#1A581E] group-hover:shadow-[0_0_15px_rgba(26,88,30,0.5)] transition-all duration-400`}>
+                <Mail width={24} height={24} className={`${styles.contactIcon} group-hover:text-white transition-colors duration-400`} />
               </div>
               <div className={styles.contactDetails}>
                 <h3 className={styles.contactLabel}>Email</h3>
-                <p className={styles.contactText}>pohonku@gmail.com</p>
+                <p className={`${styles.contactText} mt-1 opacity-90 group-hover:opacity-100 transition-opacity tracking-wide`}>pohonku@gmail.com</p>
               </div>
             </div>
 
-            {/* General Contact (Laras) */}
-            <div className={`${styles.contactBlock} hover:-translate-y-1 hover:bg-white/50 hover:shadow-sm transition-all duration-300 rounded-xl p-2 -mx-2`}>
-              <div className={styles.iconContainer}>
-                <Phone width={24} height={24} className={styles.contactIcon} />
+            {/* Combined Phone Contacts */}
+            <div className={`${styles.contactBlock} group hover:-translate-y-1 hover:bg-white/5 transition-all duration-400 rounded-2xl p-4 md:p-5 -mx-4 md:-mx-5 border border-transparent hover:border-white/10 cursor-pointer`}>
+              <div className={`${styles.iconContainer} group-hover:bg-[#1A581E] group-hover:shadow-[0_0_15px_rgba(26,88,30,0.5)] transition-all duration-400`}>
+                <Phone width={24} height={24} className={`${styles.contactIcon} group-hover:text-white transition-colors duration-400`} />
               </div>
               <div className={styles.contactDetails}>
-                <h3 className={styles.contactLabel}>CP Informasi Umum</h3>
-                <p className={styles.contactText}>+6285715538430 (Laras)</p>
-              </div>
-            </div>
-
-            {/* Technical Contact (Arsya) */}
-            <div className={`${styles.contactBlock} hover:-translate-y-1 hover:bg-white/50 hover:shadow-sm transition-all duration-300 rounded-xl p-2 -mx-2`}>
-              <div className={styles.iconContainer}>
-                <Phone width={24} height={24} className={styles.contactIcon} />
-              </div>
-              <div className={styles.contactDetails}>
-                <h3 className={styles.contactLabel}>CP Masalah Teknis</h3>
-                <p className={styles.contactText}>+6281383857627 (Arsya)</p>
+                <h3 className={styles.contactLabel}>Telepon & WhatsApp</h3>
+                <div className="flex flex-col gap-2 mt-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-[#A2E3B1] bg-[#1A581E]/40 px-2 py-0.5 rounded border border-[#A2E3B1]/20 w-16 text-center shadow-sm">Umum</span>
+                    <p className={`${styles.contactText} opacity-90 group-hover:opacity-100 transition-opacity tracking-wide`}>+62 857-1553-8430 <span className="text-gray-400 text-xs ml-1 font-normal tracking-normal">(Laras)</span></p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-[#A2E3B1] bg-[#1A581E]/40 px-2 py-0.5 rounded border border-[#A2E3B1]/20 w-16 text-center shadow-sm">Teknis</span>
+                    <p className={`${styles.contactText} opacity-90 group-hover:opacity-100 transition-opacity tracking-wide`}>+62 813-8385-7627 <span className="text-gray-400 text-xs ml-1 font-normal tracking-normal">(Arsya)</span></p>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Working Hours */}
-            <div className={`${styles.contactBlock} hover:-translate-y-1 hover:bg-white/50 hover:shadow-sm transition-all duration-300 rounded-xl p-2 -mx-2`}>
-              <div className={styles.iconContainer}>
-                <Clock width={24} height={24} className={styles.contactIcon} />
+            <div className={`${styles.contactBlock} group hover:-translate-y-1 hover:bg-white/5 transition-all duration-400 rounded-2xl p-4 md:p-5 -mx-4 md:-mx-5 border border-transparent hover:border-white/10 cursor-pointer`}>
+              <div className={`${styles.iconContainer} group-hover:bg-[#1A581E] group-hover:shadow-[0_0_15px_rgba(26,88,30,0.5)] transition-all duration-400`}>
+                <Clock width={24} height={24} className={`${styles.contactIcon} group-hover:text-white transition-colors duration-400`} />
               </div>
               <div className={styles.contactDetails}>
-                <h3 className={styles.contactLabel}>Jam Kerja</h3>
-                <p className={styles.contactText}>Setiap hari: 08.00 - 15.30 (WIB)</p>
+                <h3 className={styles.contactLabel}>Jam Operasional</h3>
+                <p className={`${styles.contactText} mt-1 opacity-90 group-hover:opacity-100 transition-opacity`}>Setiap hari: 08.00 - 15.30 (WIB)</p>
               </div>
             </div>
 
