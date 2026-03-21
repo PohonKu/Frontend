@@ -4,12 +4,17 @@ import { usePathname } from 'next/navigation';
 import { Footer } from '@/components/home/Footer';
 
 export function FooterWrapper() {
-    const pathname = usePathname();
+  const pathname = usePathname();
 
-    // Hide the footer on dashboard and login routes
-    if (pathname.startsWith('/dashboard') || pathname.startsWith('/login')) {
-        return null;
-    }
+  const hiddenRoutes = ['/dashboard', '/login', '/admin', '/cust', '/riwayatOrder', '/adopsi', '/addSpecies'];
 
-    return <Footer />;
+  const shouldHide = hiddenRoutes.some(
+    route => pathname === route || pathname.startsWith(`${route}/`)
+  );
+
+  if (shouldHide) {
+    return null;
+  }
+
+  return <Footer />;
 }
