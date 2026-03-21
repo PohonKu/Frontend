@@ -19,5 +19,12 @@ export const dashboardApi = {
         return apiFetch<any>('/api/v1/adoptions/stats', {
             method: 'GET',
         });
-    }
+    },
+
+    async getAdoptionUpdates() {
+        return apiFetch<any>('/api/v1/adoptions/updates', {
+            method: 'GET',
+        });
+    },
+
 };
