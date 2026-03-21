@@ -30,7 +30,7 @@ function LoginContent() {
             // Keep existing or default to dashboard
             const existing = localStorage.getItem('post_login_redirect');
             if (!existing) {
-                localStorage.setItem('post_login_redirect', '/dashboard');
+                localStorage.setItem('post_login_redirect', '/dashboard/dashboard');
             }
         }
         window.location.href = `${apiUrl}/api/v1/auth/google`;

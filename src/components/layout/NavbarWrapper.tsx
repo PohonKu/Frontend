@@ -4,13 +4,12 @@ import { usePathname } from 'next/navigation';
 import { Navbar } from './Navbar';
 
 export function NavbarWrapper() {
-  const pathname = usePathname();
+    const pathname = usePathname();
 
-  const hiddenRoutes = ['/dashboard', '/admin', '/cust', '/riwayatOrder', '/adopsi', '/addSpecies'];
+    // Hide the navbar on dashboard and login routes
+    if (pathname.startsWith('/dashboard') || pathname.startsWith('/login')) {
+        return null;
+    }
 
-  if (hiddenRoutes.some(route => pathname.startsWith(route))) {
-    return null;
-  }
-
-  return <Navbar />;
+    return <Navbar />;
 }
