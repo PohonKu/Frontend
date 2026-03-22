@@ -503,12 +503,33 @@ export default function DashboardPage() {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-12 text-center">
-            <Trees className="w-12 h-12 text-gray-200 mx-auto mb-4" />
-            <h3 className="text-xl font-serif text-gray-900 mb-2">Tidak Ada Pohon Aktif</h3>
-            <p className="text-gray-500 text-sm max-w-sm mx-auto mb-6">Anda belum memiliki pohon yang sedang dalam masa adopsi aktif.</p>
-            <Link href="/adopt" className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#1E562A] text-white rounded-full font-semibold hover:bg-[#153f1e] transition-colors text-sm">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 md:p-16 text-center animate-in fade-in slide-in-from-bottom-4 duration-700 relative overflow-hidden group/empty">
+            {/* Subtle background glow */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#CEFFD1] rounded-full blur-[80px] opacity-20 group-hover/empty:opacity-40 transition-opacity duration-700"></div>
+            
+            <div className="w-24 h-24 md:w-32 md:h-32 mx-auto mb-8 relative">
+              <div className="absolute inset-0 bg-[#F0FDF4] rounded-full scale-0 group-hover/empty:scale-100 transition-transform duration-500 origin-center"></div>
+              {/* Premium Planting SVG Illustration */}
+              <svg className="w-full h-full text-[#1E562A] relative z-10 transform group-hover/empty:-translate-y-2 transition-transform duration-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 75H75" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+                <path d="M50 75V35" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+                <path d="M50 55C50 55 40 45 40 37C40 29 48 25 50 35" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M50 45C50 45 60 35 60 27C60 19 52 15 50 25" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeOpacity="0.1" strokeDasharray="8 8"/>
+                <path d="M35 85L45 75L55 85L65 75" stroke="currentColor" strokeWidth="2" strokeOpacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            
+            <h3 className="text-xl md:text-2xl font-tilt text-gray-900 mb-2 relative z-10">Tidak Ada Pohon Aktif</h3>
+            <p className="text-gray-500 text-sm md:text-base max-w-sm mx-auto mb-8 font-sans leading-relaxed relative z-10">
+              Anda belum memiliki pohon yang sedang dalam masa adopsi aktif. Mari mulai berkontribusi merawat bumi bersama PohonKu.
+            </p>
+            
+            <Link href="/adopt" className="relative z-10 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#1E562A] text-white rounded-full font-semibold hover:bg-[#153f1e] hover:shadow-xl hover:shadow-[#1E562A]/20 hover:-translate-y-1 transition-all duration-300 text-sm md:text-base group">
               Eksplorasi Katalog
+              <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </Link>
           </div>
         )}
