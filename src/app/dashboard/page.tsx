@@ -1,3 +1,4 @@
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -321,30 +322,18 @@ export default function Dashboard() {
           return;
         }
 
-        // TEMPORARY BYPASS: Handle mock login when backend is down
-        if (token === 'mock_token_123') {
-          console.log('Using mock user data for offline testing');
-          setUser({
-            id: 'mock-user-1',
-            email: 'guest@pohonku.com',
-            name: 'PohonKu Guest (Simulasi)',
-            picture: 'https://ui-avatars.com/api/?name=PohonKu+Guest&background=1A581E&color=fff'
-          } as any);
-        } else {
-          // Normal validation
-          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
-          const userRes = await fetch(`${apiUrl}/api/v1/auth/me`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+        const userRes = await fetch(`${apiUrl}/api/v1/auth/me`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
 
-          if (!userRes.ok) {
-            localStorage.removeItem('access_token');
-            router.push('/login');
-            return;
-          }
-          const userData = await userRes.json();
-          setUser(userData.data);
+        if (!userRes.ok) {
+          localStorage.removeItem('access_token');
+          router.push('/login');
+          return;
         }
+        const userData = await userRes.json();
+        setUser(userData.data);
 
         // Try fetching real adoptions from API first
         try {
