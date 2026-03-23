@@ -322,18 +322,29 @@ export default function Dashboard() {
           return;
         }
 
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
-        const userRes = await fetch(`${apiUrl}/api/v1/auth/me`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+        // TEMPORARY BYPASS: Handle mock login
+        if (token === 'mock_token_123') {
+          console.log('Using mock user data for UI development');
+          setUser({
+            id: 'mock-user-1',
+            email: 'dev@pohonku.com',
+            name: 'PohonKu UI Developer',
+            picture: 'https://ui-avatars.com/api/?name=UI+Dev&background=1A581E&color=fff'
+          } as any);
+        } else {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+          const userRes = await fetch(`${apiUrl}/api/v1/auth/me`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
 
-        if (!userRes.ok) {
-          localStorage.removeItem('access_token');
-          router.push('/login');
-          return;
+          if (!userRes.ok) {
+            localStorage.removeItem('access_token');
+            router.push('/login');
+            return;
+          }
+          const userData = await userRes.json();
+          setUser(userData.data);
         }
-        const userData = await userRes.json();
-        setUser(userData.data);
 
         // Try fetching real adoptions from API first
         try {

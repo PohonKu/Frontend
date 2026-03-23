@@ -1,7 +1,7 @@
 import { Tree, Species, TreeCategory } from '@/types';
 import TreeCatalogView from '@/features/catalog/TreeCatalogView';
 import { getTrees } from '@/services/mockData';
-
+import ClientAuthGuard from '@/components/auth/ClientAuthGuard';
 // Map API category string to our TreeCategory/location_block
 function mapCategory(apiCategory: string): string {
   const map: Record<string, string> = {
@@ -70,10 +70,12 @@ export default async function TreeListPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-16 px-4 md:px-8">
-      <div className="max-w-7xl mx-auto">
-        <TreeCatalogView trees={trees} />
-      </div>
-    </main>
+    <ClientAuthGuard>
+      <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-16 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto">
+          <TreeCatalogView trees={trees} />
+        </div>
+      </main>
+    </ClientAuthGuard>
   );
 }

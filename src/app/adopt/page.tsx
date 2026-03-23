@@ -1,44 +1,34 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import React, { useState } from 'react';
 import HeroSection from '@/components/adopt-landing/HeroSection';
 import ImpactStats from '@/components/adopt-landing/ImpactStats';
-import FeaturedTrees from '@/components/adopt-landing/FeaturedTrees';
+import CatalogCTA from '@/components/adopt-landing/CatalogCTA';
 import HowItWorks from '@/components/adopt-landing/HowItWorks';
+import ClientAuthGuard from '@/components/auth/ClientAuthGuard';
 
 export default function AdoptLandingPage() {
   const [heroName, setHeroName] = useState('');
-  const router = useRouter();
-  const pathname = usePathname();
-  const [isAuthorized, setIsAuthorized] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-      router.push(`/login?redirect=${pathname}`);
-    } else {
-      setIsAuthorized(true);
-    }
-  }, [router, pathname]);
-
-  if (!isAuthorized) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-[#FAFAFA]">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-4 border-gray-200 border-t-[#1E562A] rounded-full animate-spin"></div>
-          <p className="text-sm font-medium text-gray-500">Memeriksa otentikasi...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <main className="min-h-screen bg-[#FAFAFA]">
-      <HeroSection treeName={heroName} setTreeName={setHeroName} />
-      <ImpactStats />
-      <FeaturedTrees prefilledName={heroName} />
-      <HowItWorks />
-    </main>
+    <ClientAuthGuard>
+      <main className="relative min-h-screen bg-[#0A120B] text-white overflow-hidden">
+        {/* Global Fixed Background for seamless transitions */}
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 scale-105"
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2000&auto=format&fit=crop')" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A120B]/60 via-[#0A120B]/80 to-[#1A3626]/90 backdrop-blur-[4px]" />
+        </div>
+
+        <div className="relative z-10 w-full h-full">
+          <HeroSection treeName={heroName} setTreeName={setHeroName} />
+          <ImpactStats />
+          <CatalogCTA />
+          <HowItWorks />
+        </div>
+      </main>
+    </ClientAuthGuard>
   );
 }

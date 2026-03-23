@@ -46,38 +46,41 @@ const STEPS = [
 
 export const HowItWorks = () => {
     return (
-        <section className="py-24 bg-[#F9F9F9] border-t border-gray-100">
-            <FadeIn className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="min-h-screen flex items-center py-24 relative z-10">
+            <FadeIn className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 <div className="text-center mb-16 px-4">
-                    <h2 className="text-3xl md:text-4xl font-tilt font-bold text-[#1A581E] mb-6">
-                        Langkah Menuju Kebaikan
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-tilt font-bold text-[#f0f9f1] mb-6 drop-shadow-lg">
+                        Langkah Kebaikan.
                     </h2>
-                    <div className="w-12 h-[2px] bg-[#1A3626] mx-auto rounded-full"></div>
+                    <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#A2E3B1] to-transparent mx-auto mb-4 opacity-70"></div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {STEPS.map((step) => (
-                        <div key={step.id} className="relative flex flex-col items-center text-center group bg-white p-10 rounded-2xl shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                        <div key={step.id} className="relative flex flex-col items-center text-center group bg-white/5 backdrop-blur-lg p-10 rounded-3xl border border-white/10 transition-all duration-500 hover:bg-white/10 hover:-translate-y-2 hover:border-[#A2E3B1]/30 shadow-[0_8px_32px_rgba(0,0,0,0.2)] overflow-hidden">
 
                             {/* Faint Step Number Watermark */}
-                            <div className="absolute top-4 right-6 text-6xl font-tilt font-bold text-gray-100 select-none transition-colors duration-300 group-hover:text-gray-200">
+                            <div className="absolute -top-4 -right-2 text-8xl font-tilt font-bold text-white/5 select-none transition-colors duration-500 group-hover:text-white/10">
                                 {step.id}
                             </div>
 
-                            <div className="relative z-10 w-16 h-16 rounded-full bg-[#CEFFD1]/50 flex items-center justify-center text-[#1A581E] mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:bg-[#A2E3B1]/50">
+                            <div className="relative z-10 w-20 h-20 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center text-[#A2E3B1] mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(162,227,177,0.2)]">
                                 {step.icon}
                             </div>
 
-                            <div className="relative z-10">
-                                <h3 className="text-xl font-bold text-[#111827] mb-3 font-inria">
+                            <div className="relative z-10 w-full">
+                                <h3 className="text-2xl font-bold text-[#f0f9f1] mb-4 font-inria tracking-wide">
                                     {step.title}
                                 </h3>
 
-                                <p className="text-[#6B7280] font-light text-[15px] leading-relaxed font-sans">
+                                <p className="text-gray-300/90 font-light text-[16px] leading-relaxed font-sans">
                                     {step.description}
                                 </p>
                             </div>
+
+                            {/* Subtle bottom accent line */}
+                            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#A2E3B1]/0 to-transparent group-hover:via-[#A2E3B1]/50 transition-all duration-700"></div>
 
                         </div>
                     ))}
