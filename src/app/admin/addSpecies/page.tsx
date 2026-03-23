@@ -8,6 +8,7 @@ import {
   DollarSign, Wind, Layers, FileText, Image as ImageIcon,
 } from 'lucide-react';
 import { adminApi, SpeciesPayload } from '@/lib/apiAdmin';
+import { ImageUploader } from '@/components/ui/imageUplouder';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -72,7 +73,7 @@ const Toast = ({ message, type, onClose }: { message: string; type: 'success' | 
 
 // ─── Species Form Modal ───────────────────────────────────────────────────────
 
-const SpeciesFormModal = ({
+export const SpeciesFormModal = ({
   isOpen, onClose, onSubmit, initialData, isEdit, isLoading,
 }: {
   isOpen: boolean; onClose: () => void;
@@ -81,26 +82,27 @@ const SpeciesFormModal = ({
 }) => {
   const [form, setForm] = useState<SpeciesForm>(EMPTY_FORM);
   const [tab,  setTab]  = useState<'basic' | 'detail'>('basic');
-
+ 
   useEffect(() => {
     if (isOpen) { setForm(initialData ? { ...EMPTY_FORM, ...initialData } : EMPTY_FORM); setTab('basic'); }
   }, [isOpen, initialData]);
-
+ 
   const set = (field: keyof SpeciesForm, value: string) =>
     setForm(prev => ({ ...prev, [field]: value }));
-
-  const basicValid = form.name.trim() && form.latinName.trim() && form.mainImageUrl.trim()
-    && form.description.trim() && form.basePrice && form.carbonAbsorptionRate && form.availabelStok;
-
+ 
+  const basicValid =
+    form.name.trim() && form.latinName.trim() && form.mainImageUrl.trim() &&
+    form.description.trim() && form.basePrice && form.carbonAbsorptionRate && form.availabelStok;
+ 
   if (!isOpen) return null;
-
-  const inputCls = "w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1E562A]/20 focus:border-[#1E562A] transition-colors bg-white";
+ 
+  const inputCls = "w-full px-3.5 py-2.5 border text-gray-900 border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1E562A]/20 focus:border-[#1E562A] transition-colors bg-white";
   const labelCls = "block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5";
-
+ 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-gray-900/60">
       <div className="bg-white rounded-t-2xl sm:rounded-xl w-full sm:max-w-2xl shadow-2xl max-h-[95vh] flex flex-col">
-
+ 
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-gray-100 shrink-0">
           <div>
@@ -111,7 +113,7 @@ const SpeciesFormModal = ({
             <X className="w-4 h-4 text-gray-600" />
           </button>
         </div>
-
+ 
         {/* Tabs */}
         <div className="flex border-b border-gray-100 px-5 shrink-0">
           {[{ key: 'basic', label: 'Informasi Dasar' }, { key: 'detail', label: 'Konten & Cerita' }].map(({ key, label }) => (
@@ -125,9 +127,11 @@ const SpeciesFormModal = ({
             </button>
           ))}
         </div>
-
+ 
         {/* Body */}
         <div className="flex-1 overflow-y-auto p-5">
+ 
+          {/* ── TAB BASIC ── */}
           {tab === 'basic' && (
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -142,25 +146,22 @@ const SpeciesFormModal = ({
                     placeholder="Mangifera indica" className={`${inputCls} italic`} />
                 </div>
               </div>
-
-              <div>
-                <label className={labelCls}><ImageIcon className="w-3 h-3 inline mr-1" />URL Foto Utama <span className="text-red-500">*</span></label>
-                <input type="url" value={form.mainImageUrl} onChange={e => set('mainImageUrl', e.target.value)}
-                  placeholder="https://res.cloudinary.com/..." className={inputCls} />
-                {form.mainImageUrl && (
-                  <div className="mt-2 relative w-full h-36 rounded-lg overflow-hidden border border-gray-100 bg-gray-50">
-                    <Image src={form.mainImageUrl} alt="Preview" fill className="object-cover"
-                      onError={(e: any) => { e.currentTarget.style.display = 'none'; }} />
-                  </div>
-                )}
-              </div>
-
+ 
+              {/* ── FOTO — pakai ImageUploader ── */}
+              <ImageUploader
+                label="Foto Utama Species"
+                required
+                value={form.mainImageUrl}
+                onChange={url => set('mainImageUrl', url)}
+              />
+ 
               <div>
                 <label className={labelCls}><FileText className="w-3 h-3 inline mr-1" />Deskripsi Singkat <span className="text-red-500">*</span></label>
                 <textarea value={form.description} onChange={e => set('description', e.target.value)}
-                  rows={3} placeholder="Deskripsi singkat..." className={`${inputCls} resize-none`} />
+                  rows={3} placeholder="Deskripsi singkat mengenai spesies ini..."
+                  className={`${inputCls} resize-none`} />
               </div>
-
+ 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className={labelCls}><DollarSign className="w-3 h-3 inline mr-1" />Harga Dasar (Rp) <span className="text-red-500">*</span></label>
@@ -179,16 +180,17 @@ const SpeciesFormModal = ({
                     min={0} placeholder="50" className={inputCls} />
                 </div>
               </div>
-
+ 
               <div>
                 <label className={labelCls}>Kategori <span className="text-red-500">*</span></label>
                 <select value={form.category} onChange={e => set('category', e.target.value)} className={inputCls}>
-                  {CATEGORIES.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
+                  {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
             </div>
           )}
-
+ 
+          {/* ── TAB DETAIL ── */}
           {tab === 'detail' && (
             <div>
               <label className={labelCls}>Konten Cerita / Story <span className="text-red-500">*</span></label>
@@ -200,7 +202,7 @@ const SpeciesFormModal = ({
             </div>
           )}
         </div>
-
+ 
         {/* Footer */}
         <div className="flex gap-3 p-5 border-t border-gray-100 shrink-0">
           {tab === 'basic' ? (
@@ -233,6 +235,7 @@ const SpeciesFormModal = ({
     </div>
   );
 };
+ 
 
 // ─── Species Card ─────────────────────────────────────────────────────────────
 
