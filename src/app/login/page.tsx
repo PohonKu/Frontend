@@ -33,14 +33,9 @@ function LoginContent() {
                 localStorage.setItem('post_login_redirect', '/dashboard/dashboard');
             }
         }
-        // TEMPORARY BYPASS: Since Railway is down, we use a mock login flow
-        alert("Backend Railway sedang tidak aktif. Menggunakan Mode Simulasi (Mock Login) agar Anda tetap bisa menguji aplikasi.");
-        localStorage.setItem('access_token', 'mock_token_123');
-        const target = localStorage.getItem('post_login_redirect') || '/dashboard';
-        window.location.href = target;
-        
+       
         // NOTE: Restore this when backend is live
-        // window.location.href = `${apiUrl}/api/v1/auth/google`;
+        window.location.href = `${apiUrl}/api/v1/auth/google`;
     };
 
     return (

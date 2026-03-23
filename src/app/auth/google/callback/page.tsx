@@ -14,6 +14,9 @@ function GoogleCallbackContent() {
     const refreshToken = searchParams.get('refreshToken');
     const error = searchParams.get('error');
 
+    console.log('Callback params:', { success, accessToken: !!accessToken, refreshToken: !!refreshToken, error });
+    console.log('Full URL:', window.location.href);
+
     if (success === 'true' && accessToken && refreshToken) {
       // Simpan token ke localStorage
       localStorage.setItem('access_token', accessToken);
@@ -24,7 +27,7 @@ function GoogleCallbackContent() {
 
       console.log('✅ Login Google berhasil!');
 
-      const redirect = localStorage.getItem('post_login_redirect') || '/dashboard';
+      const redirect = localStorage.getItem('post_login_redirect') || '/dashboard/dashboard';
       localStorage.removeItem('post_login_redirect');
 
       // Redirect ke halaman yang disimpan atau default
