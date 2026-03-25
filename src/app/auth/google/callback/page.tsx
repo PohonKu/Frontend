@@ -27,6 +27,16 @@ function GoogleCallbackContent() {
 
       console.log('✅ Login Google berhasil!');
 
+      // Dispatch security event to Vercel Logs
+      fetch('/api/log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'AUTH_SUCCESS',
+          message: 'User logged in via Google successfully',
+        })
+      }).catch(() => {});
+
       const redirect = localStorage.getItem('post_login_redirect') || '/dashboard/dashboard';
       localStorage.removeItem('post_login_redirect');
 
@@ -34,6 +44,16 @@ function GoogleCallbackContent() {
       router.push(redirect);
     } else {
       console.error('❌ Login Google gagal:', error);
+
+      // Dispatch security event to Vercel Logs for failed auth
+      fetch('/api/log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'SECURITY_EVENT',
+          message: `Failed Google login attempt: ${error || 'unknown_error'}`,
+        })
+      }).catch(() => {});
 
       // ✅ FIX: Syntax error diperbaiki
       router.push(`/login?error=${error || 'google_failed'}`);

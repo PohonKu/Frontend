@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Typography } from '@/components/ui/Typography';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { MapPin, Trees, Mountain, Landmark } from 'lucide-react';
@@ -14,7 +15,7 @@ export const ProjectArea = () => {
             id: 'perspektif',
             name: 'Perspektif Keistimewaan',
             trees: 35,
-            icon: <Trees className="w-4 h-4" />,
+            icon: <Image src="/gambarCici/Icon Pohonku/Icon Pohonku/Perspektif Keistimewaan.svg" alt="Perspektif" width={22} height={22} className="object-contain" />,
             color: '#1A581E',
             position: { cx: 30, cy: 40 }
         },
@@ -22,7 +23,7 @@ export const ProjectArea = () => {
             id: 'toponimi',
             name: 'Toponimi Gunungkidul',
             trees: 42,
-            icon: <Mountain className="w-4 h-4" />,
+            icon: <Image src="/gambarCici/Icon Pohonku/Icon Pohonku/Toponimi Gunkid.svg" alt="Toponimi" width={22} height={22} className="object-contain" />,
             color: '#029146',
             position: { cx: 55, cy: 35 }
         },
@@ -30,7 +31,7 @@ export const ProjectArea = () => {
             id: 'native',
             name: 'Native Karst',
             trees: 28,
-            icon: <Landmark className="w-4 h-4" />,
+            icon: <Image src="/gambarCici/Icon Pohonku/Icon Pohonku/Native Karst.svg" alt="Karst" width={22} height={22} className="object-contain" />,
             color: '#07863E',
             position: { cx: 70, cy: 55 }
         },
@@ -38,7 +39,7 @@ export const ProjectArea = () => {
             id: 'sumbu',
             name: 'Sumbu Filosofi',
             trees: 31,
-            icon: <MapPin className="w-4 h-4" />,
+            icon: <Image src="/gambarCici/Icon Pohonku/Icon Pohonku/Sumbu Filosofi.svg" alt="Sumbu" width={22} height={22} className="object-contain" />,
             color: '#009549',
             position: { cx: 45, cy: 70 }
         }

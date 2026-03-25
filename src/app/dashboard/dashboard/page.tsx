@@ -39,12 +39,6 @@ interface Adoption {
 
 const CHART_COLORS = ['#1E562A', '#4CAF50', '#8BC34A', '#C8E6C9', '#E8F5E9'];
 
-const MOCK_ADOPTIONS: Adoption[] = [
-  { id: '1', treeName: 'Pohon Mangga Golek', treeType: 'Mangifera indica', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '12 Jan 2024', lastUpdated: '2024-03-10T08:00:00Z', carbonAbsorbed: 12.5, adoptionDurationMonths: 12, growthPhase: 'Sapling', healthStatus: 'Sehat', nextUpdateDate: '2026-03-10T08:00:00Z' },
-  { id: '2', treeName: 'Pohon Jati Emas', treeType: 'Tectona grandis', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '20 Feb 2024', lastUpdated: '2024-03-25T09:30:00Z', carbonAbsorbed: 8.2, adoptionDurationMonths: 24, growthPhase: 'Seedling', healthStatus: 'Adaptasi', nextUpdateDate: '2026-04-25T09:30:00Z' },
-  { id: '3', treeName: 'Pohon Sengon Laut', treeType: 'Paraserianthes falcataria', location: 'Gunung Kidul, Yogyakarta', status: 'Baru Tanam', plantedAt: '05 Mar 2024', lastUpdated: '2024-03-05T14:15:00Z', carbonAbsorbed: 1.1, adoptionDurationMonths: 12, growthPhase: 'Seedling', healthStatus: 'Adaptasi', nextUpdateDate: '2025-09-05T14:15:00Z' },
-  { id: '4', treeName: 'Pohon Jati Emas', treeType: 'Tectona grandis', location: 'Tahura Bunder, Yogyakarta', status: 'Aktif', plantedAt: '15 Jan 2024', lastUpdated: '2024-03-28T11:20:00Z', carbonAbsorbed: 9.0, adoptionDurationMonths: 36, growthPhase: 'Pole', healthStatus: 'Sehat', nextUpdateDate: '2026-03-28T11:20:00Z' },
-];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -328,7 +322,6 @@ export default function DashboardPage() {
   const [adoptions,       setAdoptions]      = useState<Adoption[]>([]);
   const [activeAdoptions, setActiveAdoptions]= useState<Adoption[]>([]);
   const [expiredAdoptions,setExpiredAdoptions]= useState<Adoption[]>([]);
-  const [dataSource,      setDataSource]     = useState<'api' | 'mock'>('mock');
 
   const [selectedTree,         setSelectedTree]         = useState<Adoption | null>(null);
   const [isTreeModalOpen,      setIsTreeModalOpen]      = useState(false);
@@ -359,17 +352,14 @@ export default function DashboardPage() {
         const active  = mapped(payload?.active  ?? []);
         const expired = mapped(payload?.expired ?? []);
         const all     = [...active, ...expired];
-        if (all.length) {
-          setActiveAdoptions(active);
-          setExpiredAdoptions(expired);
-          setAdoptions(all);
-          setDataSource('api');
-        } else throw new Error();
+        setActiveAdoptions(active);
+        setExpiredAdoptions(expired);
+        setAdoptions(all);
       } catch {
-        setActiveAdoptions(MOCK_ADOPTIONS);
+        // If API fails or user has 0 adoptions properly handle it as empty
+        setActiveAdoptions([]);
         setExpiredAdoptions([]);
-        setAdoptions(MOCK_ADOPTIONS);
-        setDataSource('mock');
+        setAdoptions([]);
       }
     };
     init();
@@ -404,11 +394,6 @@ export default function DashboardPage() {
         <p className="text-gray-600 font-serif mt-1 font-medium">
           Terima kasih telah mengadopsi pohon dan ikut serta dalam pelestarian bumi.
         </p>
-        {dataSource === 'mock' && (
-          <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded px-3 py-1.5 mt-3 inline-block font-medium">
-            Data ditampilkan dari sumber lokal. Sinkronisasi dengan server akan dilakukan saat API siap.
-          </p>
-        )}
       </header>
 
       {/* Summary green section */}
@@ -504,25 +489,19 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 md:p-16 text-center animate-in fade-in slide-in-from-bottom-4 duration-700 relative overflow-hidden group/empty">
-            {/* Subtle background glow */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#CEFFD1] rounded-full blur-[80px] opacity-20 group-hover/empty:opacity-40 transition-opacity duration-700"></div>
             
-            <div className="w-24 h-24 md:w-32 md:h-32 mx-auto mb-8 relative">
-              <div className="absolute inset-0 bg-[#F0FDF4] rounded-full scale-0 group-hover/empty:scale-100 transition-transform duration-500 origin-center"></div>
-              {/* Premium Planting SVG Illustration */}
-              <svg className="w-full h-full text-[#1E562A] relative z-10 transform group-hover/empty:-translate-y-2 transition-transform duration-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M25 75H75" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-                <path d="M50 75V35" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-                <path d="M50 55C50 55 40 45 40 37C40 29 48 25 50 35" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M50 45C50 45 60 35 60 27C60 19 52 15 50 25" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeOpacity="0.1" strokeDasharray="8 8"/>
-                <path d="M35 85L45 75L55 85L65 75" stroke="currentColor" strokeWidth="2" strokeOpacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+            {/* Elegant Minimalist Icon */}
+            <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-8 relative flex items-center justify-center">
+              <div className="absolute inset-0 bg-[#1E562A]/5 rounded-full animate-ping" style={{ animationDuration: '3s' }}></div>
+              <div className="absolute inset-2 bg-[#1E562A]/10 rounded-full"></div>
+              <div className="absolute inset-4 bg-gradient-to-br from-[#1E562A] to-[#2E8B57] rounded-full shadow-lg shadow-[#1E562A]/20 justify-center items-center flex group-hover/empty:scale-110 transition-transform duration-700 ease-out">
+                <Leaf className="w-8 h-8 md:w-10 md:h-10 text-white stroke-[1.5]" />
+              </div>
             </div>
             
-            <h3 className="text-xl md:text-2xl font-tilt text-gray-900 mb-2 relative z-10">Tidak Ada Pohon Aktif</h3>
-            <p className="text-gray-500 text-sm md:text-base max-w-sm mx-auto mb-8 font-sans leading-relaxed relative z-10">
-              Anda belum memiliki pohon yang sedang dalam masa adopsi aktif. Mari mulai berkontribusi merawat bumi bersama PohonKu.
+            <h3 className="text-xl md:text-2xl font-serif font-bold text-gray-900 mb-2 relative z-10 tracking-tight transition-colors group-hover/empty:text-[#1E562A]">Tidak Ada Pohon Aktif</h3>
+            <p className="text-gray-500 text-sm md:text-base max-w-sm mx-auto mb-10 leading-relaxed relative z-10">
+              Anda belum memiliki pohon yang sedang dalam masa adopsi aktif. Mulai perjalanan pelestarian alam Anda bersama PohonKu hari ini.
             </p>
             
             <Link href="/adopt" className="relative z-10 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#1E562A] text-white rounded-full font-semibold hover:bg-[#153f1e] hover:shadow-xl hover:shadow-[#1E562A]/20 hover:-translate-y-1 transition-all duration-300 text-sm md:text-base group">

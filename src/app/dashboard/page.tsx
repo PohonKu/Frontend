@@ -301,7 +301,6 @@ export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [adoptions, setAdoptions] = useState<Adoption[]>([]);
   const [dataSource, setDataSource] = useState<'api' | 'mock'>('mock');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Modal states
   const [selectedTree, setSelectedTree] = useState<Adoption | null>(null);
@@ -395,12 +394,6 @@ export default function Dashboard() {
     fetchDashboardData();
   }, [router]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    window.dispatchEvent(new Event('auth-change'));
-    router.push('/');
-  };
 
   const openTreeDetail = async (tree: Adoption) => {
     // Try fetching full detail from API first
@@ -499,94 +492,9 @@ export default function Dashboard() {
   const totalCarbon = getTotalCarbon(adoptions);
   const nextUpdateStr = getUpcomingUpdate(adoptions);
   const nearestExpiryStr = getNearestExpiry(adoptions);
-
   return (
-    <div className="flex h-screen bg-gray-100 font-sans overflow-hidden">
-
-      {/* SIDEBAR */}
-      <aside className="w-72 bg-[#1E562A] text-white flex flex-col flex-shrink-0 hidden md:flex z-20 shadow-xl border-r border-[#153f1e]">
-        {/* Logo Section */}
-        <div className="p-8 pb-10">
-          <div className="bg-white rounded-lg p-4 flex justify-center items-center hover:scale-105 transition-transform duration-300">
-            <Image src="/images/Logo.svg" alt="PohonKu Logo" width={110} height={40} className="object-contain" />
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 px-5 space-y-1.5">
-          <Link href="/" className="flex items-center gap-3 px-4 py-3 rounded-md text-white/70 hover:bg-white/5 hover:text-white transition-all duration-300 hover:translate-x-1 group">
-            <Home className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" />
-            <span className="font-semibold tracking-wide text-sm">Home</span>
-          </Link>
-          <div className="flex items-center gap-3 px-4 py-3 rounded-md bg-white/10 text-white font-semibold tracking-wide border-l-4 border-white shadow-inner">
-            <LayoutDashboard className="w-4 h-4" />
-            <span className="text-sm">Dashboard</span>
-          </div>
-          <Link href="/settings" className="flex items-center gap-3 px-4 py-3 rounded-md text-white/70 hover:bg-white/5 hover:text-white transition-all duration-300 hover:translate-x-1 group">
-            <Settings className="w-4 h-4 group-hover:rotate-45 transition-transform duration-500" />
-            <span className="font-semibold tracking-wide text-sm">Pengaturan</span>
-          </Link>
-        </nav>
-
-        {/* Logout Button */}
-        <div className="p-6">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-md text-red-500 hover:bg-red-50 transition-all duration-300 font-semibold text-sm bg-white border border-red-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 group"
-          >
-            <LogOut className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span>Keluar</span>
-          </button>
-        </div>
-      </aside>
-
-      {/* MAIN CONTENT */}
-      <main className="flex-1 overflow-y-auto w-full relative bg-gray-50/50">
-        
-        {/* Mobile Header Menu Button */}
-        <div className="md:hidden absolute top-4 right-4 z-[30]">
-          <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2.5 bg-white rounded-lg shadow-md border border-gray-100 text-gray-800 focus:outline-none"
-          >
-            <Menu size={24} />
-          </button>
-        </div>
-
-        {/* Mobile Menu Overlay */}
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm md:hidden" onClick={() => setIsMobileMenuOpen(false)}>
-            <aside className="w-72 max-w-[80vw] h-full bg-[#1E562A] shadow-2xl flex flex-col shrink-0 animate-in slide-in-from-left-8" onClick={e => e.stopPropagation()}>
-              <div className="p-6 flex justify-between items-center border-b border-white/10 mb-2">
-                 <div className="bg-white rounded-lg p-3">
-                   <Image src="/images/Logo.svg" alt="PohonKu Logo" width={90} height={30} className="object-contain" />
-                 </div>
-                 <button onClick={() => setIsMobileMenuOpen(false)} className="text-white hover:bg-white/10 p-2 rounded-full">
-                   <X size={20} />
-                 </button>
-              </div>
-              <nav className="flex-1 px-4 py-4 space-y-2">
-                <Link href="/" className="flex items-center gap-3 px-4 py-3 rounded-md text-white/70 hover:bg-white/10 hover:text-white transition-all font-semibold tracking-wide" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Home className="w-5 h-5" /> Home
-                </Link>
-                <div className="flex items-center gap-3 px-4 py-3 rounded-md bg-white/10 text-white font-semibold tracking-wide border-l-4 border-white">
-                  <LayoutDashboard className="w-5 h-5" /> Dashboard
-                </div>
-                <Link href="/settings" className="flex items-center gap-3 px-4 py-3 rounded-md text-white/70 hover:bg-white/10 hover:text-white transition-all font-semibold tracking-wide" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Settings className="w-5 h-5" /> Pengaturan
-                </Link>
-              </nav>
-              <div className="p-6">
-                <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className="w-full flex items-center justify-center gap-3 px-4 py-3.5 rounded-md text-red-500 bg-white font-bold text-sm shadow-md">
-                  <LogOut className="w-5 h-5" /> Keluar
-                </button>
-              </div>
-            </aside>
-          </div>
-        )}
-
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-8 py-10 sm:py-12">
-
+    <div className="relative bg-gray-50/50 min-h-full">
+      <div className="max-w-[1400px] mx-auto px-5 sm:px-8 py-6 md:py-10">
           {/* Header */}
           <header className="mb-8 pt-10 md:pt-0 animate-in fade-in slide-in-from-left-4 duration-700">
             <h1 className="text-3xl font-serif font-bold text-gray-900 tracking-tight">Halo, {user?.fullName || 'Pengguna'}</h1>
@@ -750,25 +658,19 @@ export default function Dashboard() {
               </div>
             ) : (
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 md:p-16 text-center animate-in fade-in slide-in-from-bottom-4 duration-700 relative overflow-hidden group/empty">
-                {/* Subtle background glow */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#CEFFD1] rounded-full blur-[80px] opacity-20 group-hover/empty:opacity-40 transition-opacity duration-700"></div>
                 
-                <div className="w-24 h-24 md:w-32 md:h-32 mx-auto mb-8 relative">
-                  <div className="absolute inset-0 bg-[#F0FDF4] rounded-full scale-0 group-hover/empty:scale-100 transition-transform duration-500 origin-center"></div>
-                  {/* Premium Planting SVG Illustration */}
-                  <svg className="w-full h-full text-[#1E562A] relative z-10 transform group-hover/empty:-translate-y-2 transition-transform duration-500" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M25 75H75" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-                    <path d="M50 75V35" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-                    <path d="M50 55C50 55 40 45 40 37C40 29 48 25 50 35" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M50 45C50 45 60 35 60 27C60 19 52 15 50 25" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeOpacity="0.1" strokeDasharray="8 8"/>
-                    <path d="M35 85L45 75L55 85L65 75" stroke="currentColor" strokeWidth="2" strokeOpacity="0.3" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                {/* Elegant Minimalist Icon */}
+                <div className="w-24 h-24 md:w-28 md:h-28 mx-auto mb-8 relative flex items-center justify-center">
+                  <div className="absolute inset-0 bg-[#1E562A]/5 rounded-full animate-ping" style={{ animationDuration: '3s' }}></div>
+                  <div className="absolute inset-2 bg-[#1E562A]/10 rounded-full"></div>
+                  <div className="absolute inset-4 bg-gradient-to-br from-[#1E562A] to-[#2E8B57] rounded-full shadow-lg shadow-[#1E562A]/20 justify-center items-center flex group-hover/empty:scale-110 transition-transform duration-700 ease-out">
+                    <Leaf className="w-8 h-8 md:w-10 md:h-10 text-white stroke-[1.5]" />
+                  </div>
                 </div>
                 
-                <h3 className="text-xl md:text-2xl font-tilt text-gray-900 mb-2 relative z-10">Inventaris Masih Kosong</h3>
-                <p className="text-gray-500 text-sm md:text-base max-w-sm mx-auto mb-8 font-sans leading-relaxed relative z-10">
-                  Anda belum memiliki riwayat adopsi pohon. Mari mulai berkontribusi merawat bumi bersama PohonKu.
+                <h3 className="text-xl md:text-2xl font-serif font-bold text-gray-900 mb-2 relative z-10 tracking-tight transition-colors group-hover/empty:text-[#1E562A]">Inventaris Masih Kosong</h3>
+                <p className="text-gray-500 text-sm md:text-base max-w-sm mx-auto mb-10 leading-relaxed relative z-10">
+                  Anda belum memiliki riwayat adopsi. Mulai perjalanan pelestarian alam Anda bersama PohonKu hari ini.
                 </p>
                 
                 <Link href="/adopt" className="relative z-10 inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#1E562A] text-white rounded-full font-semibold hover:bg-[#153f1e] hover:shadow-xl hover:shadow-[#1E562A]/20 hover:-translate-y-1 transition-all duration-300 text-sm md:text-base group">
@@ -782,7 +684,6 @@ export default function Dashboard() {
           </section>
 
         </div>
-      </main>
 
       {/* Render Modals */}
       <TreeDetailModal isOpen={isTreeModalOpen} onClose={() => setIsTreeModalOpen(false)} tree={selectedTree} />

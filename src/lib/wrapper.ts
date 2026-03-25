@@ -33,6 +33,18 @@ export async function apiFetch<T>(
         errorMessage = `HTTP ${res.status}: ${res.statusText}`;
       }
       console.error(`❌ API Error: ${errorMessage}`);
+      
+      // Dispatch log to Vercel Serverless Function to be captured in Runtime Logs
+      fetch('/api/log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'API_ERROR',
+          message: errorMessage,
+          metadata: { endpoint: url, method: options.method || 'GET', status: res.status }
+        })
+      }).catch(() => {}); // catch silently to prevent unhandled rejections
+
       throw new Error(errorMessage);
     }
 
