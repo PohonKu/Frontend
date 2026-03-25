@@ -331,7 +331,7 @@ export default function Dashboard() {
             picture: 'https://ui-avatars.com/api/?name=UI+Dev&background=1A581E&color=fff'
           } as any);
         } else {
-          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-5612.up.railway.app';
           const userRes = await fetch(`${apiUrl}/api/v1/auth/me`, {
             headers: { 'Authorization': `Bearer ${token}` }
           });

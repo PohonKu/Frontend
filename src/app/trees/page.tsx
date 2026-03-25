@@ -15,7 +15,7 @@ function mapCategory(apiCategory: string): string {
 
 // Fetch species from real API and transform into Tree[] shape
 async function fetchTreesFromAPI(): Promise<Tree[]> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-5612.up.railway.app';
   const res = await fetch(`${apiUrl}/api/v1/trees/species`, {
     next: { revalidate: 60 }, // Cache for 60s on the server
   });

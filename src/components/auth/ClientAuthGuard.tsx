@@ -18,7 +18,7 @@ export default function ClientAuthGuard({ children }: { children: React.ReactNod
 
       try {
 
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-5612.up.railway.app';
         const res = await fetch(`${apiUrl}/api/v1/auth/me`, {
           headers: { Authorization: `Bearer ${token}` }
         });

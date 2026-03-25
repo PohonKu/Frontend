@@ -10,7 +10,7 @@ function LoginContent() {
     const searchParams = useSearchParams();
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-5612.up.railway.app';
 
     useEffect(() => {
         const error = searchParams.get('error');

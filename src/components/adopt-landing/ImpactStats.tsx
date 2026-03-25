@@ -31,7 +31,7 @@ export const ImpactStats = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-1e0b.up.railway.app';
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://be-production-5612.up.railway.app';
                 // Try fetching public stats if available
                 const res = await fetch(`${apiUrl}/api/v1/stats/public`);
                 if (res.ok) {
