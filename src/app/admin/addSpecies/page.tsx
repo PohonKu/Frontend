@@ -73,7 +73,7 @@ const Toast = ({ message, type, onClose }: { message: string; type: 'success' | 
 
 // ─── Species Form Modal ───────────────────────────────────────────────────────
 
-export const SpeciesFormModal = ({
+const SpeciesFormModal = ({
   isOpen, onClose, onSubmit, initialData, isEdit, isLoading,
 }: {
   isOpen: boolean; onClose: () => void;
