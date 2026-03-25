@@ -77,7 +77,7 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm, isLoading }: {
 
 // ─── Update Form Modal ────────────────────────────────────────────────────────
 
-export const UpdateFormModal = ({ isOpen, onClose, onSubmit, initialData, isEdit, isLoading, treeName }: {
+const UpdateFormModal = ({ isOpen, onClose, onSubmit, initialData, isEdit, isLoading, treeName }: {
   isOpen: boolean; onClose: () => void; onSubmit: (data: TreeUpdatePayload) => void;
   initialData?: Partial<TreeUpdatePayload>; isEdit: boolean; isLoading: boolean; treeName: string;
 }) => {

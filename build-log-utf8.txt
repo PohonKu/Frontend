@@ -1,0 +1,63 @@
+﻿
+> pohonku-frontend@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.15
+  - Environments: .env
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : Failed to compile.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Users\Axioo Pongo\AppData\Ro ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : Not    
+Specified: (Failed to compile    
+.:String) [], RemoteException
+    + FullyQualifiedErrorId : Nat    
+iveCommandError
+ 
+
+.next/types/app/admin/updateTree/page.ts
+:8:13
+Type error: Type 'OmitWithTag<typeof imp
+ort("C:/UGM/PohonKu/fe/pohonku-frontend/
+src/app/admin/updateTree/page"), 
+"default" | "config" | 
+"generateStaticParams" | "revalidate" | 
+"dynamic" | "dynamicParams" | ... 7 
+more ... | "generateViewport", "">' 
+does not satisfy the constraint '{ [x: 
+string]: never; }'.
+  Property 'UpdateFormModal' is 
+incompatible with index signature.
+    Type '({ isOpen, onClose, onSubmit, 
+initialData, isEdit, isLoading, 
+treeName }: { isOpen: boolean; onClose: 
+() => void; onSubmit: (data: 
+TreeUpdatePayload) => void; 
+initialData?: 
+Partial<TreeUpdatePayload>; isEdit: 
+boolean; isLoading: boolean; treeName: 
+string; }) => React.JSX.Element | null' 
+is not assignable to type 'never'.
+
+[0m [90m  6 |[39m[0m
+[0m [90m  7 |[39m [90m// Check that 
+the entry is a valid entry[39m[0m
+[0m[31m[1m>[22m[39m[90m  8 |[39m 
+checkFields[33m<[39m[33mDiff[39m[33
+m<[39m{[0m
+[0m [90m    |[39m             
+[31m[1m^[22m[39m[0m
+[0m [90m  9 |[39m   
+[36mdefault[39m[33m:[39m 
+[33mFunction[39m[0m
+[0m [90m 10 |[39m   
+config[33m?[39m[33m:[39m {}[0m
+[0m [90m 11 |[39m   generateStaticPar
+ams[33m?[39m[33m:[39m 
+[33mFunction[39m[0m

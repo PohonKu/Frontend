@@ -61,6 +61,7 @@ export default function OrderModal({ species, onClose }: OrderModalProps) {
       const response = (await orderApi.createOrder({
         speciesId: species.id,
         nameOnTag: nameOnTag.trim(),
+        durationYears: 1,
       })) as OrderResponse;
 
       console.log('📡 Order creation response:', response);
