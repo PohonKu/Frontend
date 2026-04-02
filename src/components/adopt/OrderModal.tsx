@@ -31,6 +31,7 @@ interface OrderResponse {
 
 export default function OrderModal({ species, onClose }: OrderModalProps) {
   const [nameOnTag, setNameOnTag] = useState('');
+  const [durationYears, setDurationYears] = useState<1 | 3>(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -61,7 +62,7 @@ export default function OrderModal({ species, onClose }: OrderModalProps) {
       const response = (await orderApi.createOrder({
         speciesId: species.id,
         nameOnTag: nameOnTag.trim(),
-        durationYears: 1,
+        durationYears,
       })) as OrderResponse;
 
       console.log('📡 Order creation response:', response);
@@ -180,6 +181,30 @@ export default function OrderModal({ species, onClose }: OrderModalProps) {
                 <p className="text-xs text-gray-500 mt-1">
                   Nama ini akan ditampilkan di tag pohon yang Anda adopsi
                 </p>
+              </div>
+
+              {/* Duration Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Durasi Adopsi
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  {([1, 3] as const).map((year) => (
+                    <button
+                      key={year}
+                      type="button"
+                      onClick={() => setDurationYears(year)}
+                      disabled={isLoading}
+                      className={`py-3 px-4 rounded-lg border-2 font-medium transition-all duration-200 ${
+                        durationYears === year
+                          ? 'border-green-500 bg-green-50 text-green-700'
+                          : 'border-gray-300 bg-white text-gray-700 hover:border-green-300'
+                      }`}
+                    >
+                      {year} Tahun
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Error Message */}
