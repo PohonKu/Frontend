@@ -56,13 +56,7 @@ const nextConfig = {
       { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
       { key: 'X-Content-Type-Options', value: 'nosniff' },
       { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-      {
-        key: 'Content-Security-Policy', value: [
-          "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com https://app.sandbox.midtrans.com https://app.midtrans.com",
-          "frame-src 'self' https://app.sandbox.midtrans.com https://app.midtrans.com",
-          "connect-src 'self' https://api.sandbox.midtrans.com https://api.midtrans.com",
-        ].join('; '),
-      },
+      { key: 'Content-Security-Policy', value: csp },
     ];
 
     return [
