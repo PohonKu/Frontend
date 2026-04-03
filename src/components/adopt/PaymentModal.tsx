@@ -52,18 +52,18 @@ export default function PaymentModal({ orderId, onClose }: PaymentModalProps) {
         'data-client-key',
         process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || ''
       );
-      
+
       script.onload = () => {
         console.log('✅ Midtrans Snap script loaded successfully');
         setSnapLoaded(true);
       };
-      
+
       script.onerror = () => {
         console.error('❌ Failed to load Midtrans script');
-        setError('Gagal memuat payment gateway. Silakan refresh halaman dan coba lagi.');
+        setError('Gagal memuat payment . Silakan refresh halaman dan coba lagi.');
         setSnapLoaded(false);
       };
-      
+
       document.body.appendChild(script);
     };
 
@@ -81,7 +81,7 @@ export default function PaymentModal({ orderId, onClose }: PaymentModalProps) {
       try {
         setIsLoading(true);
         setError('');
-        
+
         console.log('🔄 Getting payment token for order:', orderId);
 
         const response = (await orderApi.createPayment(
@@ -120,7 +120,7 @@ export default function PaymentModal({ orderId, onClose }: PaymentModalProps) {
     }
 
     console.log('🔐 Triggering Midtrans Snap payment');
-    
+
     window.snap.pay(snapToken, {
       onSuccess: (result: any) => {
         console.log('✅ Pembayaran berhasil!', result);
@@ -193,7 +193,7 @@ export default function PaymentModal({ orderId, onClose }: PaymentModalProps) {
                       } else {
                         setError(
                           response.message ||
-                            'Gagal mendapatkan token pembayaran. Silakan coba lagi.'
+                          'Gagal mendapatkan token pembayaran. Silakan coba lagi.'
                         );
                         setIsLoading(false);
                       }
