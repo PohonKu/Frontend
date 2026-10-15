@@ -171,8 +171,8 @@ export const useCloudinaryUpload = (): UseCloudinaryUploadReturn => {
       setProgress(100);
       return secureUrl;
  
-    } catch (err: any) {
-      const msg = err.message || 'Gagal mengupload foto';
+    } catch (err: unknown) {
+      const msg = (err instanceof Error ? err.message : '') || 'Gagal mengupload foto';
       setError(msg);
       throw new Error(msg);
     } finally {
@@ -182,4 +182,3 @@ export const useCloudinaryUpload = (): UseCloudinaryUploadReturn => {
  
   return { uploading, progress, compressedSize, error, uploadImage };
 };
- 

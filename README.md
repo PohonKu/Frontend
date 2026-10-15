@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PohonKu Frontend
 
-## Getting Started
+Design checkpoint: the original team identity restored for the bilingual adopter journey. Next.js App Router, TypeScript, Tailwind and GSAP. Login uses Google OAuth through the backend only.
 
-First, run the development server:
+## Run locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Use Node 22.13+ (CI uses Node 22) and npm. Run `npm ci`, copy `.env.example` to `.env.local`, then `npm run dev`. Open http://localhost:3000/id or /en. Never commit your local environment file.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`NEXT_PUBLIC_API_URL` points to the backend; `.env.example` contains the current Railway URL. A Midtrans sandbox client key is optional for visual development. There is no demo switch or sample-data fallback in the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Verification
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run `npm run check` (lint, TypeScript, adapter/transport tests), then `npm run build`. A clean checkout does not require local secrets to run these checks. Public environment variables are read at build time.
 
-## Learn More
+Browser scripts in `tests/browser-*.js` are async functions for Playwright CLI `run-code --filename`. Start the app on port 3000, open a browser session, create `outputs/restoration`, and run scripts sequentially. Journey and state scripts intercept API traffic; they do not test real Google credentials, payment settlement or production admin writes. The polish script intercepts OAuth and checks callback return navigation. Scroll tests cover OS dark mode with active GSAP. Screenshots are local evidence, not application assets.
 
-To learn more about Next.js, take a look at the following resources:
+## Integration and release
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See [revision guide](docs/ADOPTER-REVISION.md) for assets, API contracts, motion, and FKT content gaps. Certificates and email need backend delivery; the UI never fabricates them. Production adoption/payment readiness is not claimed by this checkpoint.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Before releasing a Preview, configure the backend CORS allowlist and Google OAuth frontend redirect for its chosen domain. The last verified backend response allowed localhost:3000 only. Production release follows integration review.

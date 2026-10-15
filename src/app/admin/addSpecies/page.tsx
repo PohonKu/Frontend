@@ -5,7 +5,7 @@ import Image from 'next/image';
 import {
   Trees, Plus, Pencil, Search, RefreshCw, X,
   CheckCircle, AlertTriangle, Sprout,
-  DollarSign, Wind, Layers, FileText, Image as ImageIcon,
+  DollarSign, Wind, Layers, FileText,
 } from 'lucide-react';
 import { adminApi, SpeciesPayload } from '@/lib/apiAdmin';
 import { ImageUploader } from '@/components/ui/imageUplouder';
@@ -80,12 +80,10 @@ const SpeciesFormModal = ({
   onSubmit: (data: SpeciesForm) => void;
   initialData?: Partial<SpeciesForm>; isEdit: boolean; isLoading: boolean;
 }) => {
-  const [form, setForm] = useState<SpeciesForm>(EMPTY_FORM);
+  const [form, setForm] = useState<SpeciesForm>(() => ({ ...EMPTY_FORM, ...initialData }));
   const [tab,  setTab]  = useState<'basic' | 'detail'>('basic');
  
-  useEffect(() => {
-    if (isOpen) { setForm(initialData ? { ...EMPTY_FORM, ...initialData } : EMPTY_FORM); setTab('basic'); }
-  }, [isOpen, initialData]);
+
  
   const set = (field: keyof SpeciesForm, value: string) =>
     setForm(prev => ({ ...prev, [field]: value }));
@@ -244,7 +242,7 @@ const SpeciesCard = ({ species, onEdit }: { species: Species; onEdit: (s: Specie
     <div className="h-44 bg-gray-100 relative overflow-hidden">
       <Image src={species.mainImageUrl} alt={species.name} fill
         className="object-cover group-hover:scale-105 transition-transform duration-700"
-        onError={(e: any) => { e.currentTarget.style.display = 'none'; }} />
+        onError={(e) => { e.currentTarget.style.display = 'none'; }} />
       <div className="absolute inset-0 bg-gray-100 flex items-center justify-center -z-10">
         <Trees className="w-8 h-8 text-gray-300" />
       </div>
@@ -304,7 +302,7 @@ export default function AdminSpeciesPage() {
   // Fetch saat mount — tidak perlu cek auth, sudah diurus layout
   useEffect(() => { fetchSpecies(); }, []);
 
-  const fetchSpecies = async () => {
+  async function fetchSpecies() {
     setSpeciesLoading(true);
     try {
       const res  = await adminApi.getAllSpecies();
@@ -321,7 +319,7 @@ export default function AdminSpeciesPage() {
       showToast('Species berhasil ditambahkan', 'success');
       setIsFormOpen(false);
       await fetchSpecies();
-    } catch (err: any) { showToast(err.message || 'Gagal menambah species', 'error'); }
+    } catch (err: unknown) { showToast((err instanceof Error ? err.message : '') || 'Gagal menambah species', 'error'); }
     finally { setFormLoading(false); }
   };
 
@@ -334,7 +332,7 @@ export default function AdminSpeciesPage() {
       setIsFormOpen(false);
       setEditingItem(null);
       await fetchSpecies();
-    } catch (err: any) { showToast(err.message || 'Gagal mengubah species', 'error'); }
+    } catch (err: unknown) { showToast((err instanceof Error ? err.message : '') || 'Gagal mengubah species', 'error'); }
     finally { setFormLoading(false); }
   };
 
@@ -472,7 +470,7 @@ export default function AdminSpeciesPage() {
       </div>
 
       {/* Modal */}
-      <SpeciesFormModal
+      <SpeciesFormModal key={`${isFormOpen}-${editingItem?.id ?? "new"}`}
         isOpen={isFormOpen}
         onClose={() => { setIsFormOpen(false); setEditingItem(null); }}
         onSubmit={editingItem ? handleEdit : handleCreate}

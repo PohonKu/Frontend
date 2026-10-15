@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import {
   Trees, Plus, Pencil, Trash2, X, ChevronRight,
-  Ruler, Gauge, Leaf, FileText, AlertTriangle, CheckCircle,
+  Ruler, Gauge, Leaf, AlertTriangle, CheckCircle,
   RefreshCw, Search,
 } from 'lucide-react';
 import { adminApi, TreeUpdatePayload } from '@/lib/apiAdmin';
@@ -81,11 +81,9 @@ const UpdateFormModal = ({ isOpen, onClose, onSubmit, initialData, isEdit, isLoa
   isOpen: boolean; onClose: () => void; onSubmit: (data: TreeUpdatePayload) => void;
   initialData?: Partial<TreeUpdatePayload>; isEdit: boolean; isLoading: boolean; treeName: string;
 }) => {
-  const [form, setForm] = React.useState<TreeUpdatePayload>(EMPTY_FORM);
+  const [form, setForm] = React.useState<TreeUpdatePayload>(() => ({ ...EMPTY_FORM, ...initialData }));
  
-  React.useEffect(() => {
-    if (isOpen) setForm(initialData ? { ...EMPTY_FORM, ...initialData } : EMPTY_FORM);
-  }, [isOpen, initialData]);
+
  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -135,7 +133,7 @@ const UpdateFormModal = ({ isOpen, onClose, onSubmit, initialData, isEdit, isLoa
                 </label>
                 <input
                   type="number" name={name}
-                  value={(form as any)[name] || ''}
+                  value={form[name as keyof TreeUpdatePayload] || ''}
                   onChange={handleChange}
                   required min={0} step={0.1} placeholder={placeholder}
                   className="w-full px-3 py-2.5 text-gray-900 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#1E562A]/20 focus:border-[#1E562A] transition-colors"
@@ -187,7 +185,7 @@ const UpdateCard = ({ update, onEdit, onDelete }: {
   <div className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group">
     <div className="h-40 bg-gray-100 relative overflow-hidden">
       <Image src={update.photoUrl} alt="Update foto" fill className="object-cover group-hover:scale-105 transition-transform duration-700"
-        onError={(e: any) => { e.currentTarget.style.display = 'none' }} />
+        onError={(e) => { e.currentTarget.style.display = 'none' }} />
       <div className="absolute inset-0 bg-gray-100 flex items-center justify-center -z-10">
         <Trees className="w-8 h-8 text-gray-300" />
       </div>
@@ -263,7 +261,7 @@ export default function AdminTreesPage() {
         });
        
 
-        const userData = await userRes.json();
+        await userRes.json();
 
       try {
         const treesRes = await fetch(`${apiUrl}/api/v1/trees`, {
@@ -288,8 +286,8 @@ export default function AdminTreesPage() {
       const res  = await adminApi.getUpdatesByTreeId(tree.id);
       const list = res?.data ?? res ?? [];
       setUpdates(Array.isArray(list) ? list : []);
-    } catch (err: any) {
-      showToast(err.message || 'Gagal memuat update', 'error');
+    } catch (err: unknown) {
+      showToast((err instanceof Error ? err.message : '') || 'Gagal memuat update', 'error');
     } finally { setUpdatesLoading(false); }
   }, []);
 
@@ -306,7 +304,7 @@ export default function AdminTreesPage() {
       showToast('Update berhasil ditambahkan', 'success');
       setIsFormOpen(false);
       fetchUpdates(selectedTree);
-    } catch (err: any) { showToast(err.message || 'Gagal menambahkan update', 'error'); }
+    } catch (err: unknown) { showToast((err instanceof Error ? err.message : '') || 'Gagal menambahkan update', 'error'); }
     finally { setFormLoading(false); }
   };
 
@@ -318,7 +316,7 @@ export default function AdminTreesPage() {
       showToast('Update berhasil diubah', 'success');
       setEditingUpdate(null); setIsFormOpen(false);
       fetchUpdates(selectedTree);
-    } catch (err: any) { showToast(err.message || 'Gagal mengubah update', 'error'); }
+    } catch (err: unknown) { showToast((err instanceof Error ? err.message : '') || 'Gagal mengubah update', 'error'); }
     finally { setFormLoading(false); }
   };
 
@@ -330,7 +328,7 @@ export default function AdminTreesPage() {
       showToast('Update berhasil dihapus', 'success');
       setDeletingUpdate(null);
       fetchUpdates(selectedTree);
-    } catch (err: any) { showToast(err.message || 'Gagal menghapus update', 'error'); }
+    } catch (err: unknown) { showToast((err instanceof Error ? err.message : '') || 'Gagal menghapus update', 'error'); }
     finally { setDeleteLoading(false); }
   };
 
@@ -501,7 +499,7 @@ export default function AdminTreesPage() {
       </div>
 
       {/* Modals */}
-      <UpdateFormModal
+      <UpdateFormModal key={`${isFormOpen}-${editingUpdate?.id ?? "new"}`}
         isOpen={isFormOpen}
         onClose={() => { setIsFormOpen(false); setEditingUpdate(null); }}
         onSubmit={editingUpdate ? handleEdit : handleCreate}

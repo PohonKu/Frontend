@@ -26,7 +26,7 @@ const nextConfig = {
       },
     ],
 
-    domains: ['placeholder.com'],
+
   },
 
   async headers() {
@@ -44,7 +44,7 @@ const nextConfig = {
       `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com ${midtransDomains}`,
       "img-src 'self' blob: data: https:",
       "font-src 'self' https://fonts.gstatic.com",
-      `connect-src 'self' https: ${midtransDomains}`,
+      `connect-src 'self' https: ${process.env.NEXT_PUBLIC_API_URL ? new URL(process.env.NEXT_PUBLIC_API_URL).origin : ''} ${midtransDomains}`,
       `frame-src ${midtransDomains}`,
       `frame-ancestors 'self' ${midtransDomains}`,
     ].join('; ');

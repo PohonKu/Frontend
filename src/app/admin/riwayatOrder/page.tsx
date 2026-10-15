@@ -40,13 +40,13 @@ const STATUS_CONFIG: Record<string, { label: string; icon: React.ElementType; cl
   FAILED:  { label: 'Gagal',    icon: XCircle,      cls: 'bg-red-50 text-red-600 border-red-100',       activeCls: 'bg-red-600 text-white border-red-600' },
 };
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: readonly { value?: number | string; payload?: { count?: number } }[]; label?: string | number }) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-white border border-gray-100 rounded-xl shadow-xl p-3 min-w-[150px]">
       <p className="text-xs text-gray-500 font-semibold mb-1">{label}</p>
-      <p className="text-sm font-bold text-[#1E562A]">{formatRupiah(payload[0].value)}</p>
-      <p className="text-[10px] text-gray-400 mt-0.5">{payload[0].payload.count} transaksi</p>
+      <p className="text-sm font-bold text-[#1E562A]">{formatRupiah(payload[0].value ?? 0)}</p>
+      <p className="text-[10px] text-gray-400 mt-0.5">{payload[0].payload?.count} transaksi</p>
     </div>
   );
 };
@@ -57,7 +57,7 @@ const Avatar = ({ user, size = 'md' }: { user: OrderUser; size?: 'sm' | 'md' }) 
   if (user.avatarUrl) return (
     <div className={`${dim} rounded-full overflow-hidden border border-gray-100 shrink-0 relative`}>
       <Image src={user.avatarUrl} alt={user.fullName} fill className="object-cover"
-        onError={(e: any) => { e.currentTarget.style.display = 'none'; }} />
+        onError={(e) => { e.currentTarget.style.display = 'none'; }} />
     </div>
   );
   return <div className={`${dim} rounded-full flex items-center justify-center font-bold shrink-0 ${color}`}>{getInitials(user.fullName)}</div>;
@@ -85,7 +85,7 @@ const OrderRow = ({ order }: { order: Order }) => {
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-lg overflow-hidden bg-gray-100 relative shrink-0">
             <Image src={order.orderItems.species.mainImageUrl} alt={order.orderItems.species.name} fill className="object-cover"
-              onError={(e: any) => { e.currentTarget.style.display = 'none'; }} />
+              onError={(e) => { e.currentTarget.style.display = 'none'; }} />
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-gray-900 truncate max-w-[110px]">{order.orderItems.species.name}</p>
@@ -140,7 +140,7 @@ const OrderCard = ({ order }: { order: Order }) => {
           <div className="flex items-center gap-3 py-3 mb-3">
             <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 relative shrink-0">
               <Image src={order.orderItems.species.mainImageUrl} alt={order.orderItems.species.name} fill className="object-cover"
-                onError={(e: any) => { e.currentTarget.style.display = 'none'; }} />
+                onError={(e) => { e.currentTarget.style.display = 'none'; }} />
             </div>
             <div className="min-w-0">
               <p className="text-sm font-semibold text-gray-900 truncate">{order.orderItems.species.name}</p>
@@ -185,7 +185,7 @@ export default function AdminOrdersPage() {
 
   useEffect(() => { fetchOrders(); }, []);
 
-  const fetchOrders = async () => {
+  async function fetchOrders() {
     setOrdersLoading(true);
     try {
       const res  = await adminApi.getAllOrder();
