@@ -42,7 +42,7 @@ const Avatar = ({ buyer }: { buyer: Buyer }) => {
   if (buyer.avatarUrl) return (
     <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-100 shrink-0 relative">
       <Image src={buyer.avatarUrl} alt={buyer.fullName} fill className="object-cover"
-        onError={(e: any) => { e.currentTarget.style.display = 'none'; }} />
+        onError={(e) => { e.currentTarget.style.display = 'none'; }} />
     </div>
   );
   return (
@@ -128,7 +128,7 @@ export default function AdminBuyersPage() {
 
   useEffect(() => { fetchBuyers(); }, []);
 
-  const fetchBuyers = async () => {
+  async function fetchBuyers() {
     const token  = localStorage.getItem('access_token') || '';
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
     setBuyersLoading(true);

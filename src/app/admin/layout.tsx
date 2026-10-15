@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  LogOut, Trees, LayoutDashboard, Settings, Menu, X,
+  LogOut, Trees, Menu, X,
   ChevronLeft, Leaf, ShoppingBag, Sprout, Users,
 } from 'lucide-react';
 
@@ -44,7 +44,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const check = async () => {
       try {
         const token = localStorage.getItem('access_token');
-        if (!token) { router.push('/login?redirect=' + pathname); return; }
+        if (!token) { router.push('/id/login?next=' + encodeURIComponent(pathname)); return; }
 
         const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
         const res    = await fetch(`${apiUrl}/api/v1/auth/me`, {
@@ -72,12 +72,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       }
     };
     check();
-  }, []);
+  }, [pathname, router]);
 
   // Tutup mobile sidebar saat navigasi
-  useEffect(() => {
-    setMobileSidebarOpen(false);
-  }, [pathname]);
+
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
@@ -160,7 +158,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             return (
               <Link
                 key={href}
-                href={href}
+                href={href} onClick={() => setMobileSidebarOpen(false)}
                 title={sidebarCollapsed ? label : ''}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-md transition-all w-full
                   ${active

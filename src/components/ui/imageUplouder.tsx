@@ -2,7 +2,7 @@
  
 import React, { useRef, useState } from 'react';
 import Image from 'next/image';
-import { Upload, X, ImageOff, Loader2, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Upload, X, Loader2, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { useCloudinaryUpload } from '@/lib/upFotoCloudinary';
  
 interface ImageUploaderProps {
@@ -103,7 +103,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
               alt="Preview"
               fill
               className="object-cover"
-              onError={(e: any) => { e.currentTarget.style.display = 'none'; }}
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
             />
             {/* Overlay saat uploading */}
             {uploading && (
@@ -234,4 +234,3 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
     </div>
   );
 };
- 

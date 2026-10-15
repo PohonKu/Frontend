@@ -1,5 +1,2 @@
-import ContactSection from '@/components/ContactSection';
-
-export default function ContactPage() {
-  return <ContactSection />;
-}
+import { redirect } from 'next/navigation';
+export default function Page() { redirect('/id/contact'); }

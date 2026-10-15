@@ -39,7 +39,7 @@ const Avatar = ({ user, size = 'md' }: { user: AdoptionUser; size?: 'sm' | 'md' 
   if (user.avatarUrl) return (
     <div className={`${dim} rounded-full overflow-hidden border border-gray-100 shrink-0 relative`}>
       <Image src={user.avatarUrl} alt={user.fullName} fill className="object-cover"
-        onError={(e: any) => { e.currentTarget.style.display = 'none'; }} />
+        onError={(e) => { e.currentTarget.style.display = 'none'; }} />
     </div>
   );
   return <div className={`${dim} rounded-full flex items-center justify-center font-bold shrink-0 ${color}`}>{getInitials(user.fullName)}</div>;
@@ -62,7 +62,7 @@ const AdoptionRow = ({ adoption }: { adoption: Adoption }) => {
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-lg overflow-hidden bg-gray-100 relative shrink-0">
             <Image src={adoption.species.mainImageUrl} alt={adoption.species.name} fill className="object-cover"
-              onError={(e: any) => { e.currentTarget.style.display = 'none'; }} />
+              onError={(e) => { e.currentTarget.style.display = 'none'; }} />
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-gray-900 truncate max-w-[110px]">{adoption.species.name}</p>
@@ -107,7 +107,7 @@ const AdoptionCard = ({ adoption }: { adoption: Adoption }) => {
       <button className="w-full flex items-center gap-3 p-4 text-left" onClick={() => setOpen(o => !o)}>
         <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 relative shrink-0">
           <Image src={adoption.species.mainImageUrl} alt={adoption.species.name} fill className="object-cover"
-            onError={(e: any) => { e.currentTarget.style.display = 'none'; }} />
+            onError={(e) => { e.currentTarget.style.display = 'none'; }} />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5 flex-wrap">
@@ -173,7 +173,7 @@ export default function AdminAdoptionsPage() {
 
   useEffect(() => { fetchAdoptions(); }, []);
 
-  const fetchAdoptions = async () => {
+  async function fetchAdoptions() {
     setAdoptionsLoading(true);
     try {
       const res  = await adminApi.getAllAdoption();

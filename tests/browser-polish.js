@@ -1,0 +1,13 @@
+async page=>{
+ await page.bringToFront(); await page.setDefaultNavigationTimeout(90000);await page.emulateMedia({reducedMotion:'no-preference'});const checks=[];const ok=(v,n)=>{if(!v)throw Error(n);checks.push(n)};
+ for(const size of [{width:1920,height:1200},{width:1440,height:900},{width:390,height:844}]){
+ await page.setViewportSize(size);await page.goto('http://localhost:3000/id');await page.locator('.pk-footer').waitFor();await page.waitForTimeout(600);
+ const hero=await page.locator('.pk-forest-hero').boundingBox();ok(hero.height>=size.height,'Hero fills '+size.width);const pads=await page.locator('.pk-theme').evaluateAll(els=>els.map(el=>getComputedStyle(el).paddingLeft));ok(new Set(pads).size===1,'Equal card padding '+size.width);ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'No overflow '+size.width);
+ const heading=await page.locator('.pk-theme-heading h2').boundingBox(),body=await page.locator('.pk-theme-heading p').boundingBox();ok(body.y>=heading.y+heading.height,'Theme description under title '+size.width);
+ await page.goto('http://localhost:3000/id/login');await page.locator('.pk-google-panel').waitFor();await page.waitForTimeout(600);ok(await page.locator('input').count()===0,'Google only '+size.width);ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Login fits '+size.width);await page.screenshot({path:'outputs/restoration/login-'+size.width+'.png'});
+ }
+ await page.goto('http://localhost:3000/id/trees');await page.locator('.pk-heading').waitFor();ok(!(await page.locator('.pk-heading').innerText()).includes('AWAL SEBUAH HUBUNGAN'),'No catalogue eyebrow');
+ await page.route('**/api/v1/auth/google',route=>route.fulfill({status:200,contentType:'text/html',body:'<p>OAuth endpoint intercepted by test</p>'}));
+ const next='/en/checkout?species=bendo&duration=3';await page.goto('http://localhost:3000/en/login?next='+encodeURIComponent(next));await page.getByRole('button',{name:'Continue with Google'}).click();await page.waitForURL('**/api/v1/auth/google');ok(true,'Google button reaches BE OAuth');
+ await page.route('**/api/v1/auth/me',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({data:{id:'test',fullName:'Test',email:'test@example.invalid'}})}));await page.goto('http://localhost:3000/auth/google/callback?success=true&accessToken=test-only&refreshToken=test-refresh');await page.waitForURL('**/en/checkout?species=bendo&duration=3');ok(true,'OAuth callback restores selection and locale');await page.evaluate(()=>localStorage.clear());await page.unroute('**/api/v1/auth/google');await page.unroute('**/api/v1/auth/me');await page.goto('http://localhost:3000/id');return{passed:checks.length,checks};
+}
