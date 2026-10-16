@@ -132,8 +132,8 @@ export function ProgrammeTeam() {
                 ? "Fakultas Kehutanan, Universitas Gadjah Mada"
                 : "Faculty of Forestry, Universitas Gadjah Mada"
               : id
-                ? "Tim desain dan pengembangan website PohonKu"
-                : "PohonKu website design and development team"}
+                ? "Tim desain dan pengembangan website PohonKu dari Departemen Teknik Elektro dan Teknologi Informasi (DTETI), Fakultas Teknik, Universitas Gadjah Mada."
+                : "PohonKu website design and development team from the Department of Electrical Engineering and Information Technology (DTETI), Faculty of Engineering, Universitas Gadjah Mada."}
           </p>
           <div className="pk-members" key={active}>
             {teams[active].map((member) => (
