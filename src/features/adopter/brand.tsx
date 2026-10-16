@@ -210,44 +210,4 @@ export function Conservation() {
     </section>
   );
 }
-export function ProgrammeTeam() {
-  const { locale } = useApp();
-  const id = locale === "id";
-  return (
-    <section className="pk-section pk-team" id="team">
-      <div className="pk-container">
-        <h2>{id ? "Tim di balik PohonKu" : "The people behind PohonKu"}</h2>
-        <div className="pk-team-grid">
-          {[
-            {
-              title: id ? "Tim Fakultas Kehutanan" : "Faculty of Forestry team",
-              body: id
-                ? "Fakultas Kehutanan, Universitas Gadjah Mada — penggagas program konservasi PohonKu."
-                : "Faculty of Forestry, Universitas Gadjah Mada — initiator of the PohonKu conservation programme.",
-            },
-            {
-              title: id ? "Tim DTETI / IT" : "DTETI / IT team",
-              body: id
-                ? "Tim desain UI/UX dan pengembangan website PohonKu."
-                : "The team responsible for PohonKu’s UI/UX design and website development.",
-            },
-          ].map((team) => (
-            <article key={team.title}>
-              <div className="pk-team-frame" aria-hidden="true">
-                <Image
-                  src="/images/RectangleFoto.svg"
-                  width={150}
-                  height={200}
-                  alt=""
-                />
-                <Image src="/images/Logo.svg" width={100} height={58} alt="" />
-              </div>
-              <h3>{team.title}</h3>
-              <p>{team.body}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+export { ProgrammeTeam } from "./team";

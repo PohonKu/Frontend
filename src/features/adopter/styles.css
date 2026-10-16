@@ -2118,3 +2118,22 @@ html {
     padding: 40px 20px;
   }
 }
+
+/* One team at a time; the portraits retain the original leaf silhouette. */
+.pk-team-tabs { display:flex; justify-content:center; gap:8px; width:fit-content; max-width:100%; margin:32px auto 20px; padding:6px; border:1px solid #ffffff66; border-radius:999px; background:#071b0c44; position:relative; }
+.pk-team-tabs button { min-height:52px; padding:12px 32px; border:0; border-radius:999px; color:white; background:transparent; font-size:20px; font-weight:600; transition:background .2s,color .2s; }
+.pk-team-tabs button:hover { background:#ffffff20; }
+.pk-team-tabs button[aria-selected="true"] { background:#e4f0dc; color:#17451e; }
+.pk-team-tabs button:focus-visible,.pk-team-panel:focus-visible { outline:3px solid #d7ef9b; outline-offset:5px; }
+.pk-team-panel { position:relative; }
+.pk-team .pk-team-description { text-align:center; margin:0 auto 40px; max-width:700px; color:#e4f0dc; font-size:20px; }
+.pk-members { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:32px; }
+.pk-member { min-width:0; text-align:center; padding:20px 20px 28px; background:#ffffff0d; border:1px solid #ffffff20; border-radius:28px; }
+.pk-member-photo { position:relative; width:100%; aspect-ratio:4/5; max-width:260px; margin:0 auto 28px; overflow:hidden; border-radius:45% 0 45% 0; background:#dce6d7; border:3px solid #e4f0dc; }
+.pk-member-photo img { object-fit:cover; transition:transform .3s; }
+.pk-member:hover .pk-member-photo img { transform:scale(1.035); }
+.pk-team .pk-member h3 { font-family:var(--font-inter-source),sans-serif; font-weight:700; font-size:22px; line-height:1.4; margin:0 0 12px; overflow-wrap:break-word; }
+.pk-team .pk-member p { color:#dcebcf; font-size:18px; line-height:1.5; margin:0; }
+@media(max-width:1050px){.pk-members{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:560px){.pk-members{grid-template-columns:1fr;gap:24px;}.pk-member{max-width:380px;width:100%;margin-inline:auto;}.pk-team-tabs button{padding:12px 24px;font-size:18px;}.pk-team .pk-team-description{font-size:18px;}}
+@media(prefers-reduced-motion:reduce){.pk-member-photo img{transition:none;}.pk-member:hover .pk-member-photo img{transform:none;}}
